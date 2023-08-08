@@ -36,8 +36,9 @@ public class Entrypoint {
         );
 
         List<Particle> neighbours = method.findNeighbours();
-
-
+        for(Particle neighbour : neighbours) {
+            System.out.println(neighbour.neighboursToString());
+        }
 
     }
 }

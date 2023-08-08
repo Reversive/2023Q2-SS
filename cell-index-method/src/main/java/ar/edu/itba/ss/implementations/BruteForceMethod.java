@@ -14,9 +14,20 @@ public class BruteForceMethod implements DistanceMethod {
         this.context = context;
         this.shouldUsePeriodicContour = shouldUsePeriodicContour;
     }
-
     @Override
     public List<Particle> findNeighbours() {
-        return null;
+        List<Particle> particles = context.getParticles();
+        for(Particle p1 : particles) {
+            for(Particle p2 : particles) {
+                if(p1.equals(p2) || p1.getNeighbours().contains(p2)) continue;
+                int dim = context.getMatrixSize() * context.getSideLength();
+                double distance = shouldUsePeriodicContour ? p1.getContourDistanceTo(p2, dim) : p1.getDistanceTo(p2);
+                if(distance < context.getIcRadius()) {
+                    p1.addNeighbour(p2);
+                    p2.addNeighbour(p1);
+                }
+            }
+        }
+        return particles;
     }
 }

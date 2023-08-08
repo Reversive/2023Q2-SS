@@ -25,7 +25,7 @@ public class Parser {
             int property = Integer.parseInt(currentStaticLine[1]);
             double x = Double.parseDouble(currentDynamicLine[0]);
             double y = Double.parseDouble(currentDynamicLine[1]);
-            particles.add(new Particle(radius, x, y, property));
+            particles.add(new Particle(i, radius, x, y, property));
         }
         context.setParticleAmount(particleAmount);
         context.setSideLength(sideLength);
