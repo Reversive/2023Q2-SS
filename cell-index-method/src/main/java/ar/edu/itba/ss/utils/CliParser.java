@@ -1,4 +1,4 @@
-package ar.edu.itba.ss.util;
+package ar.edu.itba.ss.utils;
 import org.apache.commons.cli.*;
 public class CliParser {
     private String staticFilePath;

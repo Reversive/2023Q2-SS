@@ -1,4 +1,4 @@
-package ar.edu.itba.ss.model;
+package ar.edu.itba.ss.models;
 
 public class Particle {
     private double radius;

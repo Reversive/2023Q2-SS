@@ -1,4 +1,4 @@
-package ar.edu.itba.ss.util;
+package ar.edu.itba.ss.utils;
 
 import java.io.*;
 

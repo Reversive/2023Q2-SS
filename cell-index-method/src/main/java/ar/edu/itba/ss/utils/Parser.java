@@ -1,22 +1,21 @@
-package ar.edu.itba.ss.util;
+package ar.edu.itba.ss.utils;
 
-import ar.edu.itba.ss.model.Context;
-import ar.edu.itba.ss.model.Particle;
+import ar.edu.itba.ss.models.Context;
+import ar.edu.itba.ss.models.Particle;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Parser {
-    public static Context parseContext(
+    public static boolean parseInputContext(
             String staticInput,
             String dynamicInput,
-            double icRadius,
-            int matrixSize,
-            boolean usePeriodicContour,
-            boolean useBruteForce
+            Context context
     ) {
         String[] staticTokens = staticInput.split("\n");
         String[] dynamicTokens = dynamicInput.split("\n");
+        if(staticTokens.length < 2 || dynamicTokens.length < 1) return false;
         int particleAmount = Integer.parseInt(staticTokens[0]);
+        if(staticTokens.length - 2 != particleAmount || dynamicTokens.length - 1 != particleAmount) return false;
         int sideLength = Integer.parseInt(staticTokens[1]);
         List<Particle> particles = new ArrayList<>();
         for(int i = 0; i < particleAmount; i++) {
@@ -28,6 +27,9 @@ public class Parser {
             double y = Double.parseDouble(currentDynamicLine[1]);
             particles.add(new Particle(radius, x, y, property));
         }
-        return new Context(particleAmount, sideLength, particles, icRadius, matrixSize, usePeriodicContour, useBruteForce);
+        context.setParticleAmount(particleAmount);
+        context.setSideLength(sideLength);
+        context.setParticles(particles);
+        return true;
     }
 }
