@@ -45,18 +45,30 @@ public class Entrypoint {
         Instant end = Instant.now();
         System.out.println("Duration: " + Duration.between(start, end));
 
-        for(Particle neighbour : neighbours) {
-            System.out.println(neighbour.neighboursToString());
-        }
+//        for(Particle neighbour : neighbours) {
+//            System.out.println(neighbour.neighboursToString());
+//        }
 
         File positionsFile = new File("positions.csv");
         FileWriter positionsFileWriter = new FileWriter(positionsFile);
 
+        File neighboursFile = new File("neighbours.csv");
+        FileWriter neighboursFileWriter = new FileWriter(neighboursFile);
+
         for (Particle p : context.getParticles()) {
             positionsFileWriter.write(p.getX() + "," + p.getY() + "," + p.getRadius() + "\n");
+            StringBuilder neighboursString = new StringBuilder();
+            if(p.getNeighbours() != null && !p.getNeighbours().isEmpty()) {
+                neighboursString.append(p.getId()).append(",");
+                for(Particle n : p.getNeighbours())
+                    neighboursString.append(n.getId()).append(",");
+                neighboursString.deleteCharAt(neighboursString.length() - 1).append('\n');
+                neighboursFileWriter.write(neighboursString.toString());
+            }
         }
 
         positionsFileWriter.close();
+        neighboursFileWriter.close();
 
 //        try (PrintWriter writer = new PrintWriter(new FileWriter("output.txt"))) {
 //            for (Particle neighbour : neighbours) {

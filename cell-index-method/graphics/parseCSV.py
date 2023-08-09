@@ -1,6 +1,7 @@
 STATIC_PATH = '../src/main/resources/Static100.txt'
 PARTICLE_QTY = int(open(STATIC_PATH, 'r').readline().strip())
 POSITIONS_PATH = '../positions.csv'
+NEIGHBOURS_PATH = '../neighbours.csv'
 
 def parse_positions():
     i = 0
@@ -14,3 +15,14 @@ def parse_positions():
             particles.insert(i, [eval(i) for i in positions])
             i += 1
     return particles
+
+def parse_neighbours():
+    neighbours = [[]] * PARTICLE_QTY
+    with open(NEIGHBOURS_PATH, 'r') as f:
+        while True:
+            line = f.readline()
+            if not line:
+                break
+            particles = line.rsplit()[0].split(',')
+            neighbours.insert(int(particles[0]), [eval(i) for i in particles[1:]])
+    return neighbours
