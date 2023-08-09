@@ -10,13 +10,18 @@ import java.util.List;
 public class CellIndexMethod implements DistanceMethod {
     private final Context context;
     private final boolean shouldUsePeriodicContour;
-    private final Cell[][] matrix;
+    private Cell[][] matrix;
 
     public CellIndexMethod(Context context, boolean shouldUsePeriodicContour) {
         this.context = context;
         this.shouldUsePeriodicContour = shouldUsePeriodicContour;
         int n = this.context.getMatrixSize();
         this.matrix = new Cell[n][n];
+        for(int i = 0; i<n; i++) {
+            for(int j = 0; j<n; j++) {
+                matrix[i][j] = new Cell();
+            }
+        }
     }
 
     private void checkAdjacent(Particle p, int row, int col) {
@@ -61,8 +66,8 @@ public class CellIndexMethod implements DistanceMethod {
             this.matrix[rowIndex][colIndex].addParticle(particle);
         }
 
-        for(int i = 0; i < sideLength; i++) {
-            for(int j = 0; j < sideLength; j++) {
+        for(int i = 0; i < context.getMatrixSize(); i++) {
+            for(int j = 0; j < context.getMatrixSize(); j++) {
                 List<Particle> cellParticles = this.matrix[i][j].getParticles();
                 for(Particle p: cellParticles) {
                     checkAdjacent(p, i, j);

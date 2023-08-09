@@ -9,10 +9,10 @@ public class Particle {
     private double radius;
     private double x;
     private double y;
-    private int property;
+    private double property;
     private Set<Particle> neighbours;
 
-    public Particle(int id, double radius, double x, double y, int property) {
+    public Particle(int id, double radius, double x, double y, double property) {
         this.id = id;
         this.radius = radius;
         this.x = x;
@@ -49,7 +49,7 @@ public class Particle {
         this.y = y;
     }
 
-    public int getProperty() {
+    public double getProperty() {
         return property;
     }
 

@@ -22,7 +22,7 @@ public class Parser {
             String[] currentStaticLine = staticTokens[2 + i].split(" ");
             String[] currentDynamicLine = dynamicTokens[1 + i].split(" ");
             double radius = Double.parseDouble(currentStaticLine[0]);
-            int property = Integer.parseInt(currentStaticLine[1]);
+            double property = Double.parseDouble(currentStaticLine[1]);
             double x = Double.parseDouble(currentDynamicLine[0]);
             double y = Double.parseDouble(currentDynamicLine[1]);
             particles.add(new Particle(i, radius, x, y, property));

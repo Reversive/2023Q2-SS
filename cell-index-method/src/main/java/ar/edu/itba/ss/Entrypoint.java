@@ -7,12 +7,16 @@ import ar.edu.itba.ss.models.Particle;
 import ar.edu.itba.ss.utils.CliParser;
 import ar.edu.itba.ss.utils.Parser;
 import ar.edu.itba.ss.utils.Reader;
-
 import java.io.IOException;
 import java.util.List;
+import java.time.Duration;
+import java.time.Instant;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 
 public class Entrypoint {
     public static void main(String[] args) throws IOException {
+        Instant start = Instant.now();
         CliParser cli = new CliParser();
         if(!cli.parseOptions(args)) return;
         Context context = new Context(
@@ -36,8 +40,17 @@ public class Entrypoint {
         );
 
         List<Particle> neighbours = method.findNeighbours();
+        Instant end = Instant.now();
+        System.out.println("Duration: " + Duration.between(start, end));
+
         for(Particle neighbour : neighbours) {
             System.out.println(neighbour.neighboursToString());
+        }
+
+        try (PrintWriter writer = new PrintWriter(new FileWriter("output.txt"))) {
+            for (Particle neighbour : neighbours) {
+                writer.println(neighbour.neighboursToString());
+            }
         }
 
     }
