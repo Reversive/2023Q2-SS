@@ -7,6 +7,8 @@ import ar.edu.itba.ss.models.Particle;
 import ar.edu.itba.ss.utils.CliParser;
 import ar.edu.itba.ss.utils.Parser;
 import ar.edu.itba.ss.utils.Reader;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.time.Duration;
@@ -47,11 +49,20 @@ public class Entrypoint {
             System.out.println(neighbour.neighboursToString());
         }
 
-        try (PrintWriter writer = new PrintWriter(new FileWriter("output.txt"))) {
-            for (Particle neighbour : neighbours) {
-                writer.println(neighbour.neighboursToString());
-            }
+        File positionsFile = new File("positions.csv");
+        FileWriter positionsFileWriter = new FileWriter(positionsFile);
+
+        for (Particle p : context.getParticles()) {
+            positionsFileWriter.write(p.getX() + "," + p.getY() + "," + p.getRadius() + "\n");
         }
+
+        positionsFileWriter.close();
+
+//        try (PrintWriter writer = new PrintWriter(new FileWriter("output.txt"))) {
+//            for (Particle neighbour : neighbours) {
+//                writer.println(neighbour.neighboursToString());
+//            }
+//        }
 
     }
 }

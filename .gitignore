@@ -38,6 +38,3 @@ build/
 
 ### Mac OS ###
 .DS_Store
-
-output.txt
-positions.csv
