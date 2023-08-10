@@ -43,7 +43,7 @@ public class Entrypoint {
 
         List<Particle> neighbours = method.findNeighbours();
         Instant end = Instant.now();
-        System.out.println("Method: " + method.getName() + "Duration: " + Duration.between(start, end));
+        System.out.println("Method: " + method.getName() + " Duration: " + Duration.between(start, end));
 
         File positionsFile = new File("positions.csv");
         FileWriter positionsFileWriter = new FileWriter(positionsFile);

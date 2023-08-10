@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Context {
     private int particleAmount;
-    private int sideLength;
+    private double sideLength;
     private List<Particle> particles;
     private double icRadius;
     private int matrixSize;
@@ -18,7 +18,7 @@ public class Context {
         return particleAmount;
     }
 
-    public int getSideLength() {
+    public double getSideLength() {
         return sideLength;
     }
 
@@ -38,7 +38,7 @@ public class Context {
         this.particleAmount = particleAmount;
     }
 
-    public void setSideLength(int sideLength) {
+    public void setSideLength(double sideLength) {
         this.sideLength = sideLength;
     }
 

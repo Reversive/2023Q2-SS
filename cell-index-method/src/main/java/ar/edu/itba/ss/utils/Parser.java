@@ -16,7 +16,7 @@ public class Parser {
         if(staticTokens.length < 2 || dynamicTokens.length < 1) return false;
         int particleAmount = Integer.parseInt(staticTokens[0]);
         if(staticTokens.length - 2 != particleAmount || dynamicTokens.length - 1 != particleAmount) return false;
-        int sideLength = Integer.parseInt(staticTokens[1]);
+        double sideLength = Double.parseDouble(staticTokens[1]);
         List<Particle> particles = new ArrayList<>();
         for(int i = 0; i < particleAmount; i++) {
             String[] currentStaticLine = staticTokens[2 + i].split(" ");

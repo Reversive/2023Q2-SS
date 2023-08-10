@@ -5,33 +5,25 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
 public class ParticleGenerator {
-
-    private static final double MAX_PARTICLE_RADIUS = 1.0;
-
     public static void main(String[] args) {
-        if (args.length != 2) {
-            System.out.println("Usage: java ParticleGenerator <N> <L>");
-            return;
+        int[] particleN = { 10,20,30,40,50,60,70,80,90,100,200,300,400,500,600,700,800,900,1000 };
+        int L = 20;
+        for(int n : particleN) {
+            generateStaticFile(n, L);
+            generateDynamicFile(n, L);
         }
-
-        int N = Integer.parseInt(args[0]);
-        int L = Integer.parseInt(args[1]);
-
-        generateStaticFile(N,L);
-        generateDynamicFile(N,L);
     }
 
     private static void generateStaticFile(int N, int L) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/StaticN.txt"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/Static" + N + ".txt"))) {
             writer.write(Integer.toString(N));
             writer.newLine();
             writer.write(Double.toString(L));
             writer.newLine();
-
-            Random random = new Random();
             for (int i = 0; i < N; i++) {
-                double radius = random.nextDouble() * MAX_PARTICLE_RADIUS;
-                writer.write("r" + (i + 1) + " " + radius);
+                double radius = 0.25;
+                double property = 1;
+                writer.write(radius + " " + property);
                 writer.newLine();
             }
         } catch (IOException e) {
@@ -40,7 +32,7 @@ public class ParticleGenerator {
     }
 
     private static void generateDynamicFile(int N, int L) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/DynamicN.txt"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/Dynamic" + N + ".txt"))) {
             writer.write("0");
             writer.newLine();
 
