@@ -43,11 +43,7 @@ public class Entrypoint {
 
         List<Particle> neighbours = method.findNeighbours();
         Instant end = Instant.now();
-        System.out.println("Duration: " + Duration.between(start, end));
-
-//        for(Particle neighbour : neighbours) {
-//            System.out.println(neighbour.neighboursToString());
-//        }
+        System.out.println("Method: " + method.getName() + "Duration: " + Duration.between(start, end));
 
         File positionsFile = new File("positions.csv");
         FileWriter positionsFileWriter = new FileWriter(positionsFile);
@@ -70,11 +66,11 @@ public class Entrypoint {
         positionsFileWriter.close();
         neighboursFileWriter.close();
 
-//        try (PrintWriter writer = new PrintWriter(new FileWriter("output.txt"))) {
-//            for (Particle neighbour : neighbours) {
-//                writer.println(neighbour.neighboursToString());
-//            }
-//        }
+        try (PrintWriter writer = new PrintWriter(new FileWriter("output.txt"))) {
+            for (Particle neighbour : neighbours) {
+                writer.println(neighbour.neighboursToString());
+            }
+        }
 
     }
 }

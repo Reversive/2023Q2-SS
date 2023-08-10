@@ -8,9 +8,10 @@ FONT_SIZE = 10
 
 positions = parse_positions()
 neighbours = parse_neighbours()
-
+matrix_size = parse_matrix_size()
 plt.figure(figsize=(9, 9), dpi=80)
-
+plt.xlim(0, matrix_size)
+plt.ylim(0, matrix_size)
 
 for i, position in enumerate(positions):
     if i == PARTICLE_QTY:

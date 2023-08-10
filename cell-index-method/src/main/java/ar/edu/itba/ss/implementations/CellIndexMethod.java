@@ -47,8 +47,7 @@ public class CellIndexMethod implements DistanceMethod {
         List<Particle> targetParticles = this.matrix[row][col].getParticles();
         for(Particle particle : targetParticles) {
             if(p.equals(particle) || p.getNeighbours().contains(particle)) continue;
-            int dim = context.getMatrixSize() * context.getSideLength();
-            double distance = shouldUsePeriodicContour ? p.getContourDistanceTo(particle, dim) : p.getDistanceTo(particle);
+            double distance = shouldUsePeriodicContour ? p.getContourDistanceTo(particle, context.getSideLength()) : p.getDistanceTo(particle);
             if(distance < context.getIcRadius()) {
                 p.addNeighbour(particle);
                 particle.addNeighbour(p);
@@ -59,10 +58,10 @@ public class CellIndexMethod implements DistanceMethod {
     @Override
     public List<Particle> findNeighbours() {
         List<Particle> particles = context.getParticles();
-        int sideLength = context.getSideLength();
+        int cellLength = context.getSideLength() / context.getMatrixSize();
         for(Particle particle : particles) {
-            int rowIndex = (int) Math.floor(particle.getX() / sideLength);
-            int colIndex = (int) Math.floor(particle.getY() / sideLength);
+            int rowIndex = (int) Math.floor(particle.getX() / cellLength);
+            int colIndex = (int) Math.floor(particle.getY() / cellLength);
             this.matrix[rowIndex][colIndex].addParticle(particle);
         }
 
@@ -80,5 +79,10 @@ public class CellIndexMethod implements DistanceMethod {
         }
 
         return particles;
+    }
+
+    @Override
+    public String getName() {
+        return "Cell Index Method";
     }
 }
