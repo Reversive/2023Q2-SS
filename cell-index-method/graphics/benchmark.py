@@ -9,8 +9,8 @@ BRUTE_times = [data[2] for data in times]
 
 plt.figure(figsize=(9, 9), dpi=80)
 
-plt.plot(N_values, CIM_times, color='blue', label='Cell Index Method')
-plt.plot(N_values, BRUTE_times, color='orange', label='Brute Force')
+plt.plot(N_values, CIM_times, 'b.', label='Cell Index Method')
+plt.plot(N_values, BRUTE_times, 'r.', label='Brute Force')
 
 plt.xticks(N_values)
 
