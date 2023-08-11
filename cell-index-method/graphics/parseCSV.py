@@ -1,7 +1,8 @@
-STATIC_PATH = '../src/main/resources/Static100.txt'
+STATIC_PATH = '../src/main/resources/Static100.txt' #TODO CAMBIAR ESTO CUANDO SE CORRE
 PARTICLE_QTY = int(open(STATIC_PATH, 'r').readline().strip())
 POSITIONS_PATH = '../positions.csv'
 NEIGHBOURS_PATH = '../neighbours.csv'
+BENCHMARK_PATH = '../benchmark.txt' #TODO CAMBIAR ESTO CUANDO SE CORRE BENCHMARK
 
 def parse_positions():
     i = 0
@@ -36,3 +37,16 @@ def parse_matrix_size():
         return matrix_size
     else:
         return 0
+    
+def parse_times():
+    times = []
+    first_line = None
+    with open(BENCHMARK_PATH, 'r') as f:
+        first_line = f.readline()
+        while True:
+            line = f.readline()
+            if not line:
+                break
+            time_values = line.strip().split(',')
+            times.append([int(time_values[0]), float(time_values[1]), float(time_values[2])])
+    return first_line, times
