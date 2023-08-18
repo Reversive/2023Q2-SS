@@ -12,6 +12,7 @@ matrix_size = parse_matrix_size()
 plt.figure(figsize=(9, 9), dpi=80)
 plt.xlim(0, matrix_size)
 plt.ylim(0, matrix_size)
+plt.axis('equal')
 
 for i, position in enumerate(positions):
     if i == PARTICLE_QTY:
@@ -49,7 +50,10 @@ while not kill:
             chosen = mpatches.Patch(color='#FFFF14', label='Chosen')
             neighbour = mpatches.Patch(color='#E50000', label='Neighbour')
             unrelated = mpatches.Patch(color='#76FF7B', label='Unrelated')
-            plt.legend(handles=[chosen, neighbour, unrelated], loc='best')        
+            plt.legend(handles=[chosen, neighbour, unrelated], loc='best')
+            plt.xlim(0, matrix_size)
+            plt.ylim(0, matrix_size) 
+            plt.axis('equal')       
             plt.show()
         except ValueError:
             kill = True

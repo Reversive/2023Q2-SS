@@ -58,10 +58,12 @@ public class CellIndexMethod implements DistanceMethod {
     @Override
     public List<Particle> findNeighbours() {
         List<Particle> particles = context.getParticles();
-        int cellLength = (int)context.getSideLength() / context.getMatrixSize();
+        double cellLength = context.getSideLength() / context.getMatrixSize();
         for(Particle particle : particles) {
             int rowIndex = (int) Math.floor(particle.getX() / cellLength);
             int colIndex = (int) Math.floor(particle.getY() / cellLength);
+            if(rowIndex > 13 || colIndex > 13)
+                System.out.println("rowindex " + rowIndex + " colindex " + colIndex + " celllength " + cellLength + " x " + particle.getX() + " y " + particle.getY());
             this.matrix[rowIndex][colIndex].addParticle(particle);
         }
 
