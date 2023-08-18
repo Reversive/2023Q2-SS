@@ -1,0 +1,59 @@
+package ar.edu.itba.ss.utils;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Random;
+
+public class ParticleGenerator {
+    public static void main(String[] args) {
+        int[] particleN = { 300/*,20,30,40,50,60,70,80,90,100,200,300,400,500,600,700,800,900,1000*/ };
+        int L = 5;
+        for(int n : particleN) {
+            generateStaticFile(n, L);
+            generateDynamicFile(n, L);
+        }
+    }
+
+    public static void generate(int particleDensity, int sideSize) {
+        generateStaticFile(particleDensity, sideSize);
+        generateDynamicFile(particleDensity, sideSize);
+    }
+
+    private static void generateStaticFile(int N, int L) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/static" + N + ".txt"))) {
+            writer.write(Integer.toString(N));
+            writer.newLine();
+            writer.write(Integer.toString(L));
+            writer.newLine();
+            for (int i = 0; i < N; i++) {
+                double radius = 0.;
+                double property = 1;
+                writer.write(radius + " " + property);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void generateDynamicFile(int N, int L) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/dynamic" + N + ".txt"))) {
+            writer.write("0");
+            writer.newLine();
+            Random random = new Random();
+            double DEFAULT_SPEED = 0.03;
+            double direction = random.nextDouble() * 2 * Math.PI;
+            for (int i = 0; i < N; i++) {
+                double x = random.nextDouble() * L;
+                double y = random.nextDouble() * L;
+                double dx = DEFAULT_SPEED * Math.cos(direction);
+                double dy = DEFAULT_SPEED * Math.sin(direction);
+                writer.write(x + " " + y + " " + dx + " " + dy);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
