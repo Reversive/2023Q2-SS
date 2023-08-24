@@ -8,7 +8,7 @@ import java.util.Random;
 public class ParticleGenerator {
     public static void main(String[] args) {
         int[] particleN = { 300/*,20,30,40,50,60,70,80,90,100,200,300,400,500,600,700,800,900,1000*/ };
-        int L = 5;
+        int L = 7;
         for(int n : particleN) {
             generateStaticFile(n, L);
             generateDynamicFile(n, L);
@@ -42,9 +42,9 @@ public class ParticleGenerator {
             writer.write("0");
             writer.newLine();
             Random random = new Random();
-            double DEFAULT_SPEED = 0.03;
-            double direction = random.nextDouble() * 2 * Math.PI;
+            double DEFAULT_SPEED = 0.03; //TODO CAMBIAR DEFAULT SPEED
             for (int i = 0; i < N; i++) {
+                double direction = random.nextDouble() * 2 * Math.PI;
                 double x = random.nextDouble() * L;
                 double y = random.nextDouble() * L;
                 double dx = DEFAULT_SPEED * Math.cos(direction);

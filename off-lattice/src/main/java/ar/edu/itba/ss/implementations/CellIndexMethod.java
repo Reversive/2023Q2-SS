@@ -83,7 +83,7 @@ public class CellIndexMethod implements DistanceMethod {
     @Override
     public void placeParticles() {
         List<Particle> particles = context.getParticles();
-        int cellLength = context.getSideLength() / context.getMatrixSize();
+        double cellLength = (double) context.getSideLength() / context.getMatrixSize();
         this.clearMatrix();
         for(Particle particle : particles) {
             int rowIndex = (int) Math.floor(particle.getX() / cellLength);
