@@ -14,7 +14,7 @@ import java.io.PrintWriter;
 
 
 public class Entrypoint {
-    final static int ITERATIONS = 10;
+    final static int ITERATIONS = 100;
     final static double DEFAULT_SPEED = 0.03; //TODO CAMBIAR DEFAULT SPEED
     public static void main(String[] args) throws IOException {
         CliParser cli = new CliParser();
@@ -59,7 +59,7 @@ public class Entrypoint {
             double sumVy = context.getParticles().stream().mapToDouble(Particle::getVy).sum();
             double modulus = Math.sqrt(sumVx * sumVx + sumVy * sumVy);
             va *= modulus;
-            builder.append("va: ").append(va).append('\n');
+            //builder.append("va: ").append(va).append('\n');
         }
 
         try (PrintWriter writer = new PrintWriter(new FileWriter("output.txt"))) {
