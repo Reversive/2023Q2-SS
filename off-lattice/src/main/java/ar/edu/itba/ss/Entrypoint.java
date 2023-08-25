@@ -43,6 +43,11 @@ public class Entrypoint {
         outputBuilder.append(context.getSideLength()).append("\n");
         for(int i = 0; i < ITERATIONS; i++) {
             double va = 1 / (context.getParticleAmount() * DEFAULT_SPEED);
+            double sumVx = context.getParticles().stream().mapToDouble(Particle::getVx).sum();
+            double sumVy = context.getParticles().stream().mapToDouble(Particle::getVy).sum();
+            double modulus = Math.sqrt(sumVx * sumVx + sumVy * sumVy);
+            va *= modulus;
+            vaOutputBuilder.append(va).append('\n');
             outputBuilder.append(i).append("\n");
             for(Particle p : context.getParticles()) {
                 outputBuilder.append(p.getId())
@@ -57,11 +62,7 @@ public class Entrypoint {
             method.placeParticles();
             method.setNeighbours();
             context.getParticles().forEach(p -> p.move(cli.getEta(), context.getSideLength()));
-            double sumVx = context.getParticles().stream().mapToDouble(Particle::getVx).sum();
-            double sumVy = context.getParticles().stream().mapToDouble(Particle::getVy).sum();
-            double modulus = Math.sqrt(sumVx * sumVx + sumVy * sumVy);
-            va *= modulus;
-            vaOutputBuilder.append(va).append('\n');
+
         }
 
         try (PrintWriter writer = new PrintWriter(new FileWriter("output.txt"))) {
