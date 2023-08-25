@@ -37,13 +37,15 @@ public class Entrypoint {
                 cli.shouldUsePeriodicContour(),
                 context
         );
-        StringBuilder builder = new StringBuilder();
-        builder.append(context.getParticleAmount()).append("\n");
+        StringBuilder outputBuilder = new StringBuilder();
+        StringBuilder vaOutputBuilder = new StringBuilder();
+        outputBuilder.append(context.getParticleAmount()).append("\n");
+        outputBuilder.append(context.getSideLength()).append("\n");
         for(int i = 0; i < ITERATIONS; i++) {
             double va = 1 / (context.getParticleAmount() * DEFAULT_SPEED);
-            builder.append(i).append("\n");
+            outputBuilder.append(i).append("\n");
             for(Particle p : context.getParticles()) {
-                builder.append(p.getId())
+                outputBuilder.append(p.getId())
                         .append(" ")
                         .append(p.getX())
                         .append(" ")
@@ -59,11 +61,14 @@ public class Entrypoint {
             double sumVy = context.getParticles().stream().mapToDouble(Particle::getVy).sum();
             double modulus = Math.sqrt(sumVx * sumVx + sumVy * sumVy);
             va *= modulus;
-            //builder.append("va: ").append(va).append('\n');
+            vaOutputBuilder.append(va).append('\n');
         }
 
         try (PrintWriter writer = new PrintWriter(new FileWriter("output.txt"))) {
-                writer.println(builder);
+            writer.println(outputBuilder);
+        }
+        try (PrintWriter writer = new PrintWriter(new FileWriter("va_output.txt"))) {
+            writer.println(vaOutputBuilder);
         }
     }
 }

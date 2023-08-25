@@ -7,7 +7,8 @@ def parse_file(filename):
     
     with open(filename, 'r') as file:
         num_particles = int(file.readline().strip())
-        
+        max_value = float(file.readline().strip())
+
         while True:
             iteration_line = file.readline().strip()
             if not iteration_line:
@@ -25,7 +26,7 @@ def parse_file(filename):
             
             data.append(iteration_data)
             
-    return data
+    return data, max_value
 
 def update_plot(frame):
     plt.clf()
@@ -38,11 +39,11 @@ def update_plot(frame):
         dy = arrow_length * np.sin(angle)
         plt.arrow(x, y, dx, dy, head_width=0.05, head_length=0.05, fc='blue', ec='blue')
     
-    plt.xlim(-1.0, 1.0)
-    plt.ylim(-1.0, 1.0)
+    plt.xlim(0, max_value)
+    plt.ylim(0, max_value)
 
 input = 'input_file_name.txt'
-data = parse_file(input)
+data, max_value = parse_file(input)
 
 fig = plt.figure()
 ani = animation.FuncAnimation(fig, update_plot, frames=len(data), interval=50, repeat=False)
