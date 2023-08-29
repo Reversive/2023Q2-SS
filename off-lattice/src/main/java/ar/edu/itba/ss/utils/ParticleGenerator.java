@@ -1,8 +1,12 @@
 package ar.edu.itba.ss.utils;
 
+import ar.edu.itba.ss.models.Particle;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class ParticleGenerator {
@@ -55,5 +59,20 @@ public class ParticleGenerator {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static List<Particle> generateParticles(int N, int L) {
+        Random random = new Random();
+        List<Particle> particles = new ArrayList<>(N);
+        double DEFAULT_SPEED = 0.03;
+        for (int i = 0; i < N; i++) {
+            double direction = random.nextDouble() * 2 * Math.PI;
+            double x = random.nextDouble() * L;
+            double y = random.nextDouble() * L;
+            double dx = DEFAULT_SPEED * Math.cos(direction);
+            double dy = DEFAULT_SPEED * Math.sin(direction);
+            particles.add(new Particle(i,0,x,y,dx,dy,0));
+        }
+        return particles;
     }
 }
