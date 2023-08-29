@@ -48,7 +48,7 @@ def update_plot(frame):
     plt.xlim(0, max_value)
     plt.ylim(0, max_value)
 
-input = '../output.txt'
+input = '../output_100.txt'
 data, max_value = parse_file(input)
 
 fig = plt.figure()

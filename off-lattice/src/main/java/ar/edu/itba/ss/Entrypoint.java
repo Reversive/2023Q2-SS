@@ -14,7 +14,7 @@ import java.io.PrintWriter;
 
 
 public class Entrypoint {
-    final static int ITERATIONS = 100;
+    final static int ITERATIONS = 500;
     final static double DEFAULT_SPEED = 0.03; //TODO CAMBIAR DEFAULT SPEED
     public static void main(String[] args) throws IOException {
         CliParser cli = new CliParser();
