@@ -11,8 +11,8 @@ import java.util.Random;
 
 public class ParticleGenerator {
     public static void main(String[] args) {
-        int[] particleN = { 300/*,20,30,40,50,60,70,80,90,100,200,300,400,500,600,700,800,900,1000*/ };
-        int L = 7;
+        int[] particleN = { 150/*,20,30,40,50,60,70,80,90,100,200,300,400,500,600,700,800,900,1000*/ };
+        int L = 5;
         for(int n : particleN) {
             generateStaticFile(n, L);
             generateDynamicFile(n, L);

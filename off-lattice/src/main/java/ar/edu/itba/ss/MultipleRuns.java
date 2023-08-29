@@ -15,6 +15,8 @@ public class MultipleRuns {
     final static int ITERATIONS = 200;
     final static int RUNS = 15;
     final static double DEFAULT_SPEED = 0.03; //TODO CAMBIAR DEFAULT SPEED
+    final static int N = 600;
+    final static int L = 10;
     public static void main(String[] args) throws IOException {
         CliParser cli = new CliParser();
         if(!cli.parseOptions(args)) return;
@@ -22,19 +24,19 @@ public class MultipleRuns {
                 cli.getIcRadius(),
                 cli.getMatrixSize()
         );
-
         DistanceMethod method = DistanceMethodFactory.buildMethod(
                 cli.shouldUseBruteForce(),
                 cli.shouldUsePeriodicContour(),
                 context
         );
-        context.setSideLength(7);
-        context.setParticleAmount(300);
+
+        context.setSideLength(L);
+        context.setParticleAmount(N);
 
         StringBuilder vaOutputBuilder = new StringBuilder();
 
         for(int j = 0; j < RUNS; j++) {
-            context.setParticles(ParticleGenerator.generateParticles(300,7));
+            context.setParticles(ParticleGenerator.generateParticles(N,L));
             vaOutputBuilder.append(j).append('\n');
             for(int i = 0; i < ITERATIONS; i++) {
                 double va = 1 / (context.getParticleAmount() * DEFAULT_SPEED);
@@ -49,7 +51,7 @@ public class MultipleRuns {
             }
         }
 
-        try (PrintWriter writer = new PrintWriter(new FileWriter("mult_va_output" + cli.getEta() + ".txt"))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(L + "_mult_va_output" + cli.getEta() + ".txt"))) {
             writer.println(vaOutputBuilder);
         }
     }
