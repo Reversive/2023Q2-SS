@@ -36,7 +36,7 @@ def angle_to_color(angle):
 
 def update_plot(frame):
     plt.clf()
-    plt.title(f"Iteration {frame+1}")
+    #plt.title(f"Iteration {frame+1}")
 
     for x, y, angle in data[frame]:
         arrow_length = 0.1
@@ -47,11 +47,17 @@ def update_plot(frame):
 
     plt.xlim(0, max_value)
     plt.ylim(0, max_value)
+    plt.xticks([])  # Removes tick labels on the x-axis
+    plt.yticks([])
 
-input = '../output_100.txt'
+input = './outputLL.txt'
 data, max_value = parse_file(input)
 
 fig = plt.figure()
-ani = animation.FuncAnimation(fig, update_plot, frames=len(data), interval=50, repeat=False)
-
-plt.show()
+plt.xlabel(None)
+plt.ylabel(None)
+plt.xticks([])  # Removes tick labels on the x-axis
+plt.yticks([])  # Removes tick labels on the y-axis
+ani = animation.FuncAnimation(fig, update_plot, frames=len(data), interval=16.67, repeat=False)
+ani.save('animationLL.gif', writer='pillow', fps=60, dpi=300)
+#plt.show()
