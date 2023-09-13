@@ -9,7 +9,7 @@ public class ParticleGenerator {
     private static final double SPEED = 0.01;
     private static final double MASS = 1;
     private static final double RADIUS = 0.0015;
-    public static List<Particle> generateParticles(int N, int L) {
+    public static List<Particle> generateParticles(int N, double L) {
         Random random = new Random();
         List<Particle> particles = new ArrayList<>(N);
         double x, y, direction, dx, dy;
