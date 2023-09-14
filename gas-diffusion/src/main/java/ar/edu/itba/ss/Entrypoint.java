@@ -36,6 +36,9 @@ public class Entrypoint {
                     .append("\n");
         }
 
+        StringBuilder pressureOutputBuilder = new StringBuilder();
+        pressureOutputBuilder.append("0\n").append("0 ").append("0\n");
+
         double nextEventTime;
 //        int eventCounter = 1;
         for(int i = 1; i < ITERATIONS + 1; i++) {
@@ -57,12 +60,20 @@ public class Entrypoint {
 //            } else {
 //                eventCounter++;
 //            }
-
-            eventManager.resolveCollision();
+            eventManager.resolveCollisionAndAddImpulse();
+            pressureOutputBuilder.append(i).append("\n")
+                    .append(eventManager.getLeftSideImpulse() / (nextEventTime * 3 * INITIAL_SQUARE_SIDE_LENGTH))
+                    .append(" ")
+                    .append(eventManager.getRightSideImpulse() / (nextEventTime * (2 * INITIAL_SQUARE_SIDE_LENGTH + L)))
+                    .append("\n");
         }
 
         try (PrintWriter writer = new PrintWriter(new FileWriter("output.txt"))) {
             writer.println(outputBuilder);
+        }
+
+        try (PrintWriter writer = new PrintWriter(new FileWriter("pressure.txt"))) {
+            writer.println(pressureOutputBuilder);
         }
 
         return;
