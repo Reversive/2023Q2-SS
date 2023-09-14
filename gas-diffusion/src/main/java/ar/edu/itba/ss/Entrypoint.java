@@ -11,20 +11,54 @@ import java.util.List;
 
 public class Entrypoint {
 
-    private static final Integer PARTICLE_AMOUNT = 500;
+    private static final Integer PARTICLE_AMOUNT = 10;
     private static final Double INITIAL_SQUARE_SIDE_LENGTH = 0.09;
-    private static final Double L = 0.5;
-    private static final Integer ITERATIONS = 500;
+    private static final Double L = 0.03;
+    private static final Integer ITERATIONS = 100;
 
     public static void main(String[] args) throws IOException {
         List<Particle> particles = ParticleGenerator.generateParticles(PARTICLE_AMOUNT, INITIAL_SQUARE_SIDE_LENGTH);
 
         StringBuilder outputBuilder = new StringBuilder();
+        EventManager eventManager = new EventManager();
+        outputBuilder.append(PARTICLE_AMOUNT).append("\n");
+        outputBuilder.append(INITIAL_SQUARE_SIDE_LENGTH).append("\n");
+        outputBuilder.append(L).append("\n");
+        outputBuilder.append(0).append("\n");
+        for(Particle p : particles) {
+            outputBuilder.append(p.getId())
+                    .append(" ")
+                    .append(p.getX())
+                    .append(" ")
+                    .append(p.getY())
+                    .append(" ")
+                    .append(p.getDirection())
+                    .append("\n");
+        }
 
         double nextEventTime;
-        for(int i = 0; i < ITERATIONS; i++) {
-            nextEventTime = EventManager.getNextEventTime(particles, L, INITIAL_SQUARE_SIDE_LENGTH);
-            //MOVER
+//        int eventCounter = 1;
+        for(int i = 1; i < ITERATIONS + 1; i++) {
+            nextEventTime = eventManager.getNextEventTime(particles, L, INITIAL_SQUARE_SIDE_LENGTH);
+            eventManager.evolveTillEvent(particles, nextEventTime);
+//            if(eventCounter == 10) {
+                outputBuilder.append(i).append("\n");
+                for(Particle p : particles) {
+                    outputBuilder.append(p.getId())
+                            .append(" ")
+                            .append(p.getX())
+                            .append(" ")
+                            .append(p.getY())
+                            .append(" ")
+                            .append(p.getDirection())
+                            .append("\n");
+                }
+//                eventCounter = 1;
+//            } else {
+//                eventCounter++;
+//            }
+
+            eventManager.resolveCollision();
         }
 
         try (PrintWriter writer = new PrintWriter(new FileWriter("output.txt"))) {
