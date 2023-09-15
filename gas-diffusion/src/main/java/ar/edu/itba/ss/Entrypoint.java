@@ -37,6 +37,8 @@ public class Entrypoint {
         }
 
         StringBuilder pressureOutputBuilder = new StringBuilder();
+        double area = Math.pow(INITIAL_SQUARE_SIDE_LENGTH, 2) + INITIAL_SQUARE_SIDE_LENGTH * L;
+        pressureOutputBuilder.append(area).append('\n');
         pressureOutputBuilder.append("0\n").append("0 ").append("0\n");
 
         double nextEventTime;
