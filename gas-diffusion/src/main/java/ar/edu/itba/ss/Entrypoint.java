@@ -60,9 +60,9 @@ public class Entrypoint {
 //            } else {
 //                eventCounter++;
 //            }
-            eventManager.resolveCollisionAndAddImpulse();
+            eventManager.resolveCollisionAndAddImpulse(INITIAL_SQUARE_SIDE_LENGTH);
             pressureOutputBuilder.append(i).append("\n")
-                    .append(eventManager.getLeftSideImpulse() / (nextEventTime * 3 * INITIAL_SQUARE_SIDE_LENGTH))
+                    .append(eventManager.getLeftSideImpulse() / (nextEventTime * (4 * INITIAL_SQUARE_SIDE_LENGTH - L)))
                     .append(" ")
                     .append(eventManager.getRightSideImpulse() / (nextEventTime * (2 * INITIAL_SQUARE_SIDE_LENGTH + L)))
                     .append("\n");

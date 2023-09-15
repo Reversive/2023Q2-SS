@@ -10,11 +10,12 @@ public class EventManager {
 
     private Boolean wallCollision;
     private Boolean isHorizontalCollision;
-    private Boolean isLeftSquareCollision;
+
     private Particle wallCollisionParticle;
     private Particle firstCollisionParticle;
     private Particle secondCollisionParticle;
     private Particle auxCollisionParticle;
+
     private double leftSideImpulse = 0.0;
     private double rightSideImpulse = 0.0;
 
@@ -62,18 +63,13 @@ public class EventManager {
             willCrossSlit = checkCrossSlit(p, sideLength, L);
             if(!willCrossSlit) {
                 if (p.getVx() > 0) {
-                    if(isInsideLeftSquare(p.getX(), sideLength)) {
+                    if(isInsideLeftSquare(p.getX(), sideLength))
                         currentTime = (sideLength - p.getRadius() - p.getX()) / p.getVx();
-                        this.isLeftSquareCollision = true;
-                    }
-                    else {
+                    else
                         currentTime = (2 * sideLength - p.getRadius() - p.getX()) / p.getVx();
-                        this.isLeftSquareCollision = false;
-                    }
-                } else {
+                } else
                     currentTime = (0 + p.getRadius() - p.getX()) / p.getVx();
-                    this.isLeftSquareCollision = true;
-                }
+
 
                 if (currentTime < nextEventTime) {
                     nextEventTime = currentTime;
@@ -86,13 +82,11 @@ public class EventManager {
                         currentTime = (sideLength - p.getRadius() - p.getY()) / p.getVy();
                     else
                         currentTime = (0 + p.getRadius() - p.getY()) / p.getVy();
-                    this.isLeftSquareCollision = true;
                 } else {
                     if (p.getVy() > 0)
                         currentTime = ((sideLength / 2 + L / 2) - p.getRadius() - p.getY()) / p.getVy();
                     else
                         currentTime = ((sideLength / 2 - L / 2) + p.getRadius() - p.getY()) / p.getVy();
-                    this.isLeftSquareCollision = false;
                 }
 
                 if (currentTime < nextEventTime) {
@@ -102,13 +96,10 @@ public class EventManager {
                 }
 
             } else {
-                if (p.getVx() > 0) {
+                if (p.getVx() > 0)
                     currentTime = (2 * sideLength - p.getRadius() - p.getX()) / p.getVx();
-                    this.isLeftSquareCollision = false;
-                } else {
+                else
                     currentTime = (0 + p.getRadius() - p.getX()) / p.getVx();
-                    this.isLeftSquareCollision = true;
-                }
 
                 if (currentTime < nextEventTime) {
                     nextEventTime = currentTime;
@@ -121,13 +112,11 @@ public class EventManager {
                         currentTime = ((sideLength / 2 + L / 2) - p.getRadius() - p.getY()) / p.getVy();
                     else
                         currentTime = ((sideLength / 2 - L / 2) + p.getRadius() - p.getY()) / p.getVy();
-                    this.isLeftSquareCollision = true;
                 } else {
                     if (p.getVy() > 0)
                         currentTime = (sideLength - p.getRadius() - p.getY()) / p.getVy();
                     else
                         currentTime = (0 + p.getRadius() - p.getY()) / p.getVy();
-                    this.isLeftSquareCollision = false;
                 }
 
                 if (currentTime < nextEventTime) {
@@ -202,7 +191,7 @@ public class EventManager {
         }
     }
 
-    public void resolveCollisionAndAddImpulse() {
+    public void resolveCollisionAndAddImpulse(double sideLength) {
         double impulseVelocity;
         if(this.wallCollision) {
             //TODO EL IMPUSLO PUEDE SER NEGATIVO????????
@@ -214,7 +203,7 @@ public class EventManager {
                 this.wallCollisionParticle.setVx(-wallCollisionParticle.getVx());
                 impulseVelocity = wallCollisionParticle.getVx();
             }
-            if(isLeftSquareCollision) {
+            if(isInsideLeftSquare(wallCollisionParticle.getX(), sideLength)) {
                 this.leftSideImpulse += 2 * Math.abs(impulseVelocity) * wallCollisionParticle.getMass();
             } else {
                 this.rightSideImpulse += 2 * Math.abs(impulseVelocity) * wallCollisionParticle.getMass();
