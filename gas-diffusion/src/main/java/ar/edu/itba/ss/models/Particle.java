@@ -7,7 +7,6 @@ import java.util.Set;
 public class Particle {
     private int id;
     private double radius, x, y, vx, vy, direction, mass;
-    private Set<Particle> neighbours;
 
     public Particle(int id, double radius, double x, double y, double vx, double vy, double mass) {
         this.id = id;
@@ -17,20 +16,11 @@ public class Particle {
         this.vx = vx;
         this.vy = vy;
         this.direction = Math.atan2(vy, vx);
-        this.neighbours = new HashSet<>();
         this.mass = mass;
-    }
-
-    public Particle(double radius) {
-        this.radius = radius;
     }
 
     public double getRadius() {
         return radius;
-    }
-
-    public void setRadius(double radius) {
-        this.radius = radius;
     }
 
     public double getX() {
@@ -38,6 +28,10 @@ public class Particle {
     }
 
     public void setX(double x) {
+        if(x == 0.09)
+            System.out.println("raro");
+        if(x >= (0.09 - radius) && (this.y < 0.03 || this.y > 0.06))
+            System.out.println("imposible");
         this.x = x;
     }
 
@@ -47,10 +41,6 @@ public class Particle {
 
     public void setY(double y) {
         this.y = y;
-    }
-
-    public void setNeighbours(Set<Particle> neighbours) {
-        this.neighbours = neighbours;
     }
 
     public int getId() {
