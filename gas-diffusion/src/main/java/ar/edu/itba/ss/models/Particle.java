@@ -28,10 +28,6 @@ public class Particle {
     }
 
     public void setX(double x) {
-        if(x == 0.09)
-            System.out.println("raro");
-        if(x >= (0.09 - radius) && (this.y < 0.03 || this.y > 0.06))
-            System.out.println("imposible");
         this.x = x;
     }
 
