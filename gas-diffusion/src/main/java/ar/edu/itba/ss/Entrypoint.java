@@ -13,8 +13,8 @@ public class Entrypoint {
 
     private static final Integer PARTICLE_AMOUNT = 300;
     private static final Double INITIAL_SQUARE_SIDE_LENGTH = 0.09;
-    private static final Double L = 0.09;
-    private static final Integer ITERATIONS = 80000;
+    private static final Double L = 0.03;
+    private static final Integer ITERATIONS = 40000;
     private static final Integer EVENT_STEP = 5;
 
     public static void main(String[] args) throws IOException {

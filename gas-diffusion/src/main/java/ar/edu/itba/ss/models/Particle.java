@@ -1,8 +1,6 @@
 package ar.edu.itba.ss.models;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 public class Particle {
     private int id;
@@ -17,6 +15,10 @@ public class Particle {
         this.vy = vy;
         this.direction = Math.atan2(vy, vx);
         this.mass = mass;
+    }
+
+    public boolean isLeftSide(double sideLength) {
+        return this.x < sideLength;
     }
 
     public double getRadius() {
