@@ -31,6 +31,7 @@ public class EventManager {
         if(auxEventTime < nextEventTime) {
             nextEventTime = auxEventTime;
             this.wallCollision = false;
+            this.isSlitCollision = false;
         } else {
             this.wallCollision = true;
         }

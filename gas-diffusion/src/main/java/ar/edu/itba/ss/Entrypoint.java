@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Entrypoint {
 
-    private static final Integer PARTICLE_AMOUNT = 300;
+    private static final Integer PARTICLE_AMOUNT = 3;
     private static final Double INITIAL_SQUARE_SIDE_LENGTH = 0.09;
     private static final Double L = 0.03;
     private static final Integer ITERATIONS = 40000;
