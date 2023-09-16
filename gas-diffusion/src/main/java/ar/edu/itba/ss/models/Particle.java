@@ -93,7 +93,7 @@ public class Particle {
         double cosAverage = accumulativeCos / quantity;
         double noise = Math.random() * eta - eta / 2;
         double nextDir = Math.atan2(sinAverage, cosAverage) + noise;
-        this.setDirection((nextDir + 2 * Math.PI) % (2 * Math.PI));
+//        this.setDirection((nextDir + 2 * Math.PI) % (2 * Math.PI));
         this.setX((sideLength + this.x + this.vx) % sideLength);
         this.setY((sideLength + this.y + this.vy) % sideLength);
         this.setVx(DEFAULT_SPEED * Math.cos(this.direction));

@@ -325,7 +325,7 @@ public class EventManager {
             } else {
                 this.rightSideImpulse += 2 * Math.abs(impulseVelocity) * wallCollisionParticle.getMass();
             }
-            wallCollisionParticle.setDirection(Math.atan2(wallCollisionParticle.getVy(), wallCollisionParticle.getVx()));
+//            wallCollisionParticle.setDirection(Math.atan2(wallCollisionParticle.getVy(), wallCollisionParticle.getVx()));
         } else {
 
             final double sigma = secondCollisionParticle.getRadius() + firstCollisionParticle.getRadius();
@@ -343,12 +343,12 @@ public class EventManager {
 
             secondCollisionParticle.setVx(secondCollisionParticle.getVx() - Jx / secondCollisionParticle.getMass());
             secondCollisionParticle.setVy(secondCollisionParticle.getVy() - Jy / secondCollisionParticle.getMass());
-            secondCollisionParticle.setDirection(Math.atan2(secondCollisionParticle.getVy(), secondCollisionParticle.getVx()));
+//            secondCollisionParticle.setDirection(Math.atan2(secondCollisionParticle.getVy(), secondCollisionParticle.getVx()));
 
 
             firstCollisionParticle.setVx(firstCollisionParticle.getVx() + Jx / firstCollisionParticle.getMass());
             firstCollisionParticle.setVy(firstCollisionParticle.getVy() + Jy / firstCollisionParticle.getMass());
-            firstCollisionParticle.setDirection(Math.atan2(firstCollisionParticle.getVy(), firstCollisionParticle.getVx()));
+//            firstCollisionParticle.setDirection(Math.atan2(firstCollisionParticle.getVy(), firstCollisionParticle.getVx()));
         }
     }
 

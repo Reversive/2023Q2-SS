@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-import numpy as np
-import matplotlib.colors as mcolors
+from matplotlib.patches import Circle
+
+R = 0.0015
 
 def parse_file(filename):
     data = []
@@ -22,32 +23,29 @@ def parse_file(filename):
                 particle_data = file.readline().strip().split(' ')
                 x = float(particle_data[1])
                 y = float(particle_data[2])
-                angle = float(particle_data[3])
 
-                iteration_data.append((x, y, angle))
+                iteration_data.append((x, y))
 
             data.append(iteration_data)
 
     return data, max_value, L
 
-def angle_to_color(angle):
-    color_map = mcolors.LinearSegmentedColormap.from_list('angle_cmap', ['red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'purple'])
-    normalized_angle = angle / (2 * np.pi)
-    return color_map(normalized_angle)
+# def angle_to_color(angle):
+#     color_map = mcolors.LinearSegmentedColormap.from_list('angle_cmap', ['red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'purple'])
+#     normalized_angle = angle / (2 * np.pi)
+#     return color_map(normalized_angle)
 
 def update_plot(frame):
     plt.clf()
+    plt.gca().set_aspect('equal', adjustable='box')
     #plt.title(f"Iteration {frame+1}")
 
     for x1, y1, x2, y2 in line_segments:
         plt.plot([x1, x2], [y1, y2], color='black', linestyle='-', linewidth=1)
 
-    for x, y, angle in data[frame]:
-        arrow_length = 0.001
-        dx = arrow_length * np.cos(angle)
-        dy = arrow_length * np.sin(angle)
-        color = angle_to_color(angle)
-        plt.arrow(x, y, dx, dy, head_width=0.001, head_length=0.001, fc=color, ec=color)
+    for x, y in data[frame]:
+        circle = Circle((x, y), R)
+        plt.gca().add_patch(circle)
 
     plt.xlim(0, max_value * 2)
     plt.ylim(0, max_value)
@@ -73,8 +71,8 @@ for x1, y1, x2, y2 in line_segments:
 
 plt.xlabel(None)
 plt.ylabel(None)
-plt.xticks([])  # Removes tick labels on the x-axis
-plt.yticks([])  # Removes tick labels on the y-axis
+plt.xticks([])
+plt.yticks([])
 ani = animation.FuncAnimation(fig, update_plot, frames=len(data), interval=16.67, repeat=False)
 ani.save('animation.gif', writer='pillow', fps=60, dpi=300)
 #plt.show()
