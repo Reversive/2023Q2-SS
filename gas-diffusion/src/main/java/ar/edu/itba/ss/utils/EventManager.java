@@ -22,13 +22,9 @@ public class EventManager {
 
     public double getNextEventTime(List<Particle> particles, double L, double sideLength) {
         double nextEventTime = getWallCollisionTime(particles, L, sideLength);
-        if(nextEventTime < 0)
-            System.out.println("NEGATIVO WALL PRIMERO");
         double auxEventTime = getParticlesCollisionTime(particles);
-        if(auxEventTime < 0)
-            System.out.println("NEGATIVO PARTICLE PRIMERO");
 
-        if(auxEventTime < nextEventTime) {
+        if(auxEventTime < nextEventTime && auxEventTime > 0) {
             nextEventTime = auxEventTime;
             this.wallCollision = false;
         } else {
@@ -47,8 +43,7 @@ public class EventManager {
 
         if(Double.compare(intersectionTime, 0) < 0)
             return false;
-
-
+        
         double intersectionY = p.getY() + (p.getVy() * intersectionTime);
 
         if((intersectionY > sideLength / 2 - L / 2 + p.getRadius()) && (intersectionY < sideLength / 2 + L / 2 - p.getRadius()))
@@ -59,7 +54,7 @@ public class EventManager {
 
     private void setTimeRightSquareRightSide(Particle p, double sideLength, EventTime nextEventTime) {
         double nextVxTime = (2 * sideLength - p.getRadius() - p.getX()) / p.getVx();
-        if(nextVxTime < nextEventTime.getTime()) {
+        if(nextVxTime < nextEventTime.getTime() && nextVxTime > 0) {
             nextEventTime.setTime(nextVxTime);
             nextEventTime.setHorizontal(false);
         }
@@ -67,7 +62,7 @@ public class EventManager {
 
     private void setTimeRightSquareTopSide(Particle p, double L, double sideLength, EventTime nextEventTime) {
         double nextVyTime = ((sideLength / 2 + L / 2) - p.getRadius() - p.getY()) / p.getVy();
-        if(nextVyTime < nextEventTime.getTime()) {
+        if(nextVyTime < nextEventTime.getTime() && nextVyTime > 0) {
             nextEventTime.setTime(nextVyTime);
             nextEventTime.setHorizontal(true);
         }
@@ -75,7 +70,7 @@ public class EventManager {
 
     private void setTimeRightSquareBottomSide(Particle p, double L, double sideLength, EventTime nextEventTime) {
         double nextVyTime = ((sideLength / 2 - L / 2) + p.getRadius() - p.getY()) / p.getVy();
-        if(nextVyTime < nextEventTime.getTime()) {
+        if(nextVyTime < nextEventTime.getTime() && nextVyTime > 0) {
             nextEventTime.setTime(nextVyTime);
             nextEventTime.setHorizontal(true);
         }
@@ -83,7 +78,7 @@ public class EventManager {
 
     private void setTimeLeftSquareLeftSide(Particle p, EventTime nextEventTime) {
         double nextVxTime = (0 + p.getRadius() - p.getX()) / p.getVx();
-        if(nextVxTime < nextEventTime.getTime()) {
+        if(nextVxTime < nextEventTime.getTime() && nextVxTime > 0) {
             nextEventTime.setTime(nextVxTime);
             nextEventTime.setHorizontal(false);
         }
@@ -91,7 +86,7 @@ public class EventManager {
 
     private void setTimeLeftSquareRightSide(Particle p, double sideLength, EventTime nextEventTime) {
         double nextVxTime = (sideLength - p.getRadius() - p.getX()) / p.getVx();
-        if(nextVxTime < nextEventTime.getTime()) {
+        if(nextVxTime < nextEventTime.getTime() && nextVxTime > 0) {
             nextEventTime.setTime(nextVxTime);
             nextEventTime.setHorizontal(false);
         }
@@ -99,7 +94,7 @@ public class EventManager {
 
     private void setTimeLeftSquareTopSide(Particle p, double sideLength, EventTime nextEventTime) {
         double nextVyTime = (sideLength - p.getRadius() - p.getY()) / p.getVy();
-        if(nextVyTime < nextEventTime.getTime()) {
+        if(nextVyTime < nextEventTime.getTime() && nextVyTime > 0) {
             nextEventTime.setTime(nextVyTime);
             nextEventTime.setHorizontal(true);
         }
@@ -107,7 +102,7 @@ public class EventManager {
 
     private void setTimeLeftSquareBottomSide(Particle p, EventTime nextEventTime) {
         double nextVyTime = (0 + p.getRadius() - p.getY()) / p.getVy();
-        if(nextVyTime < nextEventTime.getTime()) {
+        if(nextVyTime < nextEventTime.getTime() && nextVyTime > 0) {
             nextEventTime.setTime(nextVyTime);
             nextEventTime.setHorizontal(true);
         }
@@ -172,80 +167,6 @@ public class EventManager {
         }
         return nextEventTime;
     }
-//
-//    private double getWallCollisionTime(List<Particle> particles, double L, double sideLength) {
-//        double nextEventTime = Double.MAX_VALUE;
-//        double currentTime;
-//        boolean willCrossSlit;
-//        for(Particle p : particles) {
-//            willCrossSlit = checkCrossSlit(p, sideLength, L);
-//            if(!willCrossSlit) {
-//                if (p.getVx() > 0) {
-//                    if(isInsideLeftSquare(p.getX(), sideLength))
-//                        currentTime = (sideLength - p.getRadius() - p.getX()) / p.getVx();
-//                    else
-//                        currentTime = (2 * sideLength - p.getRadius() - p.getX()) / p.getVx();
-//                } else
-//                    currentTime = (0 + p.getRadius() - p.getX()) / p.getVx();
-//
-//
-//                if (currentTime < nextEventTime) {
-//                    nextEventTime = currentTime;
-//                    this.isHorizontalCollision = false;
-//                    this.wallCollisionParticle = p;
-//                }
-//
-//                if (isInsideLeftSquare(p.getX(), sideLength)) {
-//                    if (p.getVy() > 0)
-//                        currentTime = (sideLength - p.getRadius() - p.getY()) / p.getVy();
-//                    else
-//                        currentTime = (0 + p.getRadius() - p.getY()) / p.getVy();
-//                } else {
-//                    if (p.getVy() > 0)
-//                        currentTime = ((sideLength / 2 + L / 2) - p.getRadius() - p.getY()) / p.getVy();
-//                    else
-//                        currentTime = ((sideLength / 2 - L / 2) + p.getRadius() - p.getY()) / p.getVy();
-//                }
-//
-//                if (currentTime < nextEventTime) {
-//                    nextEventTime = currentTime;
-//                    this.isHorizontalCollision = true;
-//                    this.wallCollisionParticle = p;
-//                }
-//
-//            } else {
-//                if (p.getVx() > 0)
-//                    currentTime = (2 * sideLength - p.getRadius() - p.getX()) / p.getVx();
-//                else
-//                    currentTime = (0 + p.getRadius() - p.getX()) / p.getVx();
-//
-//                if (currentTime < nextEventTime) {
-//                    nextEventTime = currentTime;
-//                    this.isHorizontalCollision = false;
-//                    this.wallCollisionParticle = p;
-//                }
-//
-//                if(isInsideLeftSquare(p.getX(), sideLength)) {
-//                    if (p.getVy() > 0)
-//                        currentTime = ((sideLength / 2 + L / 2) - p.getRadius() - p.getY()) / p.getVy();
-//                    else
-//                        currentTime = ((sideLength / 2 - L / 2) + p.getRadius() - p.getY()) / p.getVy();
-//                } else {
-//                    if (p.getVy() > 0)
-//                        currentTime = (sideLength - p.getRadius() - p.getY()) / p.getVy();
-//                    else
-//                        currentTime = (0 + p.getRadius() - p.getY()) / p.getVy();
-//                }
-//
-//                if (currentTime < nextEventTime) {
-//                    nextEventTime = currentTime;
-//                    this.isHorizontalCollision = true;
-//                    this.wallCollisionParticle = p;
-//                }
-//            }
-//        }
-//        return nextEventTime;
-//    }
 
     private double getParticlesCollisionTime(List<Particle> particles) {
         double nextEventTime = Double.MAX_VALUE;
@@ -302,9 +223,13 @@ public class EventManager {
         return nextEventTime;
     }
 
-    public void evolveTillEvent(List<Particle> particles, double nextEvent) {
+    public void evolveTillEvent(List<Particle> particles, double nextEvent, double L) {
         for(Particle p : particles) {
             p.setX(p.getX() + nextEvent*p.getVx());
+            if(p.getX() < 0.0015)
+                p.setX(0.0015);
+            if(p.getX() > 0.09-0.0015 && (p.getY() <= 0.045 - L/2 || p.getY() >= 0.045 + L/2))
+                p.setX(0.09-0.0015);
             p.setY(p.getY() + nextEvent*p.getVy());
         }
     }
@@ -313,17 +238,17 @@ public class EventManager {
         double impulseVelocity;
         if(this.wallCollision) {
             if(isHorizontalCollision) {
-                this.wallCollisionParticle.setVy(-wallCollisionParticle.getVy());
-                impulseVelocity = wallCollisionParticle.getVy();
+                this.wallCollisionParticle.setVy(-this.wallCollisionParticle.getVy());
+                impulseVelocity = this.wallCollisionParticle.getVy();
             }
             else {
-                this.wallCollisionParticle.setVx(-wallCollisionParticle.getVx());
-                impulseVelocity = wallCollisionParticle.getVx();
+                this.wallCollisionParticle.setVx(-this.wallCollisionParticle.getVx());
+                impulseVelocity = this.wallCollisionParticle.getVx();
             }
-            if(isInsideLeftSquare(wallCollisionParticle.getX(), sideLength)) {
-                this.leftSideImpulse += 2 * Math.abs(impulseVelocity) * wallCollisionParticle.getMass();
+            if(isInsideLeftSquare(this.wallCollisionParticle.getX(), sideLength)) {
+                this.leftSideImpulse += 2 * Math.abs(impulseVelocity) * this.wallCollisionParticle.getMass();
             } else {
-                this.rightSideImpulse += 2 * Math.abs(impulseVelocity) * wallCollisionParticle.getMass();
+                this.rightSideImpulse += 2 * Math.abs(impulseVelocity) * this.wallCollisionParticle.getMass();
             }
 //            wallCollisionParticle.setDirection(Math.atan2(wallCollisionParticle.getVy(), wallCollisionParticle.getVx()));
         } else {
@@ -335,20 +260,18 @@ public class EventManager {
             final double[] dv = new double[]{this.secondCollisionParticle.getVx() - this.firstCollisionParticle.getVx(),
                     this.secondCollisionParticle.getVy() - this.firstCollisionParticle.getVy()};
 
-            final double J = (2 * secondCollisionParticle.getMass() * firstCollisionParticle.getMass() * dotProduct(dv, dr)) /
-                    (sigma * (secondCollisionParticle.getMass() + firstCollisionParticle.getMass()));
+            final double J = (2 * this.secondCollisionParticle.getMass() * this.firstCollisionParticle.getMass() * dotProduct(dv, dr)) /
+                    (sigma * (this.secondCollisionParticle.getMass() + this.firstCollisionParticle.getMass()));
 
             final double Jx = (J * dr[0]) / sigma;
             final double Jy = (J * dr[1]) / sigma;
 
-            secondCollisionParticle.setVx(secondCollisionParticle.getVx() - Jx / secondCollisionParticle.getMass());
-            secondCollisionParticle.setVy(secondCollisionParticle.getVy() - Jy / secondCollisionParticle.getMass());
-//            secondCollisionParticle.setDirection(Math.atan2(secondCollisionParticle.getVy(), secondCollisionParticle.getVx()));
+            this.secondCollisionParticle.setVx(this.secondCollisionParticle.getVx() - Jx / this.secondCollisionParticle.getMass());
+            this.secondCollisionParticle.setVy(this.secondCollisionParticle.getVy() - Jy / this.secondCollisionParticle.getMass());
 
 
-            firstCollisionParticle.setVx(firstCollisionParticle.getVx() + Jx / firstCollisionParticle.getMass());
-            firstCollisionParticle.setVy(firstCollisionParticle.getVy() + Jy / firstCollisionParticle.getMass());
-//            firstCollisionParticle.setDirection(Math.atan2(firstCollisionParticle.getVy(), firstCollisionParticle.getVx()));
+            this.firstCollisionParticle.setVx(this.firstCollisionParticle.getVx() + Jx / this.firstCollisionParticle.getMass());
+            this.firstCollisionParticle.setVy(this.firstCollisionParticle.getVy() + Jy / this.firstCollisionParticle.getMass());
         }
     }
 

@@ -11,11 +11,11 @@ import java.util.List;
 
 public class Entrypoint {
 
-    private static final Integer PARTICLE_AMOUNT = 20;
+    private static final Integer PARTICLE_AMOUNT = 300;
     private static final Double INITIAL_SQUARE_SIDE_LENGTH = 0.09;
     private static final Double L = 0.03;
-    private static final Integer ITERATIONS = 200;
-    private static final Integer EVENT_STEP = 10;
+    private static final Integer ITERATIONS = 10000;
+    private static final Integer EVENT_STEP = 5;
 
     public static void main(String[] args) throws IOException {
         List<Particle> particles = ParticleGenerator.generateParticles(PARTICLE_AMOUNT, INITIAL_SQUARE_SIDE_LENGTH);
@@ -48,19 +48,19 @@ public class Entrypoint {
         double pressureStepTime = 0.0;
         for(int i = 1; i < ITERATIONS + 1; i++) {
             nextEventTime = eventManager.getNextEventTime(particles, L, INITIAL_SQUARE_SIDE_LENGTH);
-            eventManager.evolveTillEvent(particles, nextEventTime);
+            eventManager.evolveTillEvent(particles, nextEventTime, L);
             totalTime += nextEventTime;
             pressureStepTime += nextEventTime;
 // PARA ANIMACION
-            outputBuilder.append(i).append("\n");
-            for(Particle p : particles) {
-                outputBuilder.append(p.getId())
-                        .append(" ")
-                        .append(p.getX())
-                        .append(" ")
-                        .append(p.getY())
-                        .append("\n");
-            }
+//            outputBuilder.append(i).append("\n");
+//            for(Particle p : particles) {
+//                outputBuilder.append(p.getId())
+//                        .append(" ")
+//                        .append(p.getX())
+//                        .append(" ")
+//                        .append(p.getY())
+//                        .append("\n");
+//            }
             eventManager.resolveCollisionAndAddImpulse(INITIAL_SQUARE_SIDE_LENGTH);
             if(eventCounter == EVENT_STEP) {
                 pressureOutputBuilder.append(totalTime).append(" ")
