@@ -1,5 +1,6 @@
 package ar.edu.itba.ss.utils;
 
+import ar.edu.itba.ss.models.EventTime;
 import ar.edu.itba.ss.models.Particle;
 
 import java.util.List;
@@ -21,7 +22,11 @@ public class EventManager {
 
     public double getNextEventTime(List<Particle> particles, double L, double sideLength) {
         double nextEventTime = getWallCollisionTime(particles, L, sideLength);
+        if(nextEventTime < 0)
+            System.out.println("NEGATIVO WALL PRIMERO");
         double auxEventTime = getParticlesCollisionTime(particles);
+        if(auxEventTime < 0)
+            System.out.println("NEGATIVO PARTICLE PRIMERO");
 
         if(auxEventTime < nextEventTime) {
             nextEventTime = auxEventTime;
@@ -29,7 +34,6 @@ public class EventManager {
         } else {
             this.wallCollision = true;
         }
-
         return nextEventTime;
     }
 
@@ -39,102 +43,216 @@ public class EventManager {
 
     private boolean checkCrossSlit(Particle p, double sideLength, double L) {
 
-        if((isInsideLeftSquare(p.getX(), sideLength) && p.getVx() <= 0)
-                ||
-                (!isInsideLeftSquare(p.getX(), sideLength) && p.getVx() >= 0)
-                    )
-            return false;
-
         double intersectionTime = (sideLength - p.getX()) / p.getVx();
 
-        double intersectionY = p.getY() + p.getVy() * intersectionTime;
+        if(Double.compare(intersectionTime, 0) < 0)
+            return false;
 
-        if((intersectionY > sideLength / 2 - L / 2) && (intersectionY < sideLength / 2 + L / 2))
+
+        double intersectionY = p.getY() + (p.getVy() * intersectionTime);
+
+        if((intersectionY > sideLength / 2 - L / 2 + p.getRadius()) && (intersectionY < sideLength / 2 + L / 2 - p.getRadius()))
             return true;
 
         return false;
     }
 
+    private void setTimeRightSquareRightSide(Particle p, double sideLength, EventTime nextEventTime) {
+        double nextVxTime = (2 * sideLength - p.getRadius() - p.getX()) / p.getVx();
+        if(nextVxTime < nextEventTime.getTime()) {
+            nextEventTime.setTime(nextVxTime);
+            nextEventTime.setHorizontal(false);
+        }
+    }
+
+    private void setTimeRightSquareTopSide(Particle p, double L, double sideLength, EventTime nextEventTime) {
+        double nextVyTime = ((sideLength / 2 + L / 2) - p.getRadius() - p.getY()) / p.getVy();
+        if(nextVyTime < nextEventTime.getTime()) {
+            nextEventTime.setTime(nextVyTime);
+            nextEventTime.setHorizontal(true);
+        }
+    }
+
+    private void setTimeRightSquareBottomSide(Particle p, double L, double sideLength, EventTime nextEventTime) {
+        double nextVyTime = ((sideLength / 2 - L / 2) + p.getRadius() - p.getY()) / p.getVy();
+        if(nextVyTime < nextEventTime.getTime()) {
+            nextEventTime.setTime(nextVyTime);
+            nextEventTime.setHorizontal(true);
+        }
+    }
+
+    private void setTimeLeftSquareLeftSide(Particle p, EventTime nextEventTime) {
+        double nextVxTime = (0 + p.getRadius() - p.getX()) / p.getVx();
+        if(nextVxTime < nextEventTime.getTime()) {
+            nextEventTime.setTime(nextVxTime);
+            nextEventTime.setHorizontal(false);
+        }
+    }
+
+    private void setTimeLeftSquareRightSide(Particle p, double sideLength, EventTime nextEventTime) {
+        double nextVxTime = (sideLength - p.getRadius() - p.getX()) / p.getVx();
+        if(nextVxTime < nextEventTime.getTime()) {
+            nextEventTime.setTime(nextVxTime);
+            nextEventTime.setHorizontal(false);
+        }
+    }
+
+    private void setTimeLeftSquareTopSide(Particle p, double sideLength, EventTime nextEventTime) {
+        double nextVyTime = (sideLength - p.getRadius() - p.getY()) / p.getVy();
+        if(nextVyTime < nextEventTime.getTime()) {
+            nextEventTime.setTime(nextVyTime);
+            nextEventTime.setHorizontal(true);
+        }
+    }
+
+    private void setTimeLeftSquareBottomSide(Particle p, EventTime nextEventTime) {
+        double nextVyTime = (0 + p.getRadius() - p.getY()) / p.getVy();
+        if(nextVyTime < nextEventTime.getTime()) {
+            nextEventTime.setTime(nextVyTime);
+            nextEventTime.setHorizontal(true);
+        }
+    }
+
     private double getWallCollisionTime(List<Particle> particles, double L, double sideLength) {
         double nextEventTime = Double.MAX_VALUE;
-        double currentTime;
-        boolean willCrossSlit;
+        EventTime currentEventTime = new EventTime(Double.MAX_VALUE, false);
         for(Particle p : particles) {
-            willCrossSlit = checkCrossSlit(p, sideLength, L);
-            if(!willCrossSlit) {
-                if (p.getVx() > 0) {
-                    if(isInsideLeftSquare(p.getX(), sideLength))
-                        currentTime = (sideLength - p.getRadius() - p.getX()) / p.getVx();
-                    else
-                        currentTime = (2 * sideLength - p.getRadius() - p.getX()) / p.getVx();
-                } else
-                    currentTime = (0 + p.getRadius() - p.getX()) / p.getVx();
-
-
-                if (currentTime < nextEventTime) {
-                    nextEventTime = currentTime;
-                    this.isHorizontalCollision = false;
-                    this.wallCollisionParticle = p;
-                }
-
-                if (isInsideLeftSquare(p.getX(), sideLength)) {
-                    if (p.getVy() > 0)
-                        currentTime = (sideLength - p.getRadius() - p.getY()) / p.getVy();
-                    else
-                        currentTime = (0 + p.getRadius() - p.getY()) / p.getVy();
-                } else {
-                    if (p.getVy() > 0)
-                        currentTime = ((sideLength / 2 + L / 2) - p.getRadius() - p.getY()) / p.getVy();
-                    else
-                        currentTime = ((sideLength / 2 - L / 2) + p.getRadius() - p.getY()) / p.getVy();
-                }
-
-                if (currentTime < nextEventTime) {
-                    nextEventTime = currentTime;
-                    this.isHorizontalCollision = true;
-                    this.wallCollisionParticle = p;
-                }
-
-            } else {
-                if (p.getVx() > 0)
-                    currentTime = (2 * sideLength - p.getRadius() - p.getX()) / p.getVx();
-                else
-                    currentTime = (0 + p.getRadius() - p.getX()) / p.getVx();
-
-                if (currentTime < nextEventTime) {
-                    nextEventTime = currentTime;
-                    this.isHorizontalCollision = false;
-                    this.wallCollisionParticle = p;
-                }
-
+            if(checkCrossSlit(p, sideLength, L)) {
                 if(isInsideLeftSquare(p.getX(), sideLength)) {
-                    if (p.getVy() > 0)
-                        currentTime = ((sideLength / 2 + L / 2) - p.getRadius() - p.getY()) / p.getVy();
-                    else
-                        currentTime = ((sideLength / 2 - L / 2) + p.getRadius() - p.getY()) / p.getVy();
+                    if(p.getVx() > 0) {
+                        setTimeRightSquareRightSide(p, sideLength, currentEventTime);
+                    } else if(p.getVx() < 0) {
+                        throw new RuntimeException("Esto no puede pasar");
+                    }
+                    if(p.getVy() > 0) {
+                        setTimeRightSquareTopSide(p, L, sideLength, currentEventTime);
+                    } else if(p.getVy() < 0) {
+                        setTimeRightSquareBottomSide(p, L, sideLength, currentEventTime);
+                    }
                 } else {
-                    if (p.getVy() > 0)
-                        currentTime = (sideLength - p.getRadius() - p.getY()) / p.getVy();
-                    else
-                        currentTime = (0 + p.getRadius() - p.getY()) / p.getVy();
+                    if(p.getVx() > 0) {
+                        throw new RuntimeException("Esto no puede pasar");
+                    } else if(p.getVx() < 0) {
+                        setTimeLeftSquareLeftSide(p, currentEventTime);
+                    }
+                    if(p.getVy() > 0) {
+                        setTimeLeftSquareTopSide(p, sideLength, currentEventTime);
+                    } else if(p.getVy() < 0) {
+                        setTimeLeftSquareBottomSide(p, currentEventTime);
+                    }
                 }
-
-                if (currentTime < nextEventTime) {
-                    nextEventTime = currentTime;
-                    this.isHorizontalCollision = true;
-                    this.wallCollisionParticle = p;
+            } else {
+                if(isInsideLeftSquare(p.getX(), sideLength)) {
+                    if(p.getVx() > 0) {
+                        setTimeLeftSquareRightSide(p, sideLength, currentEventTime);
+                    } else if(p.getVx() < 0) {
+                        setTimeLeftSquareLeftSide(p, currentEventTime);
+                    }
+                    if(p.getVy() > 0) {
+                        setTimeLeftSquareTopSide(p, sideLength, currentEventTime);
+                    } else if(p.getVy() < 0) {
+                        setTimeLeftSquareBottomSide(p, currentEventTime);
+                    }
+                } else {
+                    if(p.getVx() > 0) {
+                        setTimeRightSquareRightSide(p, sideLength, currentEventTime);
+                    }
+                    if(p.getVy() > 0) {
+                        setTimeRightSquareTopSide(p, L, sideLength, currentEventTime);
+                    } else if(p.getVy() < 0) {
+                        setTimeRightSquareBottomSide(p, L, sideLength, currentEventTime);
+                    }
                 }
+            }
+            if(currentEventTime.getTime() < nextEventTime) {
+                nextEventTime = currentEventTime.getTime();
+                this.isHorizontalCollision = currentEventTime.isHorizontal();
+                this.wallCollisionParticle = p;
             }
         }
         return nextEventTime;
     }
+//
+//    private double getWallCollisionTime(List<Particle> particles, double L, double sideLength) {
+//        double nextEventTime = Double.MAX_VALUE;
+//        double currentTime;
+//        boolean willCrossSlit;
+//        for(Particle p : particles) {
+//            willCrossSlit = checkCrossSlit(p, sideLength, L);
+//            if(!willCrossSlit) {
+//                if (p.getVx() > 0) {
+//                    if(isInsideLeftSquare(p.getX(), sideLength))
+//                        currentTime = (sideLength - p.getRadius() - p.getX()) / p.getVx();
+//                    else
+//                        currentTime = (2 * sideLength - p.getRadius() - p.getX()) / p.getVx();
+//                } else
+//                    currentTime = (0 + p.getRadius() - p.getX()) / p.getVx();
+//
+//
+//                if (currentTime < nextEventTime) {
+//                    nextEventTime = currentTime;
+//                    this.isHorizontalCollision = false;
+//                    this.wallCollisionParticle = p;
+//                }
+//
+//                if (isInsideLeftSquare(p.getX(), sideLength)) {
+//                    if (p.getVy() > 0)
+//                        currentTime = (sideLength - p.getRadius() - p.getY()) / p.getVy();
+//                    else
+//                        currentTime = (0 + p.getRadius() - p.getY()) / p.getVy();
+//                } else {
+//                    if (p.getVy() > 0)
+//                        currentTime = ((sideLength / 2 + L / 2) - p.getRadius() - p.getY()) / p.getVy();
+//                    else
+//                        currentTime = ((sideLength / 2 - L / 2) + p.getRadius() - p.getY()) / p.getVy();
+//                }
+//
+//                if (currentTime < nextEventTime) {
+//                    nextEventTime = currentTime;
+//                    this.isHorizontalCollision = true;
+//                    this.wallCollisionParticle = p;
+//                }
+//
+//            } else {
+//                if (p.getVx() > 0)
+//                    currentTime = (2 * sideLength - p.getRadius() - p.getX()) / p.getVx();
+//                else
+//                    currentTime = (0 + p.getRadius() - p.getX()) / p.getVx();
+//
+//                if (currentTime < nextEventTime) {
+//                    nextEventTime = currentTime;
+//                    this.isHorizontalCollision = false;
+//                    this.wallCollisionParticle = p;
+//                }
+//
+//                if(isInsideLeftSquare(p.getX(), sideLength)) {
+//                    if (p.getVy() > 0)
+//                        currentTime = ((sideLength / 2 + L / 2) - p.getRadius() - p.getY()) / p.getVy();
+//                    else
+//                        currentTime = ((sideLength / 2 - L / 2) + p.getRadius() - p.getY()) / p.getVy();
+//                } else {
+//                    if (p.getVy() > 0)
+//                        currentTime = (sideLength - p.getRadius() - p.getY()) / p.getVy();
+//                    else
+//                        currentTime = (0 + p.getRadius() - p.getY()) / p.getVy();
+//                }
+//
+//                if (currentTime < nextEventTime) {
+//                    nextEventTime = currentTime;
+//                    this.isHorizontalCollision = true;
+//                    this.wallCollisionParticle = p;
+//                }
+//            }
+//        }
+//        return nextEventTime;
+//    }
 
     private double getParticlesCollisionTime(List<Particle> particles) {
         double nextEventTime = Double.MAX_VALUE;
         double currentTime;
         for(Particle p : particles) {
             currentTime = getMinParticleCollisionTime(p, particles);
-            if(currentTime < nextEventTime) {
+            if(Double.compare(currentTime, nextEventTime) < 0) {
                 nextEventTime = currentTime;
                 this.firstCollisionParticle = p;
                 this.secondCollisionParticle = auxCollisionParticle;
@@ -163,17 +281,17 @@ public class EventManager {
             dv = new double[] {p.getVx() - currentParticle.getVx(), p.getVy() - currentParticle.getVy()};
             dvdr = dotProduct(dv, dr);
 
-            if(dvdr >= 0)
+            if(Double.compare(dvdr, 0) >= 0)
                 continue;
 
             drdr = dotProduct(dr, dr);
             dvdv = dotProduct(dv, dv);
-            d = dvdr * dvdr - (dvdv) * (drdr - sigma * sigma);
+            d = (dvdr * dvdr) - ((dvdv) * (drdr - (sigma * sigma)));
 
-            if(d < 0)
+            if(Double.compare(d, 0) < 0)
                 continue;
 
-            currentTime = - (dvdr + Math.sqrt(d)) / dvdv;
+            currentTime = - ((dvdr + Math.sqrt(d)) / dvdv);
 
             if(currentTime < nextEventTime) {
                 auxCollisionParticle = p;
@@ -194,7 +312,6 @@ public class EventManager {
     public void resolveCollisionAndAddImpulse(double sideLength) {
         double impulseVelocity;
         if(this.wallCollision) {
-            //TODO EL IMPUSLO PUEDE SER NEGATIVO????????
             if(isHorizontalCollision) {
                 this.wallCollisionParticle.setVy(-wallCollisionParticle.getVy());
                 impulseVelocity = wallCollisionParticle.getVy();
@@ -236,10 +353,14 @@ public class EventManager {
     }
 
     public double getLeftSideImpulse() {
-        return leftSideImpulse;
+        return this.leftSideImpulse;
     }
 
     public double getRightSideImpulse() {
-        return rightSideImpulse;
+        return this.rightSideImpulse;
+    }
+
+    public void resetImpulse() {
+        this.leftSideImpulse = this.rightSideImpulse = 0.0;
     }
 }
