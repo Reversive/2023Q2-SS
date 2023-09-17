@@ -17,8 +17,8 @@ public class Particle {
         this.mass = mass;
     }
 
-    public boolean isLeftSide(double sideLength) {
-        return this.x < sideLength;
+    public boolean isLeft() {
+        return this.x < 0.09;
     }
 
     public double getRadius() {

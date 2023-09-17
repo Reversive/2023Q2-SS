@@ -11,11 +11,11 @@ import java.util.List;
 
 public class Entrypoint {
 
-    private static final Integer PARTICLE_AMOUNT = 3;
+    private static final Integer PARTICLE_AMOUNT = 300;
     private static final Double INITIAL_SQUARE_SIDE_LENGTH = 0.09;
     private static final Double L = 0.03;
-    private static final Integer ITERATIONS = 40000;
-    private static final Integer EVENT_STEP = 5;
+    private static final Integer ITERATIONS = 80000;
+    private static final Integer EVENT_STEP = 10;
 
     public static void main(String[] args) throws IOException {
         List<Particle> particles = ParticleGenerator.generateParticles(PARTICLE_AMOUNT, INITIAL_SQUARE_SIDE_LENGTH);
@@ -47,10 +47,10 @@ public class Entrypoint {
         double pressureStepTime = 0.0;
         for(int i = 1; i < ITERATIONS + 1; i++) {
             nextEventTime = eventManager.getNextEventTime(particles, L, INITIAL_SQUARE_SIDE_LENGTH);
-            eventManager.evolveTillEvent(particles, nextEventTime, L);
+            eventManager.evolveTillEvent(particles, nextEventTime, L, INITIAL_SQUARE_SIDE_LENGTH);
             totalTime += nextEventTime;
             pressureStepTime += nextEventTime;
-// PARA ANIMACION
+            // PARA ANIMACION
 //            outputBuilder.append(i).append("\n");
 //            for(Particle p : particles) {
 //                outputBuilder.append(p.getId())
