@@ -4,11 +4,13 @@ public class EventTime {
     private double time;
     private boolean isHorizontal;
     private boolean slitCollision;
+    private boolean isLeftSideCollision;
 
-    public EventTime(double time, boolean isHorizontal, boolean slitCollision) {
+    public EventTime(double time, boolean isHorizontal, boolean slitCollision, boolean isLeftSideCollision) {
         this.time = time;
         this.isHorizontal = isHorizontal;
         this.slitCollision = slitCollision;
+        this.isLeftSideCollision = isLeftSideCollision;
     }
 
     public double getTime() {
@@ -33,5 +35,13 @@ public class EventTime {
 
     public void setSlitCollision(boolean slitCollision) {
         this.slitCollision = slitCollision;
+    }
+
+    public boolean isLeftSideCollision() {
+        return isLeftSideCollision;
+    }
+
+    public void setLeftSideCollision(boolean leftSideCollision) {
+        isLeftSideCollision = leftSideCollision;
     }
 }
