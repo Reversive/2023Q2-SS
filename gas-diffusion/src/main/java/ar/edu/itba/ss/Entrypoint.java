@@ -11,11 +11,13 @@ import java.util.List;
 
 public class Entrypoint {
 
-    private static final Integer PARTICLE_AMOUNT = 300;
+    private static final Integer PARTICLE_AMOUNT = 250;
     private static final Double INITIAL_SQUARE_SIDE_LENGTH = 0.09;
     private static final Double L = 0.03;
     private static final Integer ITERATIONS = 80000;
-    private static final Integer EVENT_STEP = 10;
+    private static final Integer EVENT_STEP = 1000;
+
+    private static final Double TIME_STEP = 5.0;
 
     public static void main(String[] args) throws IOException {
         List<Particle> particles = ParticleGenerator.generateParticles(PARTICLE_AMOUNT, INITIAL_SQUARE_SIDE_LENGTH);
@@ -51,27 +53,36 @@ public class Entrypoint {
             totalTime += nextEventTime;
             pressureStepTime += nextEventTime;
             // PARA ANIMACION
-//            outputBuilder.append(i).append("\n");
-//            for(Particle p : particles) {
-//                outputBuilder.append(p.getId())
-//                        .append(" ")
-//                        .append(p.getX())
-//                        .append(" ")
-//                        .append(p.getY())
-//                        .append("\n");
-//            }
-            eventManager.resolveCollisionAndAddImpulse(INITIAL_SQUARE_SIDE_LENGTH);
-            if(eventCounter == EVENT_STEP) {
-                pressureOutputBuilder.append(totalTime).append(" ")
-                        .append(eventManager.getLeftSideImpulse() / (pressureStepTime * (4 * INITIAL_SQUARE_SIDE_LENGTH - L)))
+            outputBuilder.append(i).append("\n");
+            for(Particle p : particles) {
+                outputBuilder.append(p.getId())
                         .append(" ")
-                        .append(eventManager.getRightSideImpulse() / (pressureStepTime * (2 * INITIAL_SQUARE_SIDE_LENGTH + L)))
+                        .append(p.getX())
+                        .append(" ")
+                        .append(p.getY())
                         .append("\n");
-                eventCounter = 1;
+            }
+            eventManager.resolveCollisionAndAddImpulse(INITIAL_SQUARE_SIDE_LENGTH);
+//            if(eventCounter == EVENT_STEP) {
+//                pressureOutputBuilder.append(totalTime).append(" ")
+//                        .append(eventManager.getLeftSideImpulse() / (pressureStepTime * (4 * INITIAL_SQUARE_SIDE_LENGTH - L)))
+//                        .append(" ")
+//                        .append(eventManager.getRightSideImpulse() / (pressureStepTime * (2 * INITIAL_SQUARE_SIDE_LENGTH + L)))
+//                        .append("\n");
+//                eventCounter = 1;
+//                pressureStepTime = 0.0;
+//                eventManager.resetImpulse();
+//            } else {
+//                eventCounter++;
+//            }
+            if(pressureStepTime > TIME_STEP) {
+                pressureOutputBuilder.append(totalTime).append(" ")
+                        .append(eventManager.getLeftSideImpulse() / (TIME_STEP * (4 * INITIAL_SQUARE_SIDE_LENGTH - L)))
+                        .append(" ")
+                        .append(eventManager.getRightSideImpulse() / (TIME_STEP * (2 * INITIAL_SQUARE_SIDE_LENGTH + L)))
+                        .append("\n");
                 pressureStepTime = 0.0;
                 eventManager.resetImpulse();
-            } else {
-                eventCounter++;
             }
 
         }

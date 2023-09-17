@@ -73,8 +73,7 @@ public class EventManager {
 
     private void setTimeRightSquareRightSide(Particle p, double sideLength, EventTime nextEventTime) {
         double nextVxTime = (2 * sideLength - p.getRadius() - p.getX()) / p.getVx();
-        if(nextVxTime <= 0)
-            System.out.println("NOOOOO");
+
         if(nextVxTime < nextEventTime.getTime()) {
             nextEventTime.setTime(nextVxTime);
             nextEventTime.setHorizontal(false);
@@ -84,8 +83,7 @@ public class EventManager {
 
     private void setTimeRightSquareTopSide(Particle p, double L, double sideLength, EventTime nextEventTime) {
         double nextVyTime = ((sideLength / 2 + L / 2) - p.getRadius() - p.getY()) / p.getVy();
-        if(nextVyTime <= 0)
-            System.out.println("NOOOOO");
+
         if(nextVyTime < nextEventTime.getTime()) {
             nextEventTime.setTime(nextVyTime);
             nextEventTime.setHorizontal(true);
@@ -95,8 +93,7 @@ public class EventManager {
 
     private void setTimeRightSquareBottomSide(Particle p, double L, double sideLength, EventTime nextEventTime) {
         double nextVyTime = ((sideLength / 2 - L / 2) + p.getRadius() - p.getY()) / p.getVy();
-        if(nextVyTime <= 0)
-            System.out.println("NOOOOO");
+
         if(nextVyTime < nextEventTime.getTime()) {
             nextEventTime.setTime(nextVyTime);
             nextEventTime.setHorizontal(true);
@@ -106,8 +103,7 @@ public class EventManager {
 
     private void setTimeLeftSquareLeftSide(Particle p, EventTime nextEventTime) {
         double nextVxTime = (0 + p.getRadius() - p.getX()) / p.getVx();
-        if(nextVxTime <= 0)
-            System.out.println("NOOOOO");
+
         if(nextVxTime < nextEventTime.getTime()) {
             nextEventTime.setTime(nextVxTime);
             nextEventTime.setSlitCollision(false);
@@ -133,8 +129,7 @@ public class EventManager {
             nextVxTime = (sideLength - p.getRadius() - p.getX()) / p.getVx();
             isSlit = false;
         }
-        if(nextVxTime <= 0)
-            System.out.println("NOOOOO");
+
         if(nextVxTime < nextEventTime.getTime()) {
             nextEventTime.setTime(nextVxTime);
             nextEventTime.setHorizontal(false);
@@ -156,8 +151,7 @@ public class EventManager {
         } else {
             nextVyTime = (sideLength - p.getRadius() - p.getY()) / p.getVy();
         }
-        if(nextVyTime <= 0)
-            System.out.println("NOOOOO");
+
         if(nextVyTime < nextEventTime.getTime()) {
             nextEventTime.setTime(nextVyTime);
             nextEventTime.setHorizontal(true);
@@ -179,8 +173,7 @@ public class EventManager {
         } else {
             nextVyTime = (0 + p.getRadius() - p.getY()) / p.getVy();
         }
-        if(nextVyTime <= 0)
-            System.out.println("NOOOOO");
+
         if(nextVyTime < nextEventTime.getTime()) {
             nextEventTime.setTime(nextVyTime);
             nextEventTime.setHorizontal(true);
@@ -199,8 +192,7 @@ public class EventManager {
             nextVxTime = Double.MAX_VALUE;
             isSlit = false;
         }
-        if(nextVxTime <= 0)
-            System.out.println("NOOOOO");
+
         if(nextVxTime == 0) {
             isSlit = false;
             nextVxTime = Double.MAX_VALUE;
