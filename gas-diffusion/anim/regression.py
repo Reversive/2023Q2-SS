@@ -10,7 +10,7 @@ average_pressures = {}
 std_dev_pressures = {}  # Agregado: diccionario para desvío estándar
 
 for L in L_values:
-    file_name = f"Pressure_280_L_{L}_v1.txt"
+    file_name = f"pressure_{L}.txt"
     with open(file_name, 'r') as file:
         lines = file.readlines()
         pressures = [float(line.split()[1]) for line in lines]
@@ -32,7 +32,7 @@ def error(c, x, y):
     return error
 
 def regression(x, y):
-    c = np.arange(0.014, 0.0269, 0.0001)
+    c = np.arange(0.01465, 0.0269, 0.0001)
     errors = []
     for i in range(len(c)):
         errors.append(error(c[i], x, y))
@@ -43,7 +43,7 @@ min_val, errors = regression(areas, average_pressures_list)
 print(min_val)
 # find min val in errors and print it
 print(min(errors))
-x_values = np.arange(0.014, 0.0269, 0.0001)
+x_values = np.arange(0.01465, 0.0269, 0.0001)
 y_values = errors
 # plot the results
 plt.figure(figsize=(8, 6))

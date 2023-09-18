@@ -10,7 +10,7 @@ average_pressures = {}
 std_dev_pressures = {}  # Agregado: diccionario para desvío estándar
 
 for L in L_values:
-    file_name = f"Pressure_280_L_{L}_v1.txt"
+    file_name = f"pressure_{L}.txt"
     with open(file_name, 'r') as file:
         lines = file.readlines()
         pressures = [float(line.split()[1]) for line in lines]
