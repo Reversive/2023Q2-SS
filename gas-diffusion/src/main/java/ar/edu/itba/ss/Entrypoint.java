@@ -12,12 +12,12 @@ import java.util.List;
 public class Entrypoint {
 
 
-    private static final Integer PARTICLE_AMOUNT = 50;
+    private static final Integer PARTICLE_AMOUNT = 280;
     private static final Double INITIAL_SQUARE_SIDE_LENGTH = 0.09;
-    private static final Double L = 0.03;
-    private static final Integer ITERATIONS = 200000;
+    private static final Double L = 0.09;
+    private static final Integer ITERATIONS = 250000;
     private static final Integer EVENT_STEP = 1000;
-    private static final Double TIME_STEP = 1.0;
+    private static final Double TIME_STEP = 2.0;
 
 
     public static void main(String[] args) throws IOException {
@@ -25,19 +25,19 @@ public class Entrypoint {
 
         StringBuilder outputBuilder = new StringBuilder();
         EventManager eventManager = new EventManager();
-        outputBuilder.append(PARTICLE_AMOUNT).append("\n");
-        outputBuilder.append(INITIAL_SQUARE_SIDE_LENGTH).append("\n");
-        outputBuilder.append(L).append("\n");
-        outputBuilder.append(0).append("\n");
-        for(Particle p : particles) {
-            outputBuilder.append(p.getId())
-                    .append(" ")
-                    .append(p.getX())
-                    .append(" ")
-                    .append(p.getY())
-                    .append(" ")
-                    .append("\n");
-        }
+//        outputBuilder.append(PARTICLE_AMOUNT).append("\n");
+//        outputBuilder.append(INITIAL_SQUARE_SIDE_LENGTH).append("\n");
+//        outputBuilder.append(L).append("\n");
+//        outputBuilder.append(0).append("\n");
+//        for(Particle p : particles) {
+//            outputBuilder.append(p.getId())
+//                    .append(" ")
+//                    .append(p.getX())
+//                    .append(" ")
+//                    .append(p.getY())
+//                    .append(" ")
+//                    .append("\n");
+//        }
 
         StringBuilder pressureOutputBuilder = new StringBuilder();
         double area = Math.pow(INITIAL_SQUARE_SIDE_LENGTH, 2) + INITIAL_SQUARE_SIDE_LENGTH * L;
@@ -76,23 +76,35 @@ public class Entrypoint {
 //            } else {
 //                eventCounter++;
 //            }
+
             if(pressureStepTime > TIME_STEP) {
-                pressureOutputBuilder.append(totalTime).append(" ")
-                        .append(eventManager.getLeftSideImpulse() / (pressureStepTime * ((4 * INITIAL_SQUARE_SIDE_LENGTH) - L)))
-                        .append(" ")
-                        .append(eventManager.getRightSideImpulse() / (pressureStepTime * ((2 * INITIAL_SQUARE_SIDE_LENGTH) + L)))
-                        .append("\n");
+                if(totalTime >= 190.0) {
+                    //outputBuilder.append(i).append("\n");
+                    for(Particle p : particles) {
+                        outputBuilder.append(p.getId())
+                                .append(" ")
+                                .append(p.getX())
+                                .append(" ")
+                                .append(p.getY())
+                                .append("\n");
+                    }
+                }
+//                pressureOutputBuilder.append(totalTime).append(" ")
+//                        .append(eventManager.getLeftSideImpulse() / (pressureStepTime * ((4 * INITIAL_SQUARE_SIDE_LENGTH) - L)))
+//                        .append(" ")
+//                        .append(eventManager.getRightSideImpulse() / (pressureStepTime * ((2 * INITIAL_SQUARE_SIDE_LENGTH) + L)))
+//                        .append("\n");
                 pressureStepTime = 0.0;
                 eventManager.resetImpulse();
             }
 
         }
 
-        try (PrintWriter writer = new PrintWriter(new FileWriter("output.txt"))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter("output_v3.txt"))) {
             writer.println(outputBuilder);
         }
 
-        try (PrintWriter writer = new PrintWriter(new FileWriter("pressure.txt"))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter("pressure_0.09v3.txt"))) {
             writer.println(pressureOutputBuilder);
         }
 

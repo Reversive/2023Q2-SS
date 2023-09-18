@@ -43,33 +43,6 @@ public class EventManager {
             this.wallCollision = true;
         }
 
-        double aux;
-        double auxY;
-        for(Particle p : particles) {
-            aux = p.getX() + nextEventTime * p.getVx();
-            auxY = p.getY() + nextEventTime * p.getVy();
-            if(Math.abs(aux-(sideLength-p.getRadius())) < EPSILON && !(auxY >= sideLength/2 - L/2 + p.getRadius() && auxY <= sideLength/2 + L/2 - p.getRadius()))
-                aux = sideLength-p.getRadius();
-            if(Math.abs(aux-(0+p.getRadius())) < EPSILON )
-                aux = 0+p.getRadius();
-            if(Math.abs(auxY-(0+p.getRadius())) < EPSILON )
-                auxY = 0+p.getRadius();
-            if(Math.abs(auxY-(sideLength-p.getRadius())) < EPSILON )
-                auxY = sideLength-p.getRadius();
-            if(auxY < 0.0015 || auxY > 0.0885 || (aux > 0.0885 && (auxY > 0.0585 || auxY < 0.0315)))
-                System.out.println("AAAAA");
-            if((auxY < sideLength/2-L/2+p.getRadius() || auxY > sideLength/2 + L/2 -p.getRadius()) && (aux >= sideLength))
-                System.out.println("AAAAA");
-            if(aux > 0.0885 && !(auxY <= 0.0585 && auxY >= 0.0315 ))
-                System.out.println("AAAAA");
-            if(aux < 0.0015)
-                System.out.println("AAAAA");
-            if(aux > 0.18)
-                System.out.println("AAAAA");
-        }
-
-        if(nextEventTime + 0.0 == 0.0)
-            System.out.println("AAA");
         return nextEventTime;
     }
 

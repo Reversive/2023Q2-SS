@@ -25,15 +25,13 @@ std_dev_pressures_list = [std_dev_pressures[L] for L in L_values]
 
 inverse_areas = [1 / A for A in areas]
 
-plt.figure(figsize=(8, 6))
+plt.figure(figsize=(4, 3))
 plt.plot(inverse_areas, average_pressures_list, 'x', color='green')
 plt.xlabel("A⁻¹ (1/m²)", fontsize=15)
 plt.ylabel("Presión (kg/s$^2$)", fontsize=15)
 
-x_values = np.arange(inverse_areas[-1] - 1, inverse_areas[0] + 1, 0.0001)
+x_values = np.arange(inverse_areas[-1] - 5, inverse_areas[0] + 5, 0.0001)
 y_values = 0.0204 * x_values
 plt.plot(x_values, y_values, color='red')
-
-plt.grid(True)
 
 plt.show()

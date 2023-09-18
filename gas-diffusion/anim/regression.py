@@ -52,3 +52,6 @@ plt.xlabel("c", fontsize=15)
 plt.ylabel("E(c)", fontsize=15)
 plt.grid(True)
 plt.show()
+
+# DCM = 4D*t
+# Y = 4D*X
