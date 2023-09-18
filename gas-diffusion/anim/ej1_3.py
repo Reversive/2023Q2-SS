@@ -23,7 +23,6 @@ areas = [calculate_area(L) for L in L_values]
 average_pressures_list = [average_pressures[L] for L in L_values]
 std_dev_pressures_list = [std_dev_pressures[L] for L in L_values]
 
-average_pressures_list[0] = average_pressures_list[0] - 0.09
 inverse_areas = [1 / A for A in areas]
 
 plt.figure(figsize=(8, 6))
