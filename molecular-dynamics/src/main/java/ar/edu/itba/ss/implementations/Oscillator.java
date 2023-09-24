@@ -5,6 +5,7 @@ import ar.edu.itba.ss.models.Particle;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.math.BigDecimal;
 
 public class Oscillator {
     private final Algorithm algorithm;
@@ -18,9 +19,9 @@ public class Oscillator {
     }
 
     public void simulate(double dt, double gamma, double k, double m) {
-        File file = new File("/oscillator/data/" + algorithm.getName() + "_" + dt + ".txt");
+        File file = new File("/oscillator/data/" + algorithm.getName() + "_" + BigDecimal.valueOf(dt) + ".txt");
         try(FileWriter data = new FileWriter(file)) {
-            int r0 = 1;
+            final int r0 = 1;
             double v0 = -r0 * gamma/(2 * m);
             double f0 = -k * r0 - gamma * v0;
             Particle current = new Particle.Builder()
@@ -30,7 +31,7 @@ public class Oscillator {
                     .withVelocity(v0, 0)
                     .withAcceleration(f0/m, 0)
                     .build();
-            Particle next = null;
+            Particle next;
             Particle previous = null;
             double t = 0;
             double i = 0;
