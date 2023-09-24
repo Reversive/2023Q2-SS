@@ -14,5 +14,7 @@ public class DampedPointOscillator {
     public static void main(String[] args) {
         Algorithm algorithm = AlgorithmFactory.buildAlgorithm(AlgorithmType.VERLET, K, GAMMA);
         Oscillator dampedPointOscillator = new Oscillator(algorithm, TF, STEPS);
+        // change dt
+        dampedPointOscillator.simulate(0.01, GAMMA, K, M);
     }
 }

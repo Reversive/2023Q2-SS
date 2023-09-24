@@ -13,7 +13,7 @@ public class Oscillator {
         this.steps = steps;
     }
 
-    public void simulate() {
+    public void simulate(double dt, double gamma, double k, double m) {
         // to-do
     }
 
