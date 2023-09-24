@@ -1,6 +1,10 @@
 package ar.edu.itba.ss.implementations;
 
 import ar.edu.itba.ss.interfaces.Algorithm;
+import ar.edu.itba.ss.models.Particle;
+
+import java.io.File;
+import java.io.FileWriter;
 
 public class Oscillator {
     private final Algorithm algorithm;
@@ -14,7 +18,36 @@ public class Oscillator {
     }
 
     public void simulate(double dt, double gamma, double k, double m) {
-        // to-do
+        File file = new File("/oscillator/data/" + algorithm.getName() + "_" + dt + ".txt");
+        try(FileWriter data = new FileWriter(file)) {
+            int r0 = 1;
+            double v0 = -r0 * gamma/(2 * m);
+            double f0 = -k * r0 - gamma * v0;
+            Particle current = new Particle.Builder()
+                    .withMass(m)
+                    .withRadius(0)
+                    .withPosition(r0, 0)
+                    .withVelocity(v0, 0)
+                    .withAcceleration(f0/m, 0)
+                    .build();
+            Particle next = null;
+            Particle previous = null;
+            double t = 0;
+            double i = 0;
+
+            while(t < tf) {
+                next = algorithm.update(previous, current, dt, t);
+                if(i % steps == 0) {
+                    data.write(t + " " + current.getPosition().getX() + " " + current.getPosition().getY() + "\n");
+                }
+                previous = current;
+                current = next;
+                t += dt;
+                i++;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public Algorithm getAlgorithm() {

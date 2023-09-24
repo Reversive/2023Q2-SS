@@ -13,4 +13,9 @@ public abstract class AlgorithmBase implements Algorithm {
         this.gamma = gamma;
         this.type = type;
     }
+
+    @Override
+    public String getName() {
+        return type.name();
+    }
 }
