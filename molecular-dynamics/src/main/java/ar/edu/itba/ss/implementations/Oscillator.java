@@ -19,7 +19,7 @@ public class Oscillator {
     }
 
     public void simulate(double dt, double gamma, double k, double m) {
-        File file = new File("/oscillator/data/" + algorithm.getName() + "_" + BigDecimal.valueOf(dt) + ".txt");
+        File file = new File("oscillator/data/" + algorithm.getName() + "_" + BigDecimal.valueOf(dt) + ".txt");
         try(FileWriter data = new FileWriter(file)) {
             final int r0 = 1;
             double v0 = -r0 * gamma/(2 * m);

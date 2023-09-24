@@ -55,6 +55,16 @@ public class Particle {
             return this;
         }
 
+        public Builder cloneParticle(Particle particle) {
+            this.id = particle.id;
+            this.acceleration = particle.acceleration;
+            this.position = particle.position;
+            this.velocity = particle.velocity;
+            this.mass = particle.mass;
+            this.radius = particle.radius;
+            return this;
+        }
+
         public Particle build() {
             return new Particle(this);
         }
