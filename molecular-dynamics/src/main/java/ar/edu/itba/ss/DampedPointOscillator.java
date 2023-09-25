@@ -13,17 +13,17 @@ public class DampedPointOscillator {
     static final double GAMMA = 100.0;
     static final int TF = 5;
     static final int STEPS = 2;
-    static BigDecimal DT = BigDecimal.valueOf(0.0001);
+    static BigDecimal DT = BigDecimal.valueOf(0.01);
     static BigDecimal MIN_DT = BigDecimal.valueOf(0.00001);
     static BigDecimal MAX_DT = BigDecimal.valueOf(0.01);
     public static void main(String[] args) {
-        AlgorithmType currentAlgorithm = AlgorithmType.BEEMAN;
+        AlgorithmType currentAlgorithm = AlgorithmType.GEAR_PREDICTOR_CORRECTOR;
         Algorithm algorithm = AlgorithmFactory.buildAlgorithm(currentAlgorithm, K, GAMMA);
         Oscillator dampedPointOscillator = new Oscillator(algorithm, TF, STEPS);
-
-        for(BigDecimal dt = MIN_DT; dt.compareTo(MAX_DT) <= 0; dt = dt.add(DT)) {
+        BigDecimal dt = DT;
+        //for(BigDecimal dt = MIN_DT; dt.compareTo(MAX_DT) <= 0; dt = dt.add(DT)) {
             dampedPointOscillator.simulate(dt.doubleValue(), GAMMA, K, M);
-        }
+        //}
 
     }
 }
