@@ -57,9 +57,9 @@ public class Particle {
 
         public Builder cloneParticle(Particle particle) {
             this.id = particle.id;
-            this.acceleration = particle.acceleration;
-            this.position = particle.position;
-            this.velocity = particle.velocity;
+            this.acceleration = new Acceleration(particle.getAcceleration().getAx(), particle.getAcceleration().getAy());
+            this.position = new Position(particle.getPosition().getX(), particle.getPosition().getY());
+            this.velocity = new Velocity(particle.getVelocity().getVx(), particle.getVelocity().getVy());
             this.mass = particle.mass;
             this.radius = particle.radius;
             return this;

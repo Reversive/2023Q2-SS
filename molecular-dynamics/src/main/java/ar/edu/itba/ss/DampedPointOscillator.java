@@ -19,7 +19,7 @@ public class DampedPointOscillator {
     static BigDecimal MIN_DT = BigDecimal.valueOf(0.00001);
     static BigDecimal MAX_DT = BigDecimal.valueOf(0.01);
     public static void main(String[] args) {
-        AlgorithmType currentAlgorithm = AlgorithmType.GEAR_PREDICTOR_CORRECTOR;
+        AlgorithmType currentAlgorithm = AlgorithmType.VERLET;
         Algorithm euler = currentAlgorithm == AlgorithmType.VERLET ? new AlgorithmEuler(K, GAMMA) : null;
         Algorithm algorithm = AlgorithmFactory.buildAlgorithm(currentAlgorithm, K, GAMMA, euler);
         Oscillator dampedPointOscillator = new Oscillator(algorithm, TF, STEPS);
