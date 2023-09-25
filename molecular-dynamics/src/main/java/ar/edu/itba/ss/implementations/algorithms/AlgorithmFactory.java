@@ -12,18 +12,18 @@ public class AlgorithmFactory {
         return new AlgorithmGear(K, gamma);
     }
 
-    public static Algorithm buildVerlet(Algorithm algorithm, double K, double gamma) {
-        return new AlgorithmVerlet(algorithm, K, gamma);
+    public static Algorithm buildVerlet(double K, double gamma) {
+        return new AlgorithmVerlet(K, gamma);
     }
 
-    public static Algorithm buildAlgorithm(AlgorithmType type, double k, double gamma, Algorithm euler) {
+    public static Algorithm buildAlgorithm(AlgorithmType type, double k, double gamma) {
         Algorithm algorithm = null;
         switch (type) {
             case BEEMAN:
                 algorithm = AlgorithmFactory.buildBeeman(k, gamma);
                 break;
             case VERLET:
-                algorithm = AlgorithmFactory.buildVerlet(euler, k, gamma);
+                algorithm = AlgorithmFactory.buildVerlet(k, gamma);
                 break;
             case GEAR_PREDICTOR_CORRECTOR:
                 algorithm = AlgorithmFactory.buildGear(k, gamma);

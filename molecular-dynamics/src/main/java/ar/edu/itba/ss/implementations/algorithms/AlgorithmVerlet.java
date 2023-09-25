@@ -4,21 +4,19 @@ import ar.edu.itba.ss.interfaces.Algorithm;
 import ar.edu.itba.ss.models.AlgorithmType;
 import ar.edu.itba.ss.models.Particle;
 
-public class AlgorithmVerlet implements Algorithm {
-    private final Algorithm algorithm;
-    private final double K;
-    private final double gamma;
+public class AlgorithmVerlet extends AlgorithmBase implements Algorithm {
 
-    public AlgorithmVerlet(Algorithm algorithm, double k, double gamma) {
-        this.algorithm = algorithm;
-        K = k;
-        this.gamma = gamma;
+    private final Algorithm algorithm;
+
+    public AlgorithmVerlet(double k, double gamma) {
+        super(k, gamma, AlgorithmType.VERLET);
+        algorithm = new AlgorithmEuler(k, gamma);
     }
 
     @Override
     public Particle update(Particle previous, Particle current, double deltaTime, double currentTime) {
         if (current == null) {
-            throw new NullPointerException();
+            throw new NullPointerException("This cannot happen");
         }
 
         if (previous == null) {

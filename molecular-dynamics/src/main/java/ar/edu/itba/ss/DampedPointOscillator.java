@@ -1,8 +1,6 @@
 package ar.edu.itba.ss;
 
 import ar.edu.itba.ss.implementations.Oscillator;
-import ar.edu.itba.ss.implementations.algorithms.AlgorithmEuler;
-import ar.edu.itba.ss.implementations.algorithms.AlgorithmEulerModified;
 import ar.edu.itba.ss.implementations.algorithms.AlgorithmFactory;
 import ar.edu.itba.ss.interfaces.Algorithm;
 import ar.edu.itba.ss.models.AlgorithmType;
@@ -19,9 +17,8 @@ public class DampedPointOscillator {
     static BigDecimal MIN_DT = BigDecimal.valueOf(0.00001);
     static BigDecimal MAX_DT = BigDecimal.valueOf(0.01);
     public static void main(String[] args) {
-        AlgorithmType currentAlgorithm = AlgorithmType.VERLET;
-        Algorithm euler = currentAlgorithm == AlgorithmType.VERLET ? new AlgorithmEuler(K, GAMMA) : null;
-        Algorithm algorithm = AlgorithmFactory.buildAlgorithm(currentAlgorithm, K, GAMMA, euler);
+        AlgorithmType currentAlgorithm = AlgorithmType.BEEMAN;
+        Algorithm algorithm = AlgorithmFactory.buildAlgorithm(currentAlgorithm, K, GAMMA);
         Oscillator dampedPointOscillator = new Oscillator(algorithm, TF, STEPS);
 
         for(BigDecimal dt = MIN_DT; dt.compareTo(MAX_DT) <= 0; dt = dt.add(DT)) {
