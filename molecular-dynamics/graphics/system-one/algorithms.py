@@ -15,22 +15,22 @@ def calculateR(t):
     return A * (np.exp(-(GAMMA/(2*M)) * t)) * (np.cos(np.power((K/M) - (GAMMA*GAMMA/(4*(M*M))), 0.5) * t))
 
 data = np.loadtxt('gpc_10-5.txt')
-plt.plot(data[:,0], data[:,1], label=labels[0], linestyle=styles[0], color=colors[0])
+plt.plot(data[:,0], data[:,1], label=labels[3], linestyle=styles[3], color=colors[3])
 
 data = np.loadtxt('beeman_10-5.txt')
-plt.plot(data[:,0], data[:,1], label=labels[1], linestyle=styles[1], color=colors[1])
+plt.plot(data[:,0], data[:,1], label=labels[2], linestyle=styles[2], color=colors[2])
 
 data = np.loadtxt('verlet_10-5.txt')
-plt.plot(data[:,0], data[:,1], label=labels[2], linestyle=styles[2], color=colors[2])
+plt.plot(data[:,0], data[:,1], label=labels[1], linestyle=styles[1], color=colors[1])
 
 t = np.arange(0.0, 5.0, 0.00001)
 analytic = calculateR(t)
-plt.plot(t, analytic, label=labels[3], linestyle=styles[3], color=colors[3])
+plt.plot(t, analytic, label=labels[0], linestyle=styles[0], color=colors[0])
 
 plt.legend()
 
-plt.xlabel('Tiempo (s)')
-plt.ylabel('Posicion (m)')
+plt.xlabel('Tiempo (s)', fontsize=15)
+plt.ylabel('Posicion (m)', fontsize=15)
 plt.show()
 
 
@@ -57,15 +57,16 @@ for i in range(2, 6):
     errors[2].append(error)
 
 
-# now plot the errors in a log-log plot 
-plt.loglog([10**-i for i in range(2, 6)], errors[0], label=labels[1], linestyle=styles[1], color=colors[1])
-plt.loglog([10**-i for i in range(2, 6)], errors[1], label=labels[2], linestyle=styles[2], color=colors[2])
-plt.loglog([10**-i for i in range(2, 6)], errors[2], label=labels[3], linestyle=styles[3], color=colors[3])
+plt.loglog([10**(-i) for i in range(2, 6)], errors[0], 'o', label=labels[2], linestyle=styles[2], color=colors[2])
+plt.loglog([10**(-i) for i in range(2, 6)], errors[1], 'o', label=labels[1], linestyle=styles[1], color=colors[1])
+plt.loglog([10**(-i) for i in range(2, 6)], errors[2], 'o', label=labels[3], linestyle=styles[3], color=colors[3])
+
 
 plt.legend()
 
-plt.xlabel('dt (s)')
-plt.ylabel('Error cuadrático medio (m$^2$)')
+
+plt.xlabel('dt (s)', fontsize=15)
+plt.ylabel('Error cuadrático medio (m$^2$)', fontsize=15)
 plt.show()
 
 
