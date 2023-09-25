@@ -29,8 +29,11 @@ plt.plot(t, analytic, label=labels[0], linestyle=styles[0], color=colors[0])
 
 plt.legend()
 
+plt.xticks(fontsize=15)
+plt.yticks(fontsize=15)
 plt.xlabel('Tiempo (s)', fontsize=15)
-plt.ylabel('Posicion (m)', fontsize=15)
+plt.ylabel('Posición (m)', fontsize=15)
+
 plt.show()
 
 
@@ -38,19 +41,19 @@ errors = [[], [], []]
 
 
 
-for i in range(2, 6):
+for i in range(2, 7):
     data = np.loadtxt('beeman_10-{}.txt'.format(i))
     analytic = calculateR(data[:,0])
     error = np.mean((analytic - data[:,1]) ** 2)
     errors[0].append(error)
 
-for i in range(2, 6):
+for i in range(2, 7):
     data = np.loadtxt('verlet_10-{}.txt'.format(i))
     analytic = calculateR(data[:,0])
     error = np.mean((analytic - data[:,1]) ** 2)
     errors[1].append(error)
 
-for i in range(2, 6):
+for i in range(2, 7):
     data = np.loadtxt('gpc_10-{}.txt'.format(i))
     analytic = calculateR(data[:,0])
     error = np.mean((analytic - data[:,1]) ** 2)
@@ -64,7 +67,8 @@ plt.loglog([10**(-i) for i in range(2, 6)], errors[2], 'o', label=labels[3], lin
 
 plt.legend()
 
-
+plt.xticks(fontsize=15)
+plt.yticks(fontsize=15)
 plt.xlabel('dt (s)', fontsize=15)
 plt.ylabel('Error cuadrático medio (m$^2$)', fontsize=15)
 plt.show()
