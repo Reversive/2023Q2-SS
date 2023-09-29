@@ -12,6 +12,10 @@ public class AlgorithmFactory {
         return new AlgorithmGear(K, gamma);
     }
 
+    public static Algorithm buildGearS2() {
+        return new AlgorithmGear_S2();
+    }
+
     public static Algorithm buildVerlet(double K, double gamma) {
         return new AlgorithmVerlet(K, gamma);
     }
@@ -27,6 +31,9 @@ public class AlgorithmFactory {
                 break;
             case GEAR_PREDICTOR_CORRECTOR:
                 algorithm = AlgorithmFactory.buildGear(k, gamma);
+                break;
+            case GEAR_PREDICTOR_CORRECTOR_S2:
+                algorithm = AlgorithmFactory.buildGearS2();
                 break;
         }
         return algorithm;

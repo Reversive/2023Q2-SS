@@ -5,5 +5,6 @@ public enum AlgorithmType {
     BEEMAN,
     VERLET,
     EULER,
-    EULER_MODIFIED
+    EULER_MODIFIED,
+    GEAR_PREDICTOR_CORRECTOR_S2
 }
