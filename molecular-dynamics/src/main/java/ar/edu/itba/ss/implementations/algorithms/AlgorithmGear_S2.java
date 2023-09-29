@@ -6,6 +6,7 @@ import ar.edu.itba.ss.models.Particle;
 
 import java.util.stream.LongStream;
 
+
 public class AlgorithmGear_S2 extends AlgorithmBase implements Algorithm {
 
     private static final double[] COEFFICIENTS = {3.0/20, 251.0/360, 1.0, 11.0/18, 1.0/6, 1.0/60};

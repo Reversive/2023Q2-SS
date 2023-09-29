@@ -26,9 +26,7 @@ public class Particle_S2 {
         private double position;
         private double angularVelocity;
         private double angularAcceleration;
-        private Double ui;
-        double minUi = 9.0;
-        double maxUi = 12.0;
+        private double ui;
 
         public Builder withUi(double ui) {
             this.ui = ui;
