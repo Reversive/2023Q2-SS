@@ -4,6 +4,7 @@ package ar.edu.itba.ss;
 import ar.edu.itba.ss.implementations.CircleSystem;
 import ar.edu.itba.ss.implementations.algorithms.AlgorithmFactory;
 import ar.edu.itba.ss.interfaces.Algorithm;
+import ar.edu.itba.ss.interfaces.Algorithm_S2;
 import ar.edu.itba.ss.models.AlgorithmType;
 import ar.edu.itba.ss.models.Particle_S2;
 
@@ -14,17 +15,17 @@ import java.util.List;
 public class SecondSystem {
 
     private static final int TF = 180;
-    private static final int STEPS = 2; // TODO
+    private static final int STEPS = 1; // TODO
     private static final int N = 25;
     private static final double r = 2.25;
     private static final double m = 25;
     private static final double R = 21.49;
-    private static final int REACTION_TIME = 1;
     private static final double minRad = 0.0;
     private static final double maxRad = 2 * Math.PI;
     private static final double minUi = 9.0;
     private static final double maxUi = 12.0;
-    static BigDecimal MIN_DT = BigDecimal.valueOf(0.00001);
+//    static BigDecimal MIN_DT = BigDecimal.valueOf(0.00001);
+    static BigDecimal MIN_DT = BigDecimal.valueOf(0.1); // CAMBIAR ESTO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     static BigDecimal MAX_DT = BigDecimal.valueOf(0.1);
     static BigDecimal DT = BigDecimal.valueOf(0.1);
 
@@ -59,12 +60,12 @@ public class SecondSystem {
         List<Particle_S2> particles;
 
         AlgorithmType currentAlgorithm = AlgorithmType.GEAR_PREDICTOR_CORRECTOR_S2;
-        Algorithm algorithm = AlgorithmFactory.buildAlgorithm(currentAlgorithm, 0,0);
-        CircleSystem circleSystem = new CircleSystem(algorithm, TF, STEPS);
-
+        Algorithm_S2 algorithm = AlgorithmFactory.buildAlgorithmS2(currentAlgorithm, 0,0);
+        CircleSystem circleSystem = new CircleSystem(algorithm, TF);
+        int i = 0;
         for(BigDecimal dt = MIN_DT; dt.compareTo(MAX_DT) <= 0; dt = dt.multiply(DT)) {
             particles = new ArrayList<>(immutableParticles);
-            circleSystem.simulate(dt.doubleValue(), particles);
+            circleSystem.simulate(dt.doubleValue(), particles, STEPS*Math.pow(10,i++));
         }
 
 
@@ -76,10 +77,10 @@ public class SecondSystem {
         double currentArc;
         for(Particle_S2 p : particles) {
             currentArc = p.getPosition() * R;
-            if(Math.min(Math.abs(currentArc-newArc), maxRad - Math.abs(currentArc-newArc)) < 2*r)
-                return false;
+            if(Math.min(Math.abs(currentArc-newArc), maxRad - Math.abs(currentArc-newArc)) <= 2*r)
+                return true;
         }
-        return true;
+        return false;
     }
 
 }

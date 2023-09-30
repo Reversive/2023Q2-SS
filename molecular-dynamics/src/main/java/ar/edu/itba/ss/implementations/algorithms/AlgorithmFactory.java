@@ -1,6 +1,7 @@
 package ar.edu.itba.ss.implementations.algorithms;
 
 import ar.edu.itba.ss.interfaces.Algorithm;
+import ar.edu.itba.ss.interfaces.Algorithm_S2;
 import ar.edu.itba.ss.models.AlgorithmType;
 
 public class AlgorithmFactory {
@@ -12,7 +13,7 @@ public class AlgorithmFactory {
         return new AlgorithmGear(K, gamma);
     }
 
-    public static Algorithm buildGearS2() {
+    public static Algorithm_S2 buildGearS2() {
         return new AlgorithmGear_S2();
     }
 
@@ -32,10 +33,11 @@ public class AlgorithmFactory {
             case GEAR_PREDICTOR_CORRECTOR:
                 algorithm = AlgorithmFactory.buildGear(k, gamma);
                 break;
-            case GEAR_PREDICTOR_CORRECTOR_S2:
-                algorithm = AlgorithmFactory.buildGearS2();
-                break;
         }
         return algorithm;
+    }
+
+    public static Algorithm_S2 buildAlgorithmS2(AlgorithmType type, double k, double gamma) {
+        return AlgorithmFactory.buildGearS2();
     }
 }
