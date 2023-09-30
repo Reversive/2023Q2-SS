@@ -23,8 +23,7 @@ public class SecondSystem {
     private static final double maxRad = 2 * Math.PI;
     private static final double minUi = 9.0;
     private static final double maxUi = 12.0;
-//    static BigDecimal MIN_DT = BigDecimal.valueOf(0.00001);
-    static BigDecimal MIN_DT = BigDecimal.valueOf(0.1); // CAMBIAR ESTO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    static BigDecimal MIN_DT = BigDecimal.valueOf(0.00001);
     static BigDecimal MAX_DT = BigDecimal.valueOf(0.1);
     static BigDecimal DT = BigDecimal.valueOf(0.1);
 
@@ -62,10 +61,13 @@ public class SecondSystem {
         Algorithm_S2 algorithm = AlgorithmFactory.buildAlgorithmS2(currentAlgorithm, 0,0);
         CircleSystem circleSystem = new CircleSystem(algorithm, TF);
         int i = 0;
-        for(BigDecimal dt = MIN_DT; dt.compareTo(MAX_DT) <= 0; dt = dt.multiply(DT)) {
-            particles = new ArrayList<>(immutableParticles);
-            circleSystem.simulate(dt.doubleValue(), particles, STEPS*Math.pow(10,i++));
-        }
+//        for(BigDecimal dt = MIN_DT; dt.compareTo(MAX_DT) <= 0; dt = dt.multiply(DT)) {
+//            particles = new ArrayList<>(immutableParticles);
+//            circleSystem.simulate(dt.doubleValue(), particles, STEPS*Math.pow(10,i++));
+//        }
+
+        particles = new ArrayList<>(immutableParticles);
+        circleSystem.simulate(DT.doubleValue(), particles, STEPS*Math.pow(10,i++));
 
 
 
