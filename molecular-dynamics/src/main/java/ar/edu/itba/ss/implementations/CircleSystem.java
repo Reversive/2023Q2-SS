@@ -35,14 +35,19 @@ public class CircleSystem {
             }
             Particle_S2 next;
 
+            data.write(0 + "\n");
+            for(Particle_S2 p : particles) {
+                data.write( p.getId() +  " " + p.getPosition() + "\n");
+            }
+            
             while(t < tf) {
                 if(i % steps == 0) {
-                    data.write(particles.size() + '\n');
+                    data.write(t + "\n");
                 }
-                for(Particle_S2 current : particles) {
+                for(Particle_S2 current : previousMap.values()) {
                     next = algorithm.update(previousMap, current, dt, t);
                     if(i % steps == 0) {
-                        data.write(t + " " + current.getId() +  " " + current.getPosition() + "\n");
+                        data.write( next.getId() +  " " + next.getPosition() + "\n");
                     }
                     currentMap.put(next.getId(), next);
                 }

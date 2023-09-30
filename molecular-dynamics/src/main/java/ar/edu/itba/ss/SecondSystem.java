@@ -15,7 +15,7 @@ public class SecondSystem {
 
     private static final int TF = 180;
     private static final int STEPS = 1; // TODO
-    private static final int N = 25;
+    private static final int N = 15;
     private static final double r = 2.25;
     private static final double m = 25;
     private static final double R = 21.49;

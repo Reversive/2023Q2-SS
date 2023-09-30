@@ -76,7 +76,7 @@ public class AlgorithmGear_S2 extends AlgorithmBase implements Algorithm_S2 {
             currentParameters[i] = getCorrected(i, deltaAcceleration, deltaTime);
         }
 
-        next.setPosition(currentParameters[0]);
+        next.setPosition(((currentParameters[0] % (2*Math.PI)) + 2*Math.PI) % (2 * Math.PI));
         next.setVelocity(currentParameters[1]);
         next.setAcceleration(currentParameters[2]);
         return next;
