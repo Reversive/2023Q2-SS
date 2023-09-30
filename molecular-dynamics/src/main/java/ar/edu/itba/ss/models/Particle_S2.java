@@ -126,4 +126,12 @@ public class Particle_S2 {
     public void setAcceleration(double acceleration) {
         this.angularAcceleration = acceleration;
     }
+
+    public double getUi() {
+        return ui;
+    }
+
+    public void setUi(double ui) {
+        this.ui = ui;
+    }
 }

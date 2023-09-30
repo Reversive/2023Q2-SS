@@ -43,7 +43,7 @@ public class AlgorithmGear_S2 extends AlgorithmBase implements Algorithm_S2 {
     }
 
     private double deltaAcceleration(Map<Integer, Particle_S2> previousMap, Particle_S2 current, double deltaTime) {
-        double Fi = (current.getPosition()/R - current.getVelocity())/REACTION_TIME;
+        double Fi = (current.getUi()/R - current.getVelocity())/REACTION_TIME;
         double Fij = 0.0;
         double prevArc;
         double currentArc = current.getPosition() * R;
