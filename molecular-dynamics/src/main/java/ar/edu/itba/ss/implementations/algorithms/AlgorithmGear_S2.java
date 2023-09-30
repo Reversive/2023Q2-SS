@@ -51,7 +51,7 @@ public class AlgorithmGear_S2 extends AlgorithmBase implements Algorithm_S2 {
             if(p.getId() == current.getId())
                 continue;
             prevArc = p.getPosition() * R;
-            if(Math.min(Math.abs(currentArc-prevArc), maxRad - Math.abs(currentArc-prevArc)) <= 2*p.getRadius())
+            if(Math.min(Math.abs(currentArc-prevArc), (maxRad*R) - Math.abs(currentArc-prevArc)) <= 2*p.getRadius())
                 Fij += K * (Math.abs(p.getPosition()-current.getPosition()) - (2*p.getRadius())/R) * Math.signum(p.getPosition()-current.getPosition());
         }
         double nextAcc = (Fi + Fij) / current.getMass();

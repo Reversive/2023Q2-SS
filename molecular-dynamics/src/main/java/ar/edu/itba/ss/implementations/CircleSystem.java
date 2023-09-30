@@ -36,10 +36,12 @@ public class CircleSystem {
             Particle_S2 next;
 
             while(t < tf) {
+                if(i % steps == 0) {
+                    data.write(particles.size() + '\n');
+                }
                 for(Particle_S2 current : particles) {
                     next = algorithm.update(previousMap, current, dt, t);
                     if(i % steps == 0) {
-                        data.write(particles.size() + '\n');
                         data.write(t + " " + current.getId() +  " " + current.getPosition() + "\n");
                     }
                     currentMap.put(next.getId(), next);

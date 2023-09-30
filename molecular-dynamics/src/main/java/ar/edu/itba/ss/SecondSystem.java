@@ -3,7 +3,6 @@ package ar.edu.itba.ss;
 
 import ar.edu.itba.ss.implementations.CircleSystem;
 import ar.edu.itba.ss.implementations.algorithms.AlgorithmFactory;
-import ar.edu.itba.ss.interfaces.Algorithm;
 import ar.edu.itba.ss.interfaces.Algorithm_S2;
 import ar.edu.itba.ss.models.AlgorithmType;
 import ar.edu.itba.ss.models.Particle_S2;
@@ -77,7 +76,7 @@ public class SecondSystem {
         double currentArc;
         for(Particle_S2 p : particles) {
             currentArc = p.getPosition() * R;
-            if(Math.min(Math.abs(currentArc-newArc), maxRad - Math.abs(currentArc-newArc)) <= 2*r)
+            if(Math.min(Math.abs(currentArc-newArc), (maxRad*R) - Math.abs(currentArc-newArc)) <= 2*r)
                 return true;
         }
         return false;
