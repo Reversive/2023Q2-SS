@@ -50,9 +50,10 @@ public class AlgorithmGear_S2 extends AlgorithmBase implements Algorithm_S2 {
                 continue;
             double angularDistance = Math.min(maxRad - Math.abs(p.getPosition() - predictedParameters[0]) , Math.abs(p.getPosition() - predictedParameters[0]));
             if(R*angularDistance <= 2*p.getRadius()) {
-                if((p.getPosition() <= 1 && predictedParameters[0] >= 5) ||
-                        (predictedParameters[0]  <= 1 && p.getPosition() >= 5))
-                    Fij += -1 * K * (Math.abs(p.getPosition()- predictedParameters[0]) - (2*p.getRadius())/R) * Math.signum(p.getPosition()- predictedParameters[0]);
+                if(p.getPosition() <= 1 && predictedParameters[0] >= 5)
+                    Fij += K * (Math.abs((p.getPosition() + 2*Math.PI) - predictedParameters[0]) - (2*p.getRadius())/R) * Math.signum((p.getPosition() + 2*Math.PI) - predictedParameters[0]);
+                else if(predictedParameters[0]  <= 1 && p.getPosition() >= 5)
+                    Fij += K * (Math.abs(p.getPosition()- (predictedParameters[0] + 2*Math.PI)) - (2*p.getRadius())/R) * Math.signum(p.getPosition() - (predictedParameters[0] + 2*Math.PI));
                 else
                     Fij += K * (Math.abs(p.getPosition()- predictedParameters[0]) - (2*p.getRadius())/R) * Math.signum(p.getPosition()- predictedParameters[0]);
             }
