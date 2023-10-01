@@ -12,6 +12,7 @@ import java.util.stream.LongStream;
 public class AlgorithmGear_S2 extends AlgorithmBase implements Algorithm_S2 {
 
     private static final double[] COEFFICIENTS = {3.0/20, 251.0/360, 1.0, 11.0/18, 1.0/6, 1.0/60};
+    //  TODO estos coeficientes estan bien?
     private final double[] currentParameters;
     private final double[] predictedParameters;
     private static final double REACTION_TIME = 1.0;
@@ -43,16 +44,16 @@ public class AlgorithmGear_S2 extends AlgorithmBase implements Algorithm_S2 {
     }
 
     private double deltaAcceleration(Map<Integer, Particle_S2> previousMap, Particle_S2 current, double deltaTime) {
-        double Fi = (current.getUi()/R - current.getVelocity())/REACTION_TIME;
+        double Fi = (current.getUi()/R - predictedParameters[1])/REACTION_TIME;
         double Fij = 0.0;
         double prevArc;
-        double currentArc = current.getPosition() * R;
+        double currentArc = predictedParameters[0] * R;
         for(Particle_S2 p : previousMap.values()) {
             if(p.getId() == current.getId())
                 continue;
             prevArc = p.getPosition() * R;
             if(Math.min(Math.abs(currentArc-prevArc), (maxRad*R) - Math.abs(currentArc-prevArc)) <= 2*p.getRadius())
-                Fij += K * (Math.abs(p.getPosition()-current.getPosition()) - (2*p.getRadius())/R) * Math.signum(p.getPosition()-current.getPosition());
+                Fij += K * (Math.abs(p.getPosition()- predictedParameters[0]) - (2*p.getRadius())/R) * Math.signum(p.getPosition()- predictedParameters[0]);
         }
         double nextAcc = (Fi + Fij) / current.getMass();
         return (nextAcc - predictedParameters[2]) * Math.pow(deltaTime, 2)/2;
