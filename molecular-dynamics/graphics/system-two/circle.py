@@ -34,15 +34,30 @@ def init():
     return particles
 
 def animate(i):
+    plt.axis('equal')  # Set the aspect ratio to make it a perfect circle
+    plt.xlim(-35, 35)  # Adjust the limits to match the circle's radius and center
+    plt.ylim(-35, 35)
+    plt.xticks([])  # Removes tick labels on the x-axis
+    plt.yticks([])
+    plt.xlabel(None)
+    plt.ylabel(None)
+
     for j in range(len(positions[0])):
-        x = 2.25*math.cos(positions[i][j])
-        y = 2.25*math.sin(positions[i][j])
+        x = 21.49*math.cos(positions[i][j])
+        y = 21.49*math.sin(positions[i][j])
         particles[j].set_data(x, y)
     return particles
+
+plt.xlabel(None)
+plt.ylabel(None)
+plt.xticks([])
+plt.yticks([])
 
 # cambiar el interval si queres que vaya mas lento/rapido
 anim = animation.FuncAnimation(fig, animate, init_func=init,
                                     frames=len(positions), interval=50, blit=True)
 
-plt.show()
+anim.save('circle.gif', writer='pillow', fps=60, dpi=300)
+
+# plt.show()
 
