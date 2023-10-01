@@ -55,7 +55,7 @@ public class AlgorithmGear_S2 extends AlgorithmBase implements Algorithm_S2 {
                 else if(predictedParameters[0]  <= 1 && p.getPosition() >= 5)
                     Fij += K * ((Math.abs(p.getPosition()- (predictedParameters[0] + 2*Math.PI)) - (2*p.getRadius())/R)) * Math.signum(p.getPosition() - (predictedParameters[0] + 2*Math.PI));
                 else
-                    Fij += K * ((Math.abs(p.getPosition()- predictedParameters[0]) - (2*p.getRadius())/R)) * Math.signum(p.getPosition()- predictedParameters[0]);
+                    Fij += K * ((Math.abs(p.getPosition()- predictedParameters[0]) - (2*p.getRadius())/R)) * Math.signum(p.getPosition() - predictedParameters[0]);
             }
         }
         double nextAcc = (Fi + Fij) / current.getMass();
