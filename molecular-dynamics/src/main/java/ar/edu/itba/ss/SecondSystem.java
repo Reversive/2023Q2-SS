@@ -76,7 +76,7 @@ public class SecondSystem {
     private static boolean isColliding(double position, List<Particle_S2> particles) {
         for(Particle_S2 p : particles) {
             double angularDistance = Math.min(maxRad - Math.abs(p.getPosition() - position) , Math.abs(p.getPosition() - position));
-            if(angularDistance * R <= 2*r)
+            if(angularDistance * R < 2*r)
                 return true;
         }
         return false;
