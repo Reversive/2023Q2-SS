@@ -49,8 +49,13 @@ public class AlgorithmGear_S2 extends AlgorithmBase implements Algorithm_S2 {
             if(p.getId() == current.getId())
                 continue;
             double angularDistance = Math.min(maxRad - Math.abs(p.getPosition() - predictedParameters[0]) , Math.abs(p.getPosition() - predictedParameters[0]));
-            if(R*angularDistance <= 2*p.getRadius())
-                Fij += K * (Math.abs(p.getPosition()- predictedParameters[0]) - (2*p.getRadius())/R) * Math.signum(p.getPosition()- predictedParameters[0]);
+            if(R*angularDistance <= 2*p.getRadius()) {
+                if((p.getPosition() <= 1 && predictedParameters[0] >= 5) ||
+                        (predictedParameters[0]  <= 1 && p.getPosition() >= 5))
+                    Fij += -1 * K * (Math.abs(p.getPosition()- predictedParameters[0]) - (2*p.getRadius())/R) * Math.signum(p.getPosition()- predictedParameters[0]);
+                else
+                    Fij += K * (Math.abs(p.getPosition()- predictedParameters[0]) - (2*p.getRadius())/R) * Math.signum(p.getPosition()- predictedParameters[0]);
+            }
         }
         double nextAcc = (Fi + Fij) / current.getMass();
         return (nextAcc - predictedParameters[2]) * Math.pow(deltaTime, 2)/2;
@@ -68,6 +73,8 @@ public class AlgorithmGear_S2 extends AlgorithmBase implements Algorithm_S2 {
         for (int i = 0; i < 6; i++) {
             predictedParameters[i] = predictByTaylor(deltaTime, i);
         }
+
+        predictedParameters[0] = (( predictedParameters[0] % (2*Math.PI)) + 2*Math.PI) % (2 * Math.PI);
 
         double deltaAcceleration = deltaAcceleration(previousMap, current, deltaTime);
         for (int i = 0; i < 6; i++) {
