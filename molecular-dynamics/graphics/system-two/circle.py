@@ -22,7 +22,7 @@ with open('particles.txt') as f:
         
 
 fig = plt.figure()
-ax = plt.axes(xlim=(-2.5, 2.5), ylim=(-2.5, 2.5))
+ax = plt.axes(xlim=(-25, 25), ylim=(-25, 25))
 particles = []
 for i in range(len(positions[0])):
     particle, = ax.plot([], [], 'bo', ms=6)
@@ -42,10 +42,16 @@ def animate(i):
     plt.xlabel(None)
     plt.ylabel(None)
 
+    particle_radius = 2.25
+
     for j in range(len(positions[0])):
         x = 21.49*math.cos(positions[i][j])
         y = 21.49*math.sin(positions[i][j])
         particles[j].set_data(x, y)
+        particles[j].set_markersize(particle_radius * 2)  # Set marker size based on particle radius
+
+    circle = plt.Circle((0, 0), 21.49, color='black', fill=False, linestyle='-', linewidth=0.5)
+    ax.add_artist(circle)
     return particles
 
 plt.xlabel(None)
