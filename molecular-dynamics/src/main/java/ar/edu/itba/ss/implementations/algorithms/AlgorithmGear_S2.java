@@ -12,12 +12,12 @@ import java.util.stream.LongStream;
 public class AlgorithmGear_S2 extends AlgorithmBase implements Algorithm_S2 {
 
     private static final double[] COEFFICIENTS = {3.0/16, 251.0/360, 1.0, 11.0/18, 1.0/6, 1.0/60};
+
     private final double[] currentParameters;
     private final double[] predictedParameters;
     private static final double REACTION_TIME = 1.0;
     private static final double K = 2500;
     private static final double R = 21.49;
-    private static final double minRad = 0.0;
     private static final double maxRad = 2 * Math.PI;
 
     public AlgorithmGear_S2() {

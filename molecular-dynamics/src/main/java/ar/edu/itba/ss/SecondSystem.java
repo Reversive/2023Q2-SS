@@ -15,7 +15,7 @@ public class SecondSystem {
 
     private static final int TF = 180;
     private static final int STEPS = 1; // TODO
-    private static final int N = 15;
+    private static final int N = 3;
     private static final double r = 2.25;
     private static final double m = 25;
     private static final double R = 21.49;
@@ -24,8 +24,8 @@ public class SecondSystem {
     private static final double minUi = 9.0;
     private static final double maxUi = 12.0;
     static BigDecimal MIN_DT = BigDecimal.valueOf(0.00001);
-    static BigDecimal MAX_DT = BigDecimal.valueOf(0.1);
-    static BigDecimal DT = BigDecimal.valueOf(0.1);
+    static BigDecimal MAX_DT = BigDecimal.valueOf(0.01);
+    static BigDecimal DT = BigDecimal.valueOf(0.01);
 
     public static void main(String[] args) {
 
