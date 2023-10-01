@@ -1,69 +1,59 @@
-# i have a circle of radius R
-# i have N particles inside the circle, i have the angle of each particle
-# i have for the N particles, for a time step, the new angle of each particle
-# make the animation of the particles moving
-
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.animation as animation
-import math
-import random
+from matplotlib.animation import FuncAnimation
 
 with open('particles.txt') as f:
     content = f.readlines()
     content = [x.strip() for x in content]
     positions = []
-    for i in range(0,len(content),16):
+    for i in range(0,len(content),11):
         angles = []
-        for j in range(1,16):
+        for j in range(1,11):
             angle = content[i+j].split(' ')[1]
             angles.append(float(angle))
         positions.append(angles)
-        
 
-fig = plt.figure()
-ax = plt.axes(xlim=(-25, 25), ylim=(-25, 25))
-particles = []
-for i in range(len(positions[0])):
-    particle, = ax.plot([], [], 'bo', ms=6)
-    particles.append(particle)
+# Parameters
+circle_radius = 21.49  # cm
+particle_radius_cm = 2.25  # cm
+total_time = 180  # seconds
+time_step = 0.01  # Decreased time step for faster animation
+n_particles = len(positions[0])  # Number of particles based on your data
 
-def init():
-    for i in range(len(positions[0])):
-        particles[i].set_data([], [])
-    return particles
+# Calculate the number of time steps
+num_steps = int(total_time / time_step)
 
-def animate(i):
-    plt.axis('equal')  # Set the aspect ratio to make it a perfect circle
-    plt.xlim(-35, 35)  # Adjust the limits to match the circle's radius and center
-    plt.ylim(-35, 35)
-    plt.xticks([])  # Removes tick labels on the x-axis
-    plt.yticks([])
-    plt.xlabel(None)
-    plt.ylabel(None)
+# Function to update the animation
+def update(frame):
+    plt.clf()
 
-    particle_radius = 2.25
+    # Get particle angles for the current time step
+    angles = positions[frame]
 
-    for j in range(len(positions[0])):
-        x = 21.49*math.cos(positions[i][j])
-        y = 21.49*math.sin(positions[i][j])
-        particles[j].set_data(x, y)
-        particles[j].set_markersize(particle_radius * 2)  # Set marker size based on particle radius
+    # Calculate particle positions
+    x = circle_radius * np.cos(angles)
+    y = circle_radius * np.sin(angles)
 
-    circle = plt.Circle((0, 0), 21.49, color='black', fill=False, linestyle='-', linewidth=0.5)
-    ax.add_artist(circle)
-    return particles
+    # Plot the circle
+    circle = plt.Circle((0, 0), circle_radius, color='black', fill=False, linewidth=0.5)
+    plt.gca().add_patch(circle)
 
-plt.xlabel(None)
-plt.ylabel(None)
-plt.xticks([])
-plt.yticks([])
+    # Plot the particles as circles with the correct size
+    for i in range(n_particles):
+        particle = plt.Circle((x[i], y[i]), particle_radius_cm, color='blue', fill=True)
+        plt.gca().add_patch(particle)
 
-# cambiar el interval si queres que vaya mas lento/rapido
-anim = animation.FuncAnimation(fig, animate, init_func=init,
-                                    frames=len(positions), interval=50, blit=True)
+    # Set plot limits and remove axis labels and ticks
+    plt.xlim(-circle_radius * 1.1, circle_radius * 1.1)
+    plt.ylim(-circle_radius * 1.1, circle_radius * 1.1)
+    plt.gca().set_aspect('equal', adjustable='box')
+    plt.axis('off')
 
-anim.save('circle.gif', writer='pillow', fps=60, dpi=300)
+    return circle
 
-# plt.show()
+fig, ax = plt.subplots()
+ani = FuncAnimation(fig, update, frames=num_steps, repeat=False, interval=1)
 
+# ani.save('circle.gif', writer='pillow', fps=30, dpi=50)
+
+plt.show()
