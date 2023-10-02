@@ -4,6 +4,7 @@ public class Particle_S2 {
     private int id;
     private double mass;
     private double radius;
+    private double angle;
     private double position;
     private double angularVelocity;
     private double angularAcceleration;
@@ -13,6 +14,7 @@ public class Particle_S2 {
         this.id = builder.id;
         this.mass = builder.mass;
         this.radius = builder.radius;
+        this.angle = builder.angle;
         this.position = builder.position;
         this.angularVelocity = builder.angularVelocity;
         this.angularAcceleration = builder.angularAcceleration;
@@ -23,6 +25,7 @@ public class Particle_S2 {
         private int id;
         private double mass;
         private double radius;
+        private double angle;
         private double position;
         private double angularVelocity;
         private double angularAcceleration;
@@ -53,6 +56,11 @@ public class Particle_S2 {
             return this;
         }
 
+        public Builder withAngle(double ang) {
+            this.angle = ang;
+            return this;
+        }
+
         public Builder withVelocity(double vel) {
             this.angularVelocity = vel;
             return this;
@@ -68,6 +76,7 @@ public class Particle_S2 {
             this.ui = particle.ui;
             this.angularAcceleration = particle.angularAcceleration;
             this.position = particle.position;
+            this.angle = particle.angle;
             this.angularVelocity = particle.angularVelocity;
             this.mass = particle.mass;
             this.radius = particle.radius;
@@ -103,12 +112,12 @@ public class Particle_S2 {
         this.radius = radius;
     }
 
-    public double getPosition() {
-        return position;
+    public double getAngle() {
+        return angle;
     }
 
-    public void setPosition(double position) {
-        this.position = position;
+    public void setAngle(double angle) {
+        this.angle = angle;
     }
 
     public double getVelocity() {
@@ -133,5 +142,13 @@ public class Particle_S2 {
 
     public void setUi(double ui) {
         this.ui = ui;
+    }
+
+    public double getPosition() {
+        return position;
+    }
+
+    public void setPosition(double position) {
+        this.position = position;
     }
 }

@@ -52,6 +52,7 @@ public class SecondSystem {
                         .withRadius(r)
                         .withVelocity(ui / R)
                         .withPosition(nextPosition)
+                        .withAngle(nextPosition)
                         .withAcceleration(0)
                         .build());
             }
@@ -66,6 +67,7 @@ public class SecondSystem {
                         .withRadius(r)
                         .withVelocity(ui / R)
                         .withPosition(nextPosition)
+                        .withAngle(nextPosition)
                         .withAcceleration(0)
                         .build());
             }
@@ -93,7 +95,7 @@ public class SecondSystem {
 
     private static boolean isColliding(double position, List<Particle_S2> particles) {
         for(Particle_S2 p : particles) {
-            double angularDistance = Math.min(maxRad - Math.abs(p.getPosition() - position) , Math.abs(p.getPosition() - position));
+            double angularDistance = Math.min(maxRad - Math.abs(p.getAngle() - position) , Math.abs(p.getAngle() - position));
             if(angularDistance * R < 2*r)
                 return true;
         }
