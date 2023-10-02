@@ -15,7 +15,7 @@ public class SecondSystem {
 
     private static final int TF = 180;
     private static final int STEPS = 1;
-    private static final int N = 25;
+    private static final int N = 15;
     private static final double r = 2.25;
     private static final double m = 25;
     private static final double R = 21.49;
@@ -37,22 +37,38 @@ public class SecondSystem {
 
         double nextPosition;
         double ui;
-        for(int i = 0; i < N; i++) {
-            do {
-                nextPosition = minRad + (Math.random() * (maxRad - minRad));
-                if(nextPosition == maxRad)
-                    nextPosition = 0;
-            } while(isColliding(nextPosition, immutableParticles));
-            ui = minUi + (Math.random() * (maxUi - minUi));
-            immutableParticles.add(new Particle_S2.Builder()
-                            .withId(i)
-                            .withUi(ui)
-                            .withMass(m)
-                            .withRadius(r)
-                            .withVelocity(ui/R)
-                            .withPosition(nextPosition)
-                            .withAcceleration(0)
-                    .build());
+        if(N <= 22) {
+            for (int i = 0; i < N; i++) {
+                do {
+                    nextPosition = minRad + (Math.random() * (maxRad - minRad));
+                    if (nextPosition == maxRad)
+                        nextPosition = 0;
+                } while (isColliding(nextPosition, immutableParticles));
+                ui = minUi + (Math.random() * (maxUi - minUi));
+                immutableParticles.add(new Particle_S2.Builder()
+                        .withId(i)
+                        .withUi(ui)
+                        .withMass(m)
+                        .withRadius(r)
+                        .withVelocity(ui / R)
+                        .withPosition(nextPosition)
+                        .withAcceleration(0)
+                        .build());
+            }
+        } else {
+            for (int i = 0; i < N; i++) {
+                nextPosition = maxRad * i / N ;
+                ui = minUi + (Math.random() * (maxUi - minUi));
+                immutableParticles.add(new Particle_S2.Builder()
+                        .withId(i)
+                        .withUi(ui)
+                        .withMass(m)
+                        .withRadius(r)
+                        .withVelocity(ui / R)
+                        .withPosition(nextPosition)
+                        .withAcceleration(0)
+                        .build());
+            }
         }
         List<Particle_S2> particles;
 

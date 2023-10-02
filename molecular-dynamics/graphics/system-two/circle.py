@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
-particle_quantity = 21
+particle_quantity = 26
 # generate random colors based on particle quantity
 colors = []
 for i in range(particle_quantity):
