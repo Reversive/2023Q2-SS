@@ -2,13 +2,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
+particle_quantity = 21
+# generate random colors based on particle quantity
+colors = []
+for i in range(particle_quantity):
+    colors.append(np.random.rand(3,))
+print(colors)
+
 with open('particles.txt') as f:
     content = f.readlines()
     content = [x.strip() for x in content]
     positions = []
-    for i in range(0,len(content),11):
+    for i in range(0,len(content),particle_quantity):
         angles = []
-        for j in range(1,11):
+        for j in range(1,particle_quantity):
             angle = content[i+j].split(' ')[1]
             angles.append(float(angle))
         positions.append(angles)
@@ -40,7 +47,7 @@ def update(frame):
 
     # Plot the particles as circles with the correct size
     for i in range(n_particles):
-        particle = plt.Circle((x[i], y[i]), particle_radius_cm, color='blue', fill=True)
+        particle = plt.Circle((x[i], y[i]), particle_radius_cm, color=colors[i], fill=True)
         plt.gca().add_patch(particle)
 
     # Set plot limits and remove axis labels and ticks
@@ -56,4 +63,4 @@ ani = FuncAnimation(fig, update, frames=num_steps, repeat=False, interval=1)
 
 # ani.save('circle.gif', writer='pillow', fps=30, dpi=50)
 
-plt.show()
+plt.show(block=False)

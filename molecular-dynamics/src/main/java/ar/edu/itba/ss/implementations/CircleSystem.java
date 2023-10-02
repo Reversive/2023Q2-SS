@@ -35,7 +35,7 @@ public class CircleSystem {
             }
             Particle_S2 next;
 
-            while(t < tf) {
+            while(t <= tf) {
                 if(i % steps == 0) {
                     data.write(t + "\n");
                 }
