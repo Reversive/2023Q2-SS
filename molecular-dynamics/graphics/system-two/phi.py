@@ -49,6 +49,8 @@ print(len(phi_total[1]))
 print(len(phi_total[2]))
 print(len(phi_total[3]))
 
+legend_labels = ['k = {}'.format(i+1) for i in range(len(phi_total))]
+
 colors = []
 for i in range(4):
     colors.append(np.random.rand(3,))
@@ -56,11 +58,13 @@ for i in range(4):
 
 for i in range(len(phi_total)):
     # plot with different colors
-    plt.plot(np.arange(0,180,0.1),phi_total[i],color=colors[i])
+    plt.plot(np.arange(0,180,0.1),phi_total[i],color=colors[i], label=legend_labels[i])
 
-plt.xlabel('Time (s)')
-plt.ylabel('Phi')
-plt.title('Phi vs Time')
+plt.xlabel('Tiempo (s)',  fontsize = 15)
+plt.ylabel('Φ', fontsize = 15)
+plt.xticks(fontsize = 15)
+plt.yticks(fontsize = 15)
+plt.legend(fontsize = 15)
 plt.show()
 
 
