@@ -61,7 +61,7 @@ for i in range(len(phi_total)):
     plt.plot(np.arange(0,180,0.1),phi_total[i],color=colors[i], label=legend_labels[i])
 
 plt.xlabel('Tiempo (s)',  fontsize = 15)
-plt.ylabel('Φ', fontsize = 15)
+plt.ylabel(''r'$\phi$', fontsize = 15)
 plt.xticks(fontsize = 15)
 plt.yticks(fontsize = 15)
 plt.legend(fontsize = 15)
