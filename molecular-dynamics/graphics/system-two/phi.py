@@ -34,7 +34,8 @@ for k in range(4):
     for t in range(len(first_positions)):
         summation = 0
         for i in range(len(first_positions[t])):
-            summation += min(abs(np.array(first_positions[t][i]) - np.array(second_positions[t][i])),abs(2*np.pi - abs(np.array(second_positions[t][i]) - np.array(first_positions[t][i]))))
+            # do the norm 2 of 
+            summation += np.linalg.norm(min(np.array(first_positions[t][i]) - np.array(second_positions[t][i]),2*np.pi - abs(np.array(second_positions[t][i]) - np.array(first_positions[t][i]))))
         phi.append(summation)
     phi.pop()
     phi_total.append(phi)
@@ -48,8 +49,10 @@ for i in range(4):
 
 
 for i in range(len(phi_total)):
-    # plot with different colors
-    plt.plot(np.arange(0,180,0.1),phi_total[i],color=colors[i], label=legend_labels[i])
+    # plot with different colors, make y axis log scale, originally y axis went from 0 to 180 with 0.1 step size
+    plt.plot(np.arange(0,180,0.1),phi_total[i], label = legend_labels[i], color = colors[i])
+    #plt.yscale('log')
+
 
 plt.xlabel('Tiempo (s)',  fontsize = 20)
 plt.ylabel(''r'$\phi$', fontsize = 20)
