@@ -40,15 +40,6 @@ for k in range(4):
     phi_total.append(phi)
     
 
-# plot all the phi values from 0 to 180 seconds with a time step of 0.1 seconds, for each of the 8 trials, each one with different colors
-# plot phi vs time for each trial
-
-# print phi_total lengths
-print(len(phi_total[0]))
-print(len(phi_total[1]))
-print(len(phi_total[2]))
-print(len(phi_total[3]))
-
 legend_labels = ['k = {}'.format(i+1) for i in range(len(phi_total))]
 
 colors = []

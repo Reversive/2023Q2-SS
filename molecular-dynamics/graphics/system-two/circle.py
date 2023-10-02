@@ -9,7 +9,7 @@ for i in range(particle_quantity):
     colors.append(np.random.rand(3,))
 print(colors)
 
-with open('particles.txt') as f:
+with open('particles_4.txt') as f:
     content = f.readlines()
     content = [x.strip() for x in content]
     positions = []
