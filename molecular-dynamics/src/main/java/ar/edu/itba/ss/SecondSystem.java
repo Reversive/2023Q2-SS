@@ -15,7 +15,7 @@ public class SecondSystem {
 
     private static final int TF = 180;
     private static final int STEPS = 1;
-    private static final int N = 25;
+    private static final int N = 5;
     private static final double r = 2.25;
     private static final double m = 25;
     private static final double R = 21.49;
@@ -77,18 +77,17 @@ public class SecondSystem {
         AlgorithmType currentAlgorithm = AlgorithmType.GEAR_PREDICTOR_CORRECTOR_S2;
         Algorithm_S2 algorithm = AlgorithmFactory.buildAlgorithmS2(currentAlgorithm, 0,0);
         CircleSystem circleSystem = new CircleSystem(algorithm, TF);
-        int i = 4;
         //for(BigDecimal dt = MIN_DT; dt.compareTo(MAX_DT) <= 0; dt = dt.multiply(BigDecimal.TEN)) {
         particles = new ArrayList<>(immutableParticles);
-        circleSystem.simulate(0.00001, particles, STEPS*Math.pow(10,i--));
-        particles = new ArrayList<>(immutableParticles);
-        circleSystem.simulate(0.0001, particles, STEPS*Math.pow(10,i--));
-        particles = new ArrayList<>(immutableParticles);
-        circleSystem.simulate(0.001, particles, STEPS*Math.pow(10,i--));
-        particles = new ArrayList<>(immutableParticles);
-        circleSystem.simulate(0.01, particles, STEPS*Math.pow(10,i--));
-        particles = new ArrayList<>(immutableParticles);
-        circleSystem.simulate(0.1, particles, STEPS*Math.pow(10,i--));
+        circleSystem.simulate(0.1, particles, STEPS*Math.pow(10, 0));
+//        particles = new ArrayList<>(immutableParticles);
+//        circleSystem.simulate(0.0001, particles, STEPS*Math.pow(10,i--));
+//        particles = new ArrayList<>(immutableParticles);
+//        circleSystem.simulate(0.001, particles, STEPS*Math.pow(10,i--));
+//        particles = new ArrayList<>(immutableParticles);
+//        circleSystem.simulate(0.01, particles, STEPS*Math.pow(10,i--));
+//        particles = new ArrayList<>(immutableParticles);
+//        circleSystem.simulate(0.1, particles, STEPS*Math.pow(10,i--));
         //}
 
     }

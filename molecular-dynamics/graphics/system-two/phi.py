@@ -51,7 +51,7 @@ for i in range(4):
 for i in range(len(phi_total)):
     # plot with different colors, make y axis log scale, originally y axis went from 0 to 180 with 0.1 step size
     plt.plot(np.arange(0,180,0.1),phi_total[i], label = legend_labels[i], color = colors[i])
-    #plt.yscale('log')
+    plt.yscale('log')
 
 
 plt.xlabel('Tiempo (s)',  fontsize = 20)

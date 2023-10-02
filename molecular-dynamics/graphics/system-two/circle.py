@@ -61,6 +61,6 @@ def update(frame):
 fig, ax = plt.subplots()
 ani = FuncAnimation(fig, update, frames=num_steps, repeat=False, interval=1)
 
-# ani.save('circle.gif', writer='pillow', fps=30, dpi=50)
+ani.save('circle.gif', writer='pillow', fps=30, dpi=50)
 
-plt.show(block=False)
+#plt.show(block=False)
