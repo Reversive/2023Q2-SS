@@ -20,8 +20,8 @@ public class CircleSystem {
     }
 
     public void simulate(double dt, List<Particle_S2> particles, double steps) {
-        File file = new File("circle/data/" + algorithm.getName() + "_" + BigDecimal.valueOf(dt) + ".txt");
-//      File file = new File("circle/data/velocities_" + particles.size() + ".txt");
+//        File file = new File("circle/data/" + algorithm.getName() + "_" + BigDecimal.valueOf(dt) + ".txt");
+      File file = new File("circle/data/velocities_" + particles.size() + ".txt");
         try(FileWriter data = new FileWriter(file)) {
 
             double t = 0;
@@ -42,7 +42,7 @@ public class CircleSystem {
                 }
                 for (Particle_S2 current : previousMap.values()) {
                     if (i % steps == 0) {
-                        data.write(current.getId() + " " + current.getPosition() + "\n");
+                        data.write(current.getId() + " " + current.getVelocity() + "\n");
                     }
                     next = algorithm.update(previousMap, current, dt, t);
                     currentMap.put(next.getId(), next);
@@ -53,7 +53,7 @@ public class CircleSystem {
             }
             data.write(180 + "\n");
             for(Particle_S2 p : previousMap.values()) {
-                data.write( p.getId() +  " " + p.getPosition() + "\n");
+                data.write( p.getId() +  " " + p.getVelocity() + "\n");
             }
         } catch (Exception e) {
             e.printStackTrace();
