@@ -17,8 +17,8 @@ public class AlgorithmGear_S2 extends AlgorithmBase implements Algorithm_S2 {
     private final double[] predictedParameters;
     private static final double REACTION_TIME = 1.0;
     private static final double K = 2500;
-    private static final double R = 21.49;
-    private static final double maxRad = 2 * Math.PI;
+    // private static final double R = 21.49;
+    private static final double maxPosition = 135;
 
     public AlgorithmGear_S2() {
         super(0, 0, AlgorithmType.GEAR_PREDICTOR_CORRECTOR);
@@ -43,22 +43,22 @@ public class AlgorithmGear_S2 extends AlgorithmBase implements Algorithm_S2 {
     }
 
     private double deltaAcceleration(Map<Integer, Particle_S2> previousMap, Particle_S2 current, double deltaTime) {
-        double Fi = (current.getUi()/R - predictedParameters[1])/REACTION_TIME;
+        double Fi = (current.getUi() - predictedParameters[1])/REACTION_TIME;
         double Fij = 0.0;
-        double currentAngle = ((predictedParameters[0] % (2*Math.PI)) + 2*Math.PI) % (2 * Math.PI);
+        double currentAngle = ((predictedParameters[0] % (maxPosition)) + maxPosition) % (maxPosition);
 
         for(Particle_S2 p : previousMap.values()) {
             if(p.getId() == current.getId())
                 continue;
 
-            double angularDistance = Math.min(maxRad - Math.abs(p.getAngle() - currentAngle) , Math.abs(p.getAngle() - currentAngle));
-            if(R*angularDistance < 2*p.getRadius()) {
-                if(p.getAngle() <= 1 && currentAngle >= 5)
-                    Fij += K * ((Math.abs((p.getAngle() + 2*Math.PI) - currentAngle) - (2*p.getRadius())/R)) * Math.signum((p.getAngle() + 2*Math.PI) - currentAngle);
-                else if(currentAngle  <= 1 && p.getAngle() >= 5)
-                    Fij += K * ((Math.abs(p.getAngle()- (currentAngle + 2*Math.PI)) - (2*p.getRadius())/R)) * Math.signum(p.getAngle() - (currentAngle + 2*Math.PI));
+            double angularDistance = Math.min(maxPosition - Math.abs(p.getAngle() - currentAngle) , Math.abs(p.getAngle() - currentAngle));
+            if(angularDistance < 2*p.getRadius()) {
+                if(p.getAngle() <= 10 && currentAngle >= 125)
+                    Fij += K * (angularDistance - 2*p.getRadius()) * 1;
+                else if(currentAngle  <= 10 && p.getAngle() >= 125)
+                    Fij += K * (angularDistance - 2*p.getRadius()) * -1;
                 else
-                    Fij += K * ((Math.abs(p.getAngle()- currentAngle) - (2*p.getRadius())/R)) * Math.signum(p.getAngle() - currentAngle);
+                    Fij += K * (angularDistance- 2*p.getRadius()) * Math.signum(p.getAngle() - currentAngle);
             }
         }
         double nextAcc = (Fi + Fij) / current.getMass();
@@ -84,12 +84,11 @@ public class AlgorithmGear_S2 extends AlgorithmBase implements Algorithm_S2 {
         }
 
         next.setPosition(currentParameters[0]);
-        next.setAngle(((currentParameters[0] % (2*Math.PI)) + 2*Math.PI) % (2 * Math.PI));
+        next.setAngle(((currentParameters[0] % (maxPosition)) + maxPosition) % (maxPosition));
         next.setVelocity(currentParameters[1]);
         next.setAcceleration(currentParameters[2]);
         return next;
     }
-
     @Override
     public Particle update(Particle previous, Particle current, double deltaTime, double currentTime) {
         // DO NOT USE
