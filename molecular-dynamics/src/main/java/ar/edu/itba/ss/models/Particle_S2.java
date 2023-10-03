@@ -9,6 +9,10 @@ public class Particle_S2 {
     private double angularVelocity;
     private double angularAcceleration;
     private double ui;
+    private double X3;
+    private double X4;
+    private double X5;
+
 
     private Particle_S2(Builder builder) {
         this.id = builder.id;
@@ -19,6 +23,9 @@ public class Particle_S2 {
         this.angularVelocity = builder.angularVelocity;
         this.angularAcceleration = builder.angularAcceleration;
         this.ui = builder.ui;
+        this.X3 = builder.X3;
+        this.X4 = builder.X4;
+        this.X5 = builder.X5;
     }
 
     public static class Builder {
@@ -30,6 +37,9 @@ public class Particle_S2 {
         private double angularVelocity;
         private double angularAcceleration;
         private double ui;
+        private double X3;
+        private double X4;
+        private double X5;
 
         public Builder withUi(double ui) {
             this.ui = ui;
@@ -71,6 +81,21 @@ public class Particle_S2 {
             return this;
         }
 
+        public Builder withX3(double x3) {
+            this.X3 = x3;
+            return this;
+        }
+
+        public Builder withX4(double x4) {
+            this.X4 = x4;
+            return this;
+        }
+
+        public Builder withX5(double x5) {
+            this.X5 = x5;
+            return this;
+        }
+
         public Builder cloneParticle(Particle_S2 particle) {
             this.id = particle.id;
             this.ui = particle.ui;
@@ -80,6 +105,9 @@ public class Particle_S2 {
             this.angularVelocity = particle.angularVelocity;
             this.mass = particle.mass;
             this.radius = particle.radius;
+            this.X3 = particle.getX3();
+            this.X4 = particle.getX4();
+            this.X5 = particle.getX5();
             return this;
         }
 
@@ -150,5 +178,29 @@ public class Particle_S2 {
 
     public void setPosition(double position) {
         this.position = position;
+    }
+
+    public double getX3() {
+        return X3;
+    }
+
+    public void setX3(double x3) {
+        X3 = x3;
+    }
+
+    public double getX4() {
+        return X4;
+    }
+
+    public void setX4(double x4) {
+        X4 = x4;
+    }
+
+    public double getX5() {
+        return X5;
+    }
+
+    public void setX5(double x5) {
+        X5 = x5;
     }
 }

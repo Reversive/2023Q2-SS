@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 phi_total = []
-for k in range(4):
+for k in range(3):
     first_positions = []
     second_positions = []
     particle_quantity = 26

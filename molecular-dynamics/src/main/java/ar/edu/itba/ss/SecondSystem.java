@@ -15,7 +15,7 @@ public class SecondSystem {
 
     private static final int TF = 180;
     private static final int STEPS = 1;
-    private static final int N = 30;
+    private static final int N = 25;
     private static final double r = 2.25;
     private static final double m = 25;
     private static final double R = 21.49;
@@ -28,9 +28,6 @@ public class SecondSystem {
 
     public static void main(String[] args) {
 
-        // TODO REVISAR CUANDO LA COLISION ENTRE DOS PARTICULAS SE DA CON EL 0 ENTRE MEDIO
-
-        // TODO Punto 2.1, 30 particulas entran justas, hay que hardcodearlas
         // TODO En el 2.2 hay que hacer un grafico donde se vean las 3 distribuciones y con N grande hace picos, pero con N bajo esta mas distribuida
 
         List<Particle_S2> immutableParticles = new ArrayList<>();
@@ -54,6 +51,9 @@ public class SecondSystem {
                         .withPosition(nextPosition)
                         .withAngle(nextPosition)
                         .withAcceleration(0)
+                        .withX3(0)
+                        .withX4(0)
+                        .withX5(0)
                         .build());
             }
         } else {
@@ -69,6 +69,9 @@ public class SecondSystem {
                         .withPosition(nextPosition)
                         .withAngle(nextPosition)
                         .withAcceleration(0)
+                        .withX3(0)
+                        .withX4(0)
+                        .withX5(0)
                         .build());
             }
         }
@@ -77,18 +80,24 @@ public class SecondSystem {
         AlgorithmType currentAlgorithm = AlgorithmType.GEAR_PREDICTOR_CORRECTOR_S2;
         Algorithm_S2 algorithm = AlgorithmFactory.buildAlgorithmS2(currentAlgorithm, 0,0);
         CircleSystem circleSystem = new CircleSystem(algorithm, TF);
-        //for(BigDecimal dt = MIN_DT; dt.compareTo(MAX_DT) <= 0; dt = dt.multiply(BigDecimal.TEN)) {
-//        particles = new ArrayList<>(immutableParticles);
-//        circleSystem.simulate(0.1, particles, STEPS*Math.pow(10, 0));
-//        particles = new ArrayList<>(immutableParticles);
-//        circleSystem.simulate(0.0001, particles, STEPS*Math.pow(10,i--));
+
+        int i = 4;
+        for(BigDecimal dt = MIN_DT; dt.compareTo(MAX_DT) <= 0; dt = dt.multiply(BigDecimal.TEN)) {
         particles = new ArrayList<>(immutableParticles);
-        circleSystem.simulate(0.0001, particles, STEPS*Math.pow(10,3));
+        circleSystem.simulate(0.00001, particles, STEPS*Math.pow(10,i--));
+        particles = new ArrayList<>(immutableParticles);
+        circleSystem.simulate(0.0001, particles, STEPS*Math.pow(10,i--));
+        particles = new ArrayList<>(immutableParticles);
+        circleSystem.simulate(0.001, particles, STEPS*Math.pow(10,i--));
+        particles = new ArrayList<>(immutableParticles);
+        circleSystem.simulate(0.01, particles, STEPS*Math.pow(10,i--));
+        particles = new ArrayList<>(immutableParticles);
+        circleSystem.simulate(0.1, particles, STEPS*Math.pow(10,i--));
+        }
+
+
 //        particles = new ArrayList<>(immutableParticles);
-//        circleSystem.simulate(0.01, particles, STEPS*Math.pow(10,i--));
-//        particles = new ArrayList<>(immutableParticles);
-//        circleSystem.simulate(0.1, particles, STEPS*Math.pow(10,i--));
-        //}
+//        circleSystem.simulate(0.0001, particles, STEPS*Math.pow(10,3));
 
     }
 
