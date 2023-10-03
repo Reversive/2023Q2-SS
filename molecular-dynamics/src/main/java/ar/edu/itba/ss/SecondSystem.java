@@ -78,12 +78,12 @@ public class SecondSystem {
         Algorithm_S2 algorithm = AlgorithmFactory.buildAlgorithmS2(currentAlgorithm, 0,0);
         CircleSystem circleSystem = new CircleSystem(algorithm, TF);
         //for(BigDecimal dt = MIN_DT; dt.compareTo(MAX_DT) <= 0; dt = dt.multiply(BigDecimal.TEN)) {
-        particles = new ArrayList<>(immutableParticles);
-        circleSystem.simulate(0.1, particles, STEPS*Math.pow(10, 0));
+//        particles = new ArrayList<>(immutableParticles);
+//        circleSystem.simulate(0.1, particles, STEPS*Math.pow(10, 0));
 //        particles = new ArrayList<>(immutableParticles);
 //        circleSystem.simulate(0.0001, particles, STEPS*Math.pow(10,i--));
-//        particles = new ArrayList<>(immutableParticles);
-//        circleSystem.simulate(0.001, particles, STEPS*Math.pow(10,i--));
+        particles = new ArrayList<>(immutableParticles);
+        circleSystem.simulate(0.0001, particles, STEPS*Math.pow(10,3));
 //        particles = new ArrayList<>(immutableParticles);
 //        circleSystem.simulate(0.01, particles, STEPS*Math.pow(10,i--));
 //        particles = new ArrayList<>(immutableParticles);
@@ -95,7 +95,7 @@ public class SecondSystem {
     private static boolean isColliding(double position, List<Particle_S2> particles) {
         for(Particle_S2 p : particles) {
             double angularDistance = Math.min(maxRad - Math.abs(p.getAngle() - position) , Math.abs(p.getAngle() - position));
-            if(angularDistance * R < 2*r)
+            if(angularDistance * R <= 2*r)
                 return true;
         }
         return false;

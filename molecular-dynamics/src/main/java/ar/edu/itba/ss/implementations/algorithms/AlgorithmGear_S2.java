@@ -52,13 +52,13 @@ public class AlgorithmGear_S2 extends AlgorithmBase implements Algorithm_S2 {
                 continue;
 
             double angularDistance = Math.min(maxRad - Math.abs(p.getAngle() - currentAngle) , Math.abs(p.getAngle() - currentAngle));
-            if(R*angularDistance < 2*p.getRadius()) {
+            if(R*angularDistance <= 2*p.getRadius()) {
                 if(p.getAngle() <= 1 && currentAngle >= 5)
-                    Fij += K * ((Math.abs((p.getAngle() + 2*Math.PI) - currentAngle) - (2*p.getRadius())/R)) * Math.signum((p.getAngle() + 2*Math.PI) - currentAngle);
+                    Fij += K * (R * angularDistance - (2*p.getRadius())) * Math.signum((p.getAngle() + 2*Math.PI) - currentAngle);
                 else if(currentAngle  <= 1 && p.getAngle() >= 5)
-                    Fij += K * ((Math.abs(p.getAngle()- (currentAngle + 2*Math.PI)) - (2*p.getRadius())/R)) * Math.signum(p.getAngle() - (currentAngle + 2*Math.PI));
+                    Fij += K * (R * angularDistance - (2*p.getRadius())) * Math.signum(p.getAngle() - (currentAngle + 2*Math.PI));
                 else
-                    Fij += K * ((Math.abs(p.getAngle()- currentAngle) - (2*p.getRadius())/R)) * Math.signum(p.getAngle() - currentAngle);
+                    Fij += K * (R * angularDistance - (2*p.getRadius())) * Math.signum(p.getAngle() - currentAngle);
             }
         }
         double nextAcc = (Fi + Fij) / current.getMass();
