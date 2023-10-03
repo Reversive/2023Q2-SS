@@ -54,11 +54,11 @@ public class AlgorithmGear_S2 extends AlgorithmBase implements Algorithm_S2 {
             double angularDistance = Math.min(maxRad - Math.abs(p.getAngle() - currentAngle) , Math.abs(p.getAngle() - currentAngle));
             if(R*angularDistance <= 2*p.getRadius()) {
                 if(p.getAngle() <= 1 && currentAngle >= 5)
-                    Fij += K * (R * angularDistance - (2*p.getRadius())) * Math.signum((p.getAngle() + 2*Math.PI) - currentAngle);
+                    Fij += K * (angularDistance - (2*p.getRadius())/R) * Math.signum((p.getAngle() + 2*Math.PI) - currentAngle);
                 else if(currentAngle  <= 1 && p.getAngle() >= 5)
-                    Fij += K * (R * angularDistance - (2*p.getRadius())) * Math.signum(p.getAngle() - (currentAngle + 2*Math.PI));
+                    Fij += K * (angularDistance - (2*p.getRadius())/R) * Math.signum(p.getAngle() - (currentAngle + 2*Math.PI));
                 else
-                    Fij += K * (R * angularDistance - (2*p.getRadius())) * Math.signum(p.getAngle() - currentAngle);
+                    Fij += K * (angularDistance - (2*p.getRadius())/R) * Math.signum(p.getAngle() - currentAngle);
             }
         }
         double nextAcc = (Fi + Fij) / current.getMass();

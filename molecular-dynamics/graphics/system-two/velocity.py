@@ -14,8 +14,8 @@ for k in range(6):
             for j in range(1,particle_quantity[k] + 1):
                 velocity = content[i+j].split(' ')[1]
                 velocities.append(float(velocity))
-            average_speeds.append(np.mean(velocities))
-        average_speeds.pop()
+            average_speeds.append(np.average(velocities))
+        #average_speeds.pop()
         plt.plot(np.arange(0,180,0.1), average_speeds, label = 'N = {}'.format(particle_quantity[k]))
 
 plt.xlabel('Tiempo (s)',  fontsize = 20)

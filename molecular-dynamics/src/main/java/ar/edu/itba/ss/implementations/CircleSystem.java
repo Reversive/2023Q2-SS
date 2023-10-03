@@ -36,12 +36,12 @@ public class CircleSystem {
             Particle_S2 next;
 
             while(Double.compare(t, tf) <= 0) {
-                if(i % steps == 0) {
+                if (i % steps == 0) {
                     data.write(t + "\n");
                 }
-                for(Particle_S2 current : previousMap.values()) {
-                    if(i % steps == 0) {
-                        data.write( current.getId() +  " " + current.getVelocity() + "\n");
+                for (Particle_S2 current : previousMap.values()) {
+                    if (i % steps == 0) {
+                        data.write(current.getId() + " " + current.getVelocity() + "\n");
                     }
                     next = algorithm.update(previousMap, current, dt, t);
                     currentMap.put(next.getId(), next);
