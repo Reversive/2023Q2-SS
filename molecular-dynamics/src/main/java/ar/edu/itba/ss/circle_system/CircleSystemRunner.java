@@ -16,15 +16,15 @@ public class CircleSystemRunner {
     private static final double maxRad = 2*Math.PI, minRad = 0, minUi = 9, maxUi = 12;
     private static final double R = 21.49;
     private static final double mass = 25;
-    private static final double tf = 180;
+    private static final double tf = 800;
 
     private static final double[] coef = {3/16.0, 251/360.0, 1, 11/18.0, 1/6.0, 1/60.0};
 
     private static final double[] fact = {1, 2, 6, 24, 120};
 
     public static void main(String[] args) throws IOException {
-        //int[] Ns = {5, 10, 15, 20, 25, 30};
-        int[] Ns = {5};
+//        int[] Ns = {5, 10, 15, 20, 25, 30};
+        int[] Ns = {25};
         //double[] DTs = {Math.pow(10,-1), Math.pow(10,-2), Math.pow(10,-3), Math.pow(10,-4), Math.pow(10,-5)};
         double[] DTs = {Math.pow(10,-4)};
         boolean printVelocity = true;
@@ -46,6 +46,7 @@ public class CircleSystemRunner {
                 try (FileWriter data = new FileWriter(file)) {
                     while (t <= tf) {
                         if (frames % step == 0) {
+                            data.write(t + "\n");
                             for (Particle current : particles) {
                                 if(printVelocity)
                                     data.write(current.getId() + " " + current.getX1() + "\n");
