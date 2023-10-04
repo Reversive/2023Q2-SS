@@ -1,7 +1,5 @@
 package ar.edu.itba.ss.circle_system.models;
 
-import ar.edu.itba.ss.models.Particle_S2;
-
 import java.util.Objects;
 
 public class Particle {
@@ -38,7 +36,12 @@ public class Particle {
     }
 
     public void setX0(double x0) {
-        this.x0 = x0;
+        double L = 135;
+        double aux = x0 % L;
+        if (aux < 0){
+            aux +=L;
+        }
+        this.x0 = aux;
     }
 
     public double getX1() {
@@ -113,26 +116,23 @@ public class Particle {
         this.ui = ui;
     }
 
-    public boolean collides(Particle p) {
-        double angularDistance = Math.min(2*Math.PI- Math.abs(p.getX0() - x0) , Math.abs(p.getX0() - x0));
-        return angularDistance * 21.49 <= 2 * r;
+    public boolean collides(Particle p, double dt) {
+        double dr = this.x0 - p.x0;
+        double dv = this.x1 - p.x1;
 
-//        double dr = this.x0 - p.x0;  // TODO: aca hay que multiplicar por R del circulo?
-//        double dv = this.x1 - p.x1;
-//
-//        double drdv = (dr * dv);
-//        if (drdv >= 0) {
-//            return false;
-//        }
-//
-//        double dv2 = (dv * dv);
-//        double dr2 = (dr * dr);
-//        double d = Math.pow(drdv, 2) - dv2 * (dr2 - Math.pow(this.r + p.r, 2));
-//        if (d < 0) {
-//            return false;
-//        }
-//
-//        return (-(drdv + Math.sqrt(d)) / dv2 ) < dt;
+        double drdv = (dr * dv);
+        if (drdv >= 0) {
+            return false;
+        }
+
+        double dv2 = (dv * dv);
+        double dr2 = (dr * dr);
+        double d = Math.pow(drdv, 2) - dv2 * (dr2 - Math.pow(this.r + p.r, 2));
+        if (d < 0) {
+            return false;
+        }
+
+        return (-(drdv + Math.sqrt(d)) / dv2 ) < dt;
 
     }
 

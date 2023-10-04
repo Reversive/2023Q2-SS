@@ -16,7 +16,7 @@ for k in range(6):
                 velocities.append(float(velocity))
             average_speeds.append(np.average(velocities))
 #        average_speeds.pop()
-        plt.plot(np.arange(0,800,0.1), average_speeds, label = 'N = {}'.format(particle_quantity[k]))
+        plt.plot(np.arange(0,180,0.1), average_speeds, label = 'N = {}'.format(particle_quantity[k]))
 
 plt.xlabel('Tiempo (s)',  fontsize = 20)
 plt.ylabel('Velocidad promedio (rad/s)', fontsize = 20)
