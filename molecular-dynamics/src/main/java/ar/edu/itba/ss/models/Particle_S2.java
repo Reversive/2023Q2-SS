@@ -13,6 +13,14 @@ public class Particle_S2 {
     private double X4;
     private double X5;
 
+    @Override
+    public String toString() {
+        return "Particle_S2{" +
+                "id=" + id +
+                ", position=" + position +
+                ", ui=" + ui +
+                '}';
+    }
 
     private Particle_S2(Builder builder) {
         this.id = builder.id;
@@ -26,6 +34,10 @@ public class Particle_S2 {
         this.X3 = builder.X3;
         this.X4 = builder.X4;
         this.X5 = builder.X5;
+    }
+
+    public double getUi(Particle_S2 particle_s2) {
+        return this.ui;
     }
 
     public static class Builder {
@@ -165,7 +177,7 @@ public class Particle_S2 {
     }
 
     public double getUi() {
-        return ui;
+        return this.ui;
     }
 
     public void setUi(double ui) {
