@@ -119,14 +119,10 @@ public class SecondSystem {
 
             positions = positions.stream().sorted().collect(Collectors.toList());
 
-            System.out.println(positions);
-
             for(int i = 0; i < immutableParticles.size(); i++) {
                 immutableParticles.get(i).setPosition(positions.get(i));
                 immutableParticles.get(i).setAngle(positions.get(i));
             }
-
-            System.out.println(immutableParticles);
 
         }
 
