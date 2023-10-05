@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 phi_total = []
-for k in range(3):
+for k in range(4):
     first_positions = []
     second_positions = []
     particle_quantity = 26
@@ -35,17 +35,15 @@ for k in range(3):
         summation = 0
         for i in range(len(first_positions[t])):
             # do the norm 2 of 
-            summation += np.linalg.norm(min(np.array(first_positions[t][i]) - np.array(second_positions[t][i]),2*np.pi - abs(np.array(second_positions[t][i]) - np.array(first_positions[t][i]))))
+            summation += np.linalg.norm(abs(np.array(second_positions[t][i]) - np.array(first_positions[t][i])))
         phi.append(summation)
-    phi.pop()
+    #phi.pop()
     phi_total.append(phi)
     
 
 legend_labels = ['k = {}'.format(i+1) for i in range(len(phi_total))]
 
-colors = []
-for i in range(4):
-    colors.append(np.random.rand(3,))
+colors = ['black', 'red', 'blue', 'green']
 
 
 for i in range(len(phi_total)):
@@ -55,7 +53,7 @@ for i in range(len(phi_total)):
 
 
 plt.xlabel('Tiempo (s)',  fontsize = 20)
-plt.ylabel(''r'$\phi$', fontsize = 20)
+plt.ylabel(''r'$\phi$ (rad)', fontsize = 20)
 plt.xticks(fontsize = 15)
 plt.yticks(fontsize = 15)
 plt.legend(fontsize = 15)

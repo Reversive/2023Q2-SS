@@ -14,13 +14,13 @@ GAMMA = 100.0
 def calculateR(t):
     return A * (np.exp(-(GAMMA/(2*M)) * t)) * (np.cos(np.power((K/M) - (GAMMA*GAMMA/(4*(M*M))), 0.5) * t))
 
-data = np.loadtxt('gpc_10-3.txt')
+data = np.loadtxt('gpc_10-5.txt')
 plt.plot(data[:,0], data[:,1], label=labels[3], linestyle=styles[3], color=colors[3])
 
-data = np.loadtxt('beeman_10-3.txt')
+data = np.loadtxt('beeman_10-5.txt')
 plt.plot(data[:,0], data[:,1], label=labels[2], linestyle=styles[2], color=colors[2])
 
-data = np.loadtxt('verlet_10-3.txt')
+data = np.loadtxt('verlet_10-5.txt')
 plt.plot(data[:,0], data[:,1], label=labels[1], linestyle=styles[1], color=colors[1])
 
 t = np.arange(0.0, 5.0, 0.00001)
@@ -59,6 +59,16 @@ for i in range(2, 6):
     error = np.mean((analytic - data[:,1]) ** 2)
     errors[2].append(error)
 
+
+# print errors related to 10^-3
+print('beeman=')
+print(errors[0][1])
+print('verlet=')
+print(errors[1][1])
+print('gpc=')
+print(errors[2][1])
+# print('verlet=' + errors[1])
+# print('gpc=' + errors[2])
 
 plt.loglog([10**(-i) for i in range(2, 6)], errors[0], 'o', label=labels[2], linestyle=styles[2], color=colors[2])
 plt.loglog([10**(-i) for i in range(2, 6)], errors[1], 'o', label=labels[1], linestyle=styles[1], color=colors[1])

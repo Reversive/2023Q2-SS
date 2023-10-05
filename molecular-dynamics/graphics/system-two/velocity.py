@@ -15,11 +15,12 @@ for k in range(6):
                 velocity = content[i+j].split(' ')[1]
                 velocities.append(float(velocity))
             average_speeds.append(np.average(velocities))
-#        average_speeds.pop()
-        plt.plot(np.arange(0,800,0.1), average_speeds, label = 'N = {}'.format(particle_quantity[k]))
+        average_speeds.pop()
+        plt.plot(np.arange(0,500,0.1), average_speeds, label = 'N = {}'.format(particle_quantity[k]))
 
 plt.xlabel('Tiempo (s)',  fontsize = 20)
-plt.ylabel('Velocidad promedio (rad/s)', fontsize = 20)
+plt.ylabel('Velocidad promedio ($\\frac{{\mathrm{rad}}}{{\mathrm{s}}})$', fontsize = 20)
+
 plt.xticks(fontsize = 15)
 plt.yticks(fontsize = 15)
 plt.legend(fontsize = 15)

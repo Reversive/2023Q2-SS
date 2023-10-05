@@ -13,11 +13,11 @@ public class DampedPointOscillator {
     static final double GAMMA = 100.0;
     static final int TF = 5;
     static final int STEPS = 2;
-    static BigDecimal DT = BigDecimal.valueOf(0.01);
+    static BigDecimal DT = BigDecimal.valueOf(0.00001);
     static BigDecimal MIN_DT = BigDecimal.valueOf(0.00001);
-    static BigDecimal MAX_DT = BigDecimal.valueOf(0.01);
+    static BigDecimal MAX_DT = BigDecimal.valueOf(0.0001);
     public static void main(String[] args) {
-        AlgorithmType currentAlgorithm = AlgorithmType.GEAR_PREDICTOR_CORRECTOR;
+        AlgorithmType currentAlgorithm = AlgorithmType.VERLET;
         Algorithm algorithm = AlgorithmFactory.buildAlgorithm(currentAlgorithm, K, GAMMA);
         Oscillator dampedPointOscillator = new Oscillator(algorithm, TF, STEPS);
         BigDecimal dt = DT;
