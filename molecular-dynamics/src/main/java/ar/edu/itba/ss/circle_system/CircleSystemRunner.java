@@ -6,7 +6,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CircleSystemRunner {
     private static final double r = 2.25;
@@ -23,14 +25,15 @@ public class CircleSystemRunner {
     private static final double[] fact = {1, 2, 6, 24, 120};
 
     public static void main(String[] args) throws IOException {
+//        int[] Ns = {5,10,15,20,25,39};
         int[] Ns = {25};
-        //int[] Ns = {25};
-        double[] DTs = {Math.pow(10,-1), Math.pow(10,-2), Math.pow(10,-3), Math.pow(10,-4), Math.pow(10,-5)};
-        //double[] DTs = {Math.pow(10,-4)};
+//        double[] DTs = {Math.pow(10,-1), Math.pow(10,-2), Math.pow(10,-3), Math.pow(10,-4), Math.pow(10,-5)};
+        double[] DTs = {Math.pow(10,-4)};
         boolean printVelocity = false;
 
         for(int i = 0; i < Ns.length; i++) {
-            List<Particle> immutableParticles = generateParticles(Ns[i]);
+//            List<Particle> immutableParticles = generateParticles(Ns[i]);
+            List<Particle> immutableParticles = generateParticlesOrdered(Ns[i]); //TODO ordered
             for(int j = 0; j < DTs.length; j++) {
                 List<Particle> particles = new ArrayList<>(immutableParticles);
                 double t = 0;
@@ -74,6 +77,15 @@ public class CircleSystemRunner {
         return false;
     }
 
+    private static boolean isCollidingOrdered(double position, List<Double> positions) {
+        for(Double pos : positions) {
+            double angularDistance = Math.min(maxRad - Math.abs(pos - position) , Math.abs(pos - position));
+            if(angularDistance * R <= 2*r)
+                return true;
+        }
+        return false;
+    }
+
     private static List<Particle> generateParticles(int N) {
         double nextPosition, ui;
         List<Particle> immutableParticles = new ArrayList<>();
@@ -102,6 +114,56 @@ public class CircleSystemRunner {
                     ui
             ));
         }
+        return immutableParticles;
+    }
+
+    private static List<Particle> generateParticlesOrdered(int N) {
+        double nextPosition, ui;
+        List<Particle> immutableParticles = new ArrayList<>();
+        for (int i = 0; i < N; i++) {
+            ui = minUi + (Math.random() * (maxUi - minUi));
+            immutableParticles.add(new Particle(
+                    i,
+                    0,
+                    ui/R,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    r,
+                    mass,
+                    ui
+            ));
+        }
+
+        List<Double> positions = new ArrayList<>();
+        for(int i = 0; i < immutableParticles.size(); i++) {
+            do {
+                if(N >= 22)
+                    nextPosition = maxRad * i / N ;
+                else
+                    nextPosition = minRad + (Math.random() * (maxRad - minRad));
+                if (nextPosition == maxRad)
+                    nextPosition = 0;
+            } while (isCollidingOrdered(nextPosition, positions));
+            positions.add(nextPosition);
+        }
+
+        immutableParticles = immutableParticles.stream()
+                .sorted(Comparator.comparing(Particle::getUi))
+                .collect(Collectors.toList());
+
+        positions = positions.stream().sorted().collect(Collectors.toList());
+        System.out.println(positions);
+
+        for(int i = 0; i < immutableParticles.size(); i++) {
+            immutableParticles.get(i).setX0(positions.get(i));
+            immutableParticles.get(i).setPosition(positions.get(i));
+        }
+
+        System.out.println(immutableParticles);
+
         return immutableParticles;
     }
 

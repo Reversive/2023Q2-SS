@@ -151,7 +151,7 @@ public class Particle {
 
     @Override
     public String toString() {
-        return id + " " + this.position;
+        return "id: " + id + " pos: " + this.position + " ui: " + ui + "\n";
     }
 
 }
