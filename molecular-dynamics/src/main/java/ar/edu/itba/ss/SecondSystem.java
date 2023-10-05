@@ -31,8 +31,6 @@ public class SecondSystem {
 
     public static void main(String[] args) {
 
-        // TODO En el 2.2 hay que hacer un grafico donde se vean las 3 distribuciones y con N grande hace picos, pero con N bajo esta mas distribuida
-
         List<Particle_S2> immutableParticles = new ArrayList<>();
 
         double nextPosition;
