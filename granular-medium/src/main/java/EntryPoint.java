@@ -27,11 +27,12 @@ public class EntryPoint {
         FileWriter data = new FileWriter(file);
 
         int leftParticles = 0;
+        double baseY = 0;
         StringBuilder builder = new StringBuilder();
 
         int i = 0;
         for(double t = 0; t < TF; t += DT) {
-            silo.vibrate(t, OMEGA);
+            baseY = silo.vibrate(t, OMEGA);
             particles.forEach(Particle::predictor);
             leftParticles += silo.resetParticles();
             particles.forEach(Particle::resetParticleForce);
@@ -47,6 +48,7 @@ public class EntryPoint {
                 //END
 
                 //TO-PRINT
+                builder.append(baseY).append('\n');
                 for(Particle p : particles) {
                     builder.append(p.getId()).append(' ')
                             .append(p.getPosition().getX())

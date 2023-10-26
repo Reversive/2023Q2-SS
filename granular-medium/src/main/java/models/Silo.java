@@ -21,8 +21,9 @@ public class Silo {
         this.particles = particles;
     }
 
-    public void vibrate(double t, double omega) {
+    public double vibrate(double t, double omega) {
         baseYCoordinate = A * Math.sin(omega * t);
+        return baseYCoordinate;
     }
 
     public void updateForces() {
