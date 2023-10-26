@@ -9,7 +9,7 @@ with open(data_file, 'r') as f:
         info = line.split()
         particle_id = int(info[0])
         position_x, position_y = float(info[1]), float(info[2])
-        radius = float(info[6])
+        radius = float(info[3])
         particles.append((particle_id, position_x, position_y, radius))
 
 # Create a figure and axis
