@@ -1,34 +1,30 @@
 import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
+import matplotlib.animation as animation
+import matplotlib.patches as patches
+import numpy as np
+import math
+import sys
 
-# Read the data from the text file
-data_file = 'results.txt'  # Replace with your file name
-particles = []
-with open(data_file, 'r') as f:
-    for line in f:
-        info = line.split()
-        particle_id = int(info[0])
-        position_x, position_y = float(info[1]), float(info[2])
-        radius = float(info[3])
-        particles.append((particle_id, position_x, position_y, radius))
+particle_list = []
 
-# Create a figure and axis
-fig, ax = plt.subplots()
+with open('results.txt', 'r') as f:
+    lines = f.readlines()
+    for i in range(0, len(lines), 200):
+        particle_list.append([list(map(float, line.split())) for line in lines[i:i+200]])
 
-# Set axis limits
-ax.set_xlim(0, 1)  # Adjust the limits according to your data
-ax.set_ylim(0, 1)  # Adjust the limits according to your data
 
-# Create a scatter plot
-sc = ax.scatter([p[1] for p in particles], [p[2] for p in particles], s=[p[3] for p in particles])
+silo_width = 20
+silo_height = 70
+silo_slit_width = 3
 
-# Update function for animation
-def update(frame):
-    sc.set_offsets([[p[1] + frame * 0.01, p[2] + frame * 0.01] for p in particles])
-    return sc,
+plt.plot([0, silo_width], [silo_height, silo_height], 'k-', lw=2)
+plt.plot([0, 0], [0, silo_height], 'k-', lw=2)
+plt.plot([silo_width, silo_width], [0, silo_height], 'k-', lw=2)
+plt.plot([0, (silo_width - silo_slit_width)/2], [0, 0], 'k-', lw=2)
+plt.plot([(silo_width + silo_slit_width)/2, silo_width], [0, 0], 'k-', lw=2)
 
-# Animate the plot
-ani = FuncAnimation(fig, update, frames=100, interval=50, blit=True)
+plt.axis('off')
+plt.gca().set_aspect('equal', adjustable='box')
 
-# Show the animation
+
 plt.show()
