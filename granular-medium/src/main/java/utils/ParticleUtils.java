@@ -43,6 +43,7 @@ public class ParticleUtils {
 
         current.getPosition().setX(x);
         current.getPosition().setY(y);
+        current.setLeftSilo(false);
 
         return particles;
     }

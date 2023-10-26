@@ -8,7 +8,7 @@ public class ForcesUtils {
     public static final double KT = 2 * KN;
     public static final double Y = 2.5;
     public static final double U = 0.7;
-    public static final double G = -5.0;
+    public static final double G = -9.81;
 
     private static double getNormalForceValue(double superposition) {
         return (-KN * superposition); //  - Y*superposition TODO SUPERPOSITION DERIVADO
