@@ -50,7 +50,7 @@ public class ForcesUtils {
         double normalRelativeVelocity = normalVersor.scalarProduct(particleVelocity);
         Vector tangencialVersor = new Vector(-normalVersor.getY(), normalVersor.getX());
         double forceN = getNormalForceValue(superposition, normalRelativeVelocity);
-        double forceT = getTangencialForceValue(superposition, particleVelocity.scalarProduct(tangencialVersor), forceN);
+        double forceT = getTangencialForceValue(superposition, particleVelocity.scalarProduct(tangencialVersor), Math.abs(forceN));
         return normalVersor.byScalarProduct(forceN).sum(tangencialVersor.byScalarProduct(forceT));
     }
 
