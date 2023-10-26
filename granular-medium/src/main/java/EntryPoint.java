@@ -48,7 +48,7 @@ public class EntryPoint {
                 //END
 
                 //TO-PRINT
-                builder.append(baseY).append('\n');
+//                builder.append(baseY).append('\n');
                 for(Particle p : particles) {
                     builder.append(p.getId()).append(' ')
                             .append(p.getPosition().getX())

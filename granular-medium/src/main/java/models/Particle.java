@@ -33,11 +33,7 @@ public class Particle {
         realAcceleration = new Vector(0.0, 0.0);
         previousAcceleration = new Vector(0.0, ForcesUtils.G);
     }
-
-    public Particle copy() {
-        return new Particle(id, position, r, m, dt);
-    }
-
+    
     public void addToForce(Vector vector) {
         force.setX(force.getX() + vector.getX());
         force.setY(force.getY() + vector.getY());
