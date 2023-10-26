@@ -48,8 +48,8 @@ public class Silo {
             double superposition;
 
             //abajo
-            if (withinHole(current) && !current.leftSilo()) {
-                superposition = current.getRadius() - (current.getPosition().getY() - 0);
+            if (!witihinHole(current) && !current.leftSilo()) {
+                superposition = current.getRadius() - (current.getPosition().getY() - baseYCoordinate);
                 if (superposition > 0)
                     current.addToForce(
                             getWallForce(superposition, current.getVelocity(), new Vector(0, -1.0))
@@ -83,7 +83,7 @@ public class Silo {
         int particlesLeft = 0;
 
         for(Particle p : particles) {
-            if(!p.leftSilo() && withinHole(p) && p.getPosition().getY() < baseYCoordinate) {
+            if(!p.leftSilo() && witihinHole(p) && p.getPosition().getY() < baseYCoordinate) {
                 p.setLeftSilo(true);
                 particlesLeft++;
             }
@@ -95,7 +95,7 @@ public class Silo {
         return particlesLeft;
     }
 
-    public boolean withinHole(Particle current) {
-        return (current.getPosition().getX() > W / 2 + D / 2) || (current.getPosition().getX() < W / 2 - D / 2);
+    public boolean witihinHole(Particle current) {
+        return (current.getPosition().getX() < W / 2 + D / 2) && (current.getPosition().getX() > W / 2 - D / 2);
     }
 }
