@@ -33,11 +33,6 @@ public class Particle {
         realAcceleration = new Vector(0.0, 0.0);
         previousAcceleration = new Vector(0.0, ForcesUtils.G);
     }
-    
-    public void addToForce(Vector vector) {
-        force.setX(force.getX() + vector.getX());
-        force.setY(force.getY() + vector.getY());
-    }
 
     public void resetParticle() {
         reset = true;
@@ -64,18 +59,18 @@ public class Particle {
 
         realAcceleration = this.getAcceleration();
         this.position = position.sum(
-                velocity.scalarProduct(dt).sum(
-                        realAcceleration.scalarProduct(2.0 / 3.0).sum(
-                                previousAcceleration.scalarProduct(-1.0 / 6.0)
-                        ).scalarProduct(Math.pow(dt, 2))
+                velocity.byScalarProduct(dt).sum(
+                        realAcceleration.byScalarProduct(2.0 / 3.0).sum(
+                                previousAcceleration.byScalarProduct(-1.0 / 6.0)
+                        ).byScalarProduct(Math.pow(dt, 2))
                 )
         );
 
         this.realVelocity = velocity;
 
         this.velocity = this.realVelocity.sum(
-                this.realAcceleration.scalarProduct(1.5 * dt).sum(
-                        previousAcceleration.scalarProduct(-0.5 * dt)
+                this.realAcceleration.byScalarProduct(1.5 * dt).sum(
+                        previousAcceleration.byScalarProduct(-0.5 * dt)
                 )
         );
 
@@ -89,9 +84,9 @@ public class Particle {
             previousAcceleration = new Vector(0, ForcesUtils.G);
         } else {
             this.velocity = realVelocity.sum(
-                    this.getAcceleration().scalarProduct((1.0 / 3.0) * dt).sum(
-                            realAcceleration.scalarProduct((5.0 / 6.0) * dt).sum(
-                                    previousAcceleration.scalarProduct(-(1.0 / 6.0) * dt)
+                    this.getAcceleration().byScalarProduct((1.0 / 3.0) * dt).sum(
+                            realAcceleration.byScalarProduct((5.0 / 6.0) * dt).sum(
+                                    previousAcceleration.byScalarProduct(-(1.0 / 6.0) * dt)
                             )
                     )
             );
@@ -132,7 +127,7 @@ public class Particle {
     }
 
     public Vector getAcceleration() {
-        return force.scalarProduct(1.0 / m);
+        return force.byScalarProduct(1.0 / m);
     }
 
     public int getId() {

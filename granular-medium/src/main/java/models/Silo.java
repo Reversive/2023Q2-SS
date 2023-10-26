@@ -29,6 +29,7 @@ public class Silo {
     public void updateForces() {
         double distance;
         double totalRadius;
+        Vector normalForce;
         for (Particle current : particles) {
             current.addForce(new Vector(0, current.getMass() * G));
             for (Particle other : particles) {
@@ -38,11 +39,11 @@ public class Silo {
                 totalRadius = current.getRadius() + other.getRadius();
 
                 if (distance < totalRadius) {
-                    Vector normalVersor = other.getPosition().difference(current.getPosition()).scalarProduct(1.0 / distance);
-                    current.addForce(getNormalForce(totalRadius - distance, normalVersor));
-
+                    Vector normalVersor = other.getPosition().difference(current.getPosition()).byScalarProduct(1.0 / distance);
                     Vector relativeVelocity = current.getVelocity().difference(other.getVelocity());
-                    current.addToForce(getTangencialForce(totalRadius - distance, relativeVelocity, normalVersor));
+                    normalForce = getNormalForce(totalRadius - distance, normalVersor, relativeVelocity);
+                    current.addForce(normalForce);
+                    current.addForce(getTangencialForce(totalRadius - distance, relativeVelocity, normalVersor, normalForce.modulus()));
                 }
             }
 
@@ -52,7 +53,7 @@ public class Silo {
             if (!witihinHole(current) && !current.leftSilo()) {
                 superposition = current.getRadius() - (current.getPosition().getY() - baseYCoordinate);
                 if (superposition > 0)
-                    current.addToForce(
+                    current.addForce(
                             getWallForce(superposition, current.getVelocity(), new Vector(0, -1.0))
                     );
             }
@@ -60,21 +61,21 @@ public class Silo {
             //arriba
             superposition = current.getRadius() - (L - current.getPosition().getY());
             if (superposition > 0)
-                current.addToForce(
+                current.addForce(
                         getWallForce(superposition, current.getVelocity(), new Vector(0, 1.0))
                 );
 
             //izquierda
             superposition = current.getRadius() - (current.getPosition().getX() - 0);
             if (superposition > 0)
-                current.addToForce(
+                current.addForce(
                         getWallForce(superposition, current.getVelocity(), new Vector(-1.0, 0))
                 );
 
             //derecha
             superposition = current.getRadius() - (W - current.getPosition().getX());
             if (superposition > 0)
-                current.addToForce(
+                current.addForce(
                         getWallForce(superposition, current.getVelocity(), new Vector(1.0, 0))
                 );
         }

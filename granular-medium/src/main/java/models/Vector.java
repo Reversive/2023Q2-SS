@@ -10,10 +10,6 @@ public class Vector {
         this.y = y;
     }
 
-    public double dotProduct(Vector p) {
-        return this.x * p.getX() + this.y * p.getY();
-    }
-
     public Vector difference(Vector p) {
         return new Vector(this.x - p.x, this.y - p.y);
     }
@@ -22,12 +18,20 @@ public class Vector {
         return new Vector(this.x + other.x, this.y + other.y);
     }
 
-    public Vector scalarProduct(double scalar) {
+    public Vector byScalarProduct(double scalar) {
         return new Vector(this.x * scalar, this.y * scalar);
+    }
+
+    public double scalarProduct(Vector other) {
+        return other.getX() * this.x + other.getY() * this.y;
     }
 
     public double distance(Vector p) {
         return Math.sqrt(Math.pow(x - p.getX(), 2) + Math.pow(y - p.getY(), 2));
+    }
+
+    public double modulus() {
+        return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
     }
 
     public double getX() {

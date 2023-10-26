@@ -8,39 +8,45 @@ public class ForcesUtils {
     public static final double KT = 2 * KN;
     public static final double Y = 2.5;
     public static final double U = 0.7;
-    public static final double G = -5;
+    public static final double G = -981;
 
-    private static double getNormalForceValue(double superposition) {
-        return (-KN * superposition); //  - Y*superposition TODO SUPERPOSITION DERIVADO
+    private static double getNormalForceValue(double superposition, double normalRelativeVelocity) {
+        return (-KN * superposition)  - Y * normalRelativeVelocity;
     }
 
-    public static Vector getNormalForce(double superposition, Vector normalVersor) {
+    public static Vector getNormalForce(double superposition, Vector normalVersor, Vector relativeVelocity) {
 
-        double force = getNormalForceValue(superposition);
+        double normalRelativeVelocity = relativeVelocity.scalarProduct(normalVersor);
 
-        return normalVersor.scalarProduct(force);
+        double force = getNormalForceValue(superposition, normalRelativeVelocity);
+
+        return normalVersor.byScalarProduct(force);
     }
 
-    private static double getTangencialForceValue(double superposition, double relativeTangencialVelocity) {
-        return -KT * (superposition) * (relativeTangencialVelocity); //TODO HACERLO CON T1
+    private static double getTangencialForceValue(double superposition, double relativeTangencialVelocity, double normalForceMagnitude) {
+
+        double possibleForce1 = -U * normalForceMagnitude * Math.signum(relativeTangencialVelocity);
+
+        double possibleForce2 = -KT * superposition * relativeTangencialVelocity;
+
+        return Math.min(possibleForce1, possibleForce2);
     }
 
-    public static Vector getTangencialForce(double superposition, Vector relativeTangencialVelocity, Vector normalVersor) {
+    public static Vector getTangencialForce(double superposition, Vector relativeVelocity, Vector normalVersor, double normalForceMagnitude) {
 
         Vector tangencialVersor = new Vector(-normalVersor.getY(), normalVersor.getX());
 
-        double force = getTangencialForceValue(superposition, relativeTangencialVelocity.dotProduct(tangencialVersor));
+        double force = getTangencialForceValue(superposition, relativeVelocity.scalarProduct(tangencialVersor), normalForceMagnitude);
 
-        return tangencialVersor.scalarProduct(force);
+        return tangencialVersor.byScalarProduct(force);
     }
 
-    public static Vector getWallForce(double superposition, Vector relativeTangencialVelocity, Vector normalVersor) {
-
-        Vector tan = new Vector(-normalVersor.getY(), normalVersor.getX());
-
-        double forceT = getTangencialForceValue(superposition, relativeTangencialVelocity.dotProduct(tan));
-        double forceN = getNormalForceValue(superposition);
-        return normalVersor.scalarProduct(forceN).sum(tan.scalarProduct(forceT));
+    public static Vector getWallForce(double superposition, Vector particleVelocity, Vector normalVersor) {
+        double normalRelativeVelocity = normalVersor.scalarProduct(particleVelocity);
+        Vector tangencialVersor = new Vector(-normalVersor.getY(), normalVersor.getX());
+        double forceN = getNormalForceValue(superposition, normalRelativeVelocity);
+        double forceT = getTangencialForceValue(superposition, particleVelocity.scalarProduct(tangencialVersor), forceN);
+        return normalVersor.byScalarProduct(forceN).sum(tangencialVersor.byScalarProduct(forceT));
     }
 
 }
