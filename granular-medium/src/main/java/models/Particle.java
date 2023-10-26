@@ -55,10 +55,6 @@ public class Particle {
         return m;
     }
 
-    public String toString() {
-        return position.getX() + " " + position.getY() + " " + velocity.getX() + " " + velocity.getY() + " " + r;
-    }
-
     public Vector getPosition() {
         return position;
     }
