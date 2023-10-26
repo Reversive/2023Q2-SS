@@ -11,13 +11,12 @@ public class ParticleUtils {
     private static final double MAXRAD = 1.15;
     private static final double MINRAD = 0.85;
     private static final double MASS = 1;
-    private static final double DT = 0.001;
     private static final double N = 200;
     private static final double L = 70;
     private static final double MIN_RESET_Y = 40;
     private static final double W = 20;
 
-    public static List<Particle> generateParticles() {
+    public static List<Particle> generateParticles(double dt) {
         List<Particle> particles = new ArrayList<>();
         double x, y, radius;
 
@@ -29,7 +28,7 @@ public class ParticleUtils {
                 y = radius + Math.random() * (L - 2 * radius);
             } while(isColliding(x, y, radius, particles));
 
-            particles.add(new Particle(i, new Vector(x, y), radius, MASS, DT));
+            particles.add(new Particle(i, new Vector(x, y), radius, MASS, dt));
         }
         return particles;
     }

@@ -14,11 +14,11 @@ public class EntryPoint {
 
     private static final double STEP = 100;
 
-    private static final int TF = 1000;
+    private static final double TF = 1000;
     private static final double DT = 0.001;
 
     public static void main(String[] args) throws IOException {
-        List<Particle> particles = ParticleUtils.generateParticles();
+        List<Particle> particles = ParticleUtils.generateParticles(DT);
 
         Silo silo = new Silo(D, particles);
 
@@ -29,7 +29,8 @@ public class EntryPoint {
         int leftParticles = 0;
         StringBuilder builder = new StringBuilder();
 
-        for(int t = 0, j = 0; t < TF; t += DT, j++) {
+        int i = 0;
+        for(double t = 0; t < TF; t += DT) {
             silo.vibrate(t, OMEGA);
             particles.forEach(Particle::predictor);
             leftParticles += silo.resetParticles();
@@ -39,8 +40,13 @@ public class EntryPoint {
             particles.forEach(Particle::resetParticleForce);
             silo.updateForces();
 
-            if (j % STEP == 0) {
+            if (i % STEP == 0) {
+
+                //CLEAR
                 builder.setLength(0);
+                //END
+
+                //TO-PRINT
 //                for(Particle p : particles) {
 //                    builder.append(p.getPosition().getX())
 //                            .append(' ').append(p.getPosition().getY())
@@ -49,8 +55,13 @@ public class EntryPoint {
 //                            .append(' ').append(p.getRadius()).append('\n');
 //                }
                 builder.append(t).append(' ').append(leftParticles).append('\n');
+                //TO-PRINT
+
+                //WRITE
                 data.write(builder.toString());
+                //WRITE
             }
+            i++;
         }
 
         data.close();
