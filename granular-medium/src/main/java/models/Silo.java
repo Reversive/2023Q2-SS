@@ -29,7 +29,7 @@ public class Silo {
     public void updateForces() {
         double distance;
         double totalRadius;
-        Vector normalForce;
+        double normalForceMagnitude;
         for (Particle current : particles) {
             current.addForce(new Vector(0, current.getMass() * G));
             for (Particle other : particles) {
@@ -41,9 +41,9 @@ public class Silo {
                 if (distance < totalRadius) {
                     Vector normalVersor = other.getPosition().difference(current.getPosition()).byScalarProduct(1.0 / distance);
                     Vector relativeVelocity = current.getVelocity().difference(other.getVelocity());
-                    normalForce = getNormalForce(totalRadius - distance, normalVersor, relativeVelocity);
-                    current.addForce(normalForce);
-                    current.addForce(getTangencialForce(totalRadius - distance, relativeVelocity, normalVersor, normalForce.modulus()));
+                    current.addForce(getNormalForce(totalRadius - distance, normalVersor, relativeVelocity));
+                    normalForceMagnitude = getNormalForceMagnitude(totalRadius - distance, normalVersor, relativeVelocity);
+                    current.addForce(getTangencialForce(totalRadius - distance, relativeVelocity, normalVersor, normalForceMagnitude));
                 }
             }
 

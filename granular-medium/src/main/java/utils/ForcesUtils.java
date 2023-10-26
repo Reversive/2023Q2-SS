@@ -8,7 +8,7 @@ public class ForcesUtils {
     public static final double KT = 2 * KN;
     public static final double Y = 2.5;
     public static final double U = 0.7;
-    public static final double G = -981;
+    public static final double G = -5;
 
     private static double getNormalForceValue(double superposition, double normalRelativeVelocity) {
         return (-KN * superposition)  - Y * normalRelativeVelocity;
@@ -21,6 +21,11 @@ public class ForcesUtils {
         double force = getNormalForceValue(superposition, normalRelativeVelocity);
 
         return normalVersor.byScalarProduct(force);
+    }
+
+    public static double getNormalForceMagnitude(double superposition, Vector normalVersor, Vector relativeVelocity) {
+        double normalRelativeVelocity = relativeVelocity.scalarProduct(normalVersor);
+        return Math.abs((-KN * superposition)  - Y * normalRelativeVelocity);
     }
 
     private static double getTangencialForceValue(double superposition, double relativeTangencialVelocity, double normalForceMagnitude) {
