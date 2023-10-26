@@ -138,4 +138,8 @@ public class Particle {
     public Vector getAcceleration() {
         return force.scalarProduct(1.0 / m);
     }
+
+    public int getId() {
+        return id;
+    }
 }

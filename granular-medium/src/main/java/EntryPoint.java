@@ -47,14 +47,15 @@ public class EntryPoint {
                 //END
 
                 //TO-PRINT
-//                for(Particle p : particles) {
-//                    builder.append(p.getPosition().getX())
-//                            .append(' ').append(p.getPosition().getY())
+                for(Particle p : particles) {
+                    builder.append(p.getId()).append(' ')
+                            .append(p.getPosition().getX())
+                            .append(' ').append(p.getPosition().getY())
 //                            .append(' ').append(p.getVelocity().getX())
 //                            .append(' ').append(p.getVelocity().getY())
-//                            .append(' ').append(p.getRadius()).append('\n');
-//                }
-                builder.append(t).append(' ').append(leftParticles).append('\n');
+                            .append(' ').append(p.getRadius()).append('\n');
+                }
+//                builder.append(t).append(' ').append(leftParticles).append('\n');
                 //TO-PRINT
 
                 //WRITE
