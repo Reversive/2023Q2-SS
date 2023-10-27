@@ -11,7 +11,7 @@ import java.util.List;
 public class EntryPoint {
 
     private static final double D = 3.0; // 3,4,5,6
-    private static final double OMEGA = 5; // 5,10,15,20,30,50
+    private static final double OMEGA = 15; // 5,10,15,20,30,50
     private static final List<Double> OMEGA_VECTOR = Arrays.asList(5.0, 10.0, 15.0, 20.0, 30.0, 50.0);
 
     private static final double STEP = 100;
