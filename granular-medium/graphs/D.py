@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
 # Define the file names
-file_names = ["results5.0.txt", "results10.0.txt", "results15.0.txt", "results20.0.txt", "results30.0.txt", "results50.0.txt"]
+file_names = ["resultsD3.0.txt", "resultsD4.0.txt", "resultsD5.0.txt", "resultsD6.0.txt"]
 
 # Initialize lists to store time and measurement data
 time_data = []
@@ -27,12 +27,12 @@ plt.ylabel('Número de partículas que salieron', fontsize=20)
 
 # Define colors for plots
 colors = ['b', 'g', 'r', 'c', 'm', 'y']
-omega_values = [5, 10, 15, 20, 30, 50]
+omega_values = [3,4,5,6]
 
 # Plot the data from each file
 for i in range(len(file_names)):
     plt.plot(time_data[i], measurement_data[i], color=colors[i],
-             label=f'ω = {omega_values[i]} rad/s', linewidth=1.5)
+             label=f'D = {omega_values[i]} cm', linewidth=1.5)
 
 plt.xlim(0, 1000)  # Set the x-axis limit to 1000
 plt.legend()
