@@ -7,7 +7,7 @@ public class ForcesUtils {
     public static final double KN = 250;
     public static final double KT = 2 * KN;
     public static final double Y = 2.5;
-    public static final double U = 0.1;
+    public static final double U = 0.2;
     public static final double G = -9.81;
 
     private static double getNormalForceValue(double superposition, double normalRelativeVelocity) {

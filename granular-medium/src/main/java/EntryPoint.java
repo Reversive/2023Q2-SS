@@ -16,7 +16,7 @@ public class EntryPoint {
 
     private static final double STEP = 100;
 
-    private static final double TF = 200;
+    private static final double TF = 1000;
     private static final double DT = 0.001;
 
     public static void main(String[] args) throws IOException {

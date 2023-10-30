@@ -16,17 +16,14 @@ with open('results.txt', 'r') as f:
 silo_width = 20
 silo_height = 70
 silo_slit_width = 3
-A = 0.15  # Amplitude in cm
-w = 15     # Angular frequency in rad/s
-t_step = 0.1  # Time step
-
-# now animate the particles, each particle is a circle with an id, a position and a radius
-# you have for each time step, a list of particles that you need to animate
+A = 0.15  
+w = 15    
+t_step = 0.1 
 
 def animate(i):
     plt.cla()
     t = i * t_step
-    y_bottom = A * math.sin(w * t)  # Calculate the y-position of the bottom side
+    y_bottom = A * math.sin(w * t) 
     plt.plot([0, silo_width], [silo_height, silo_height], 'k-')
     plt.plot([0, 0], [0, silo_height], 'k-')
     plt.plot([silo_width, silo_width], [0, silo_height], 'k-')
@@ -38,11 +35,10 @@ def animate(i):
     for particle in particle_list[i]:
         circle = plt.Circle((particle[1], particle[2]), particle[3], color='r', fill=False)
         plt.gca().add_patch(circle)
-    plt.title('Time: ' + str(i))
     return circle, plt.title
 
 anim = animation.FuncAnimation(plt.gcf(), animate, frames=len(particle_list), interval=1, repeat=False)
-anim.save('animation.gif', writer='pillow', fps=60)
+anim.save('anim_w_5_d_3_u_0.3.gif', writer='pillow', fps=60)
 
 
 

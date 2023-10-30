@@ -12,11 +12,11 @@ public class VaryD {
 
     private static final double D = 3.0; // 3,4,5,6
     private static final double OMEGA = 15.0; // 5,10,15,20,30,50
-    private static final List<Double> D_VECTOR = Arrays.asList(3.0, 4.0, 5.0, 6.0);
+    private static final List<Double> D_VECTOR = Arrays.asList(6.0);
 
     private static final double STEP = 100;
 
-    private static final double TF = 1000;
+    private static final double TF = 20;
     private static final double DT = 0.001;
 
     public static void main(String[] args) throws IOException {
@@ -54,15 +54,15 @@ public class VaryD {
 
                 //TO-PRINT
 //                builder.append(baseY).append('\n');
-//                    for(Particle p : particles) {
-//                        builder.append(p.getId()).append(' ')
-//                                .append(p.getPosition().getX())
-//                                .append(' ').append(p.getPosition().getY())
-////                            .append(' ').append(p.getVelocity().getX())
-////                            .append(' ').append(p.getVelocity().getY())
-//                                .append(' ').append(p.getRadius()).append('\n');
-//                    }
-                builder.append(t).append(' ').append(leftParticles).append('\n');
+                    for(Particle p : particles) {
+                        builder.append(p.getId()).append(' ')
+                                .append(p.getPosition().getX())
+                                .append(' ').append(p.getPosition().getY())
+//                            .append(' ').append(p.getVelocity().getX())
+//                            .append(' ').append(p.getVelocity().getY())
+                                .append(' ').append(p.getRadius()).append('\n');
+                    }
+                //builder.append(t).append(' ').append(leftParticles).append('\n');
                 //TO-PRINT
 
                 //WRITE

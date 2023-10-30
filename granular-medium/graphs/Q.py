@@ -29,29 +29,27 @@ for file_name in file_names:
         time_data.append(time_aux)
         measurement_data.append(measurement_aux)
 
-# Create the plot
-plt.figure(figsize=(10, 6))
-plt.xlabel('Tiempo (s)', fontsize=20)
-plt.ylabel('Número de partículas que salieron', fontsize=20)
-
 # Define colors for plots
 colors = ['b', 'g', 'r', 'c', 'm', 'y']
 omega_values = [5, 10, 15, 20, 30, 50]
-errors = []
-slopes = []
 # Plot the data from each file
+slopes = []
+errors = []
 for i in range(len(file_names)):
-    slope, _ = np.polyfit(time_data[i], measurement_data[i], 1)
+    slope, intercept, rv, pv, std_slope = stats.linregress(np.array(time_data[i]), np.array(measurement_data[i]), alternative='two-sided')
     slopes.append(slope)
-    line = slope * np.array(time_data[i])
-    error = np.mean(np.abs(np.array(measurement_data[i]) - line))
-    errors.append(error)
-    plt.plot(time_data[i], line, color=colors[i], linewidth=1, label=f'ω = {omega_values[i]} rad/s',)
+    errors.append(std_slope)
+plt.show()
+
+# make 6 colors
+colors = ['b', 'g', 'r', 'c', 'm', 'y']
 
 plt.figure(figsize=(10, 6))
-plt.errorbar(omega_values, slopes, yerr=errors, fmt='o', color='b', ecolor='r', capsize=5, capthick=2)
-plt.xlabel('ω (rad/s)', fontsize=20)
-plt.ylabel('Slope', fontsize=20)
-plt.title('Slope with Error Bars vs. ω', fontsize=20)
-plt.grid()
+plt.xlabel('ω (Hz)', fontsize=20)
+plt.ylabel('Q', fontsize=20)
+plt.errorbar(omega_values, slopes, fmt='^', color='k', markersize=10)
+# connect the points with a line
+plt.plot(omega_values, slopes, 'k--')
+plt.xticks(fontsize=20)
+plt.yticks(fontsize=20)
 plt.show()

@@ -54,7 +54,6 @@ public class Particle {
         return velocity;
     }
 
-    //TODO TOCAR ESTE METODO
     public void predictor() {
 
         realAcceleration = this.getAcceleration();
@@ -76,7 +75,6 @@ public class Particle {
 
     }
 
-    //TODO TOCAR ESTE METODO
     public void corrector(){
         if (reset) {
             this.reset = false;
